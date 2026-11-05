@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 09:44 · f8a4101"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 09:55 · cc98c17"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>transport.dysza.app</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -82,6 +82,7 @@ button { cursor: pointer; }
   display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
 .menu-imie { font-size: 14px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .motyw-seg { margin: 2px 0 4px; }
+.tel-chm .tel-n { font-size: 22px; font-weight: 800; letter-spacing: .03em; font-variant-numeric: tabular-nums; white-space: nowrap; }
 @media (max-width: 480px) { .menu-imie { display: none; } .menu-btn { padding: 0 6px; } .znak .tyt { font-size: 28px; } }
 @media (max-width: 600px) {                                   /* telefon: TRANSPORT i konto w pierwszym rzędzie, godzina pod nimi */
   .gora { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "znak konto" "teraz teraz" "widoki widoki"; align-items: center; }
@@ -914,7 +915,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     sortL: 'kierowcy',
     ls: { dzien: '', plik: null, potw: false, dni: {} },        // listy startowe: { RRRR-MM-DD: { form, wysylki, edycja } } — dziś i jutro
     dniowka: null, resDnia: null,                               // z ostatnio wysłanych list dnia: dniówka RES (gr) i kto jest RES
-    baza: [], bazaTel: {}, stawkiDni: {}, automat: {},          // kierowcy z KIEROWCY-PODSTAWOWI (ksywki), stawki dnia, znak życia automatu
+    baza: [], bazaTel: {}, telNr: {}, stawkiDni: {}, automat: {},          // kierowcy z KIEROWCY-PODSTAWOWI (ksywki), stawki dnia, znak życia automatu
     pamiec: {},                                                 // md5 pliku → tabela (treść przychodzi raz)
     wczytano: false, blad: '', offline: false, zapis: '', zapisZly: false, czekaRysuj: false
   };
@@ -962,8 +963,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     (d.zmiany || []).forEach(z => { zm[klucz(z.zamowienie)] = { id: z.zamowienie, z: z.z, na: z.na, kwota: z.kwota, czas: godzinaZ(z.kiedy), kto: z.kto || '' }; });
     S.zmiany = zm;
     S.baza = (d.kierowcy || []).map(k => k.nick);
-    S.bazaTel = {};
-    (d.kierowcy || []).forEach(k => { S.bazaTel[k.nick] = !!k.ma_tel; });
+    S.bazaTel = {}; S.telNr = {};
+    (d.kierowcy || []).forEach(k => { S.bazaTel[k.nick] = !!k.ma_tel; if (k.tel) S.telNr[k.nick] = String(k.tel); });
     S.stawkiDni = d.stawki || {};
     S.automat = d.automat || {};
     const dni = {};
@@ -2122,6 +2123,65 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     b.title = ciemny ? 'Jasny widok' : 'Ciemny widok';
   }
   try { const m = localStorage.getItem('transport-motyw'); if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-theme', m); } catch (e) { /* bez pamięci — widok jak w systemie */ }
+  // ── (5.11) telefon kierowcy w chmurce po najechaniu kursorem na ksywkę ──
+  const NAZWY_KIER = '.kier-b, .pods-k-b, td.kier, tr.grupa > td, .przydz-w .nick, .kier-l .chip, .panel > h2';
+  let tch = null, tchT = 0;
+  function telKierowcy(nick) {                                  // kierowca z KIEROWCY-PODSTAWOWI albo ZEW z list dnia
+    if (S.telNr[nick]) return S.telNr[nick];
+    const D = S.ls.dni[S.dzien], f = D && D.form;
+    if (f && f.zew && f.zew.length) {
+      const n = nickiZew(f), z = f.zew.find(x => n[x.id] === nick);
+      if (z && z.tel && z.tel !== '•') return String(z.tel);
+    }
+    return '';
+  }
+  function telNapis(t) {                                        // „0048600000001” → „600 000 001” (do skopiowania: 600000001)
+    let d = String(t || '').replace(/[^0-9]/g, '');
+    if (/^0048[0-9]{9}$/.test(d)) d = d.slice(4); else if (/^48[0-9]{9}$/.test(d)) d = d.slice(2);
+    return /^[0-9]{9}$/.test(d) ? { pokaz: `${d.slice(0, 3)} ${d.slice(3, 6)} ${d.slice(6)}`, kopia: d } : { pokaz: String(t).trim(), kopia: String(t).trim() };
+  }
+  function nickZ(e) {
+    const t = e.firstChild && e.firstChild.nodeType === 3 ? e.firstChild.nodeValue : e.textContent;
+    return String(t || '').split(' · ')[0].trim();
+  }
+  function zamknijTel() { clearTimeout(tchT); if (tch) { tch.el.remove(); tch = null; } }
+  function pokazTel(cel) {
+    const nick = nickZ(cel);
+    if (!nick || !(S.baza.indexOf(nick) >= 0 || S.telNr[nick] || /^ZEW-/i.test(nick))) return;   // tylko ksywki kierowców
+    if (tch && tch.cel === cel) { clearTimeout(tchT); return; }
+    zamknijTel();
+    const tel = telKierowcy(nick), n = tel ? telNapis(tel) : null;
+    const num = el('div', { class: 'tel-n' }, n ? n.pokaz : '—');
+    const c = el('div', { class: 'chmurka tel-chm', role: 'tooltip' },
+      el('div', { class: 'chm-t' }, el('span', null, 'Telefon'), ' · ', el('span', { class: 'id' }, nick)), num,
+      n ? el('button', { type: 'button', class: 'mb', onclick: e => kopiuj(n.kopia, num, e.currentTarget) }, 'kopiuj')
+        : el('div', { class: 'chm-m' }, !(maRole('dyspozytor') || maRole('platnosci')) ? 'Numery widzą role Dyspozytor i Płatności.'
+          : /^ZEW-/i.test(nick) ? 'ZEW — numer wpisuje dyspozytor w LISTACH STARTOWYCH, gdy kierowca się stawi.' : 'Brak numeru w KIEROWCY-PODSTAWOWI.'));
+    c.addEventListener('pointerenter', () => clearTimeout(tchT));
+    c.addEventListener('pointerleave', () => { clearTimeout(tchT); tchT = setTimeout(zamknijTel, 250); });
+    document.body.append(c);
+    tch = { el: c, cel: cel };
+    const r = cel.getBoundingClientRect(), w = c.offsetWidth, h = c.offsetHeight, szer = document.documentElement.clientWidth;
+    const x = Math.max(12, Math.min(r.left + r.width / 2 - w / 2, szer - w - 12));
+    const nad = r.bottom + 10 + h > window.innerHeight && r.top - 10 - h > 0;
+    c.classList.toggle('nad', nad);
+    c.style.setProperty('--strz', Math.round(Math.min(Math.max(r.left + r.width / 2 - x, 16), w - 16)) + 'px');
+    c.style.left = Math.round(x + window.scrollX) + 'px';
+    c.style.top = Math.round((nad ? r.top - 10 - h : r.bottom + 10) + window.scrollY) + 'px';
+  }
+  document.addEventListener('pointerover', e => {
+    if (tch && !document.body.contains(tch.cel)) zamknijTel();  // strona przerysowana pod kursorem
+    if (e.pointerType !== 'mouse' && e.pointerType !== 'pen') return;   // dotyk — bez chmurki (dotknięcie wybiera kierowcę)
+    const cel = e.target.closest && e.target.closest(NAZWY_KIER);
+    if (cel) { clearTimeout(tchT); pokazTel(cel); }
+  });
+  document.addEventListener('pointerout', e => {
+    if (!tch || (e.pointerType !== 'mouse' && e.pointerType !== 'pen')) return;
+    const dok = e.relatedTarget;
+    if (dok && (tch.cel.contains(dok) || tch.el.contains(dok))) return;
+    if (e.target.closest && e.target.closest(NAZWY_KIER) === tch.cel) { clearTimeout(tchT); tchT = setTimeout(zamknijTel, 250); }
+  });
+  window.addEventListener('scroll', () => { if (tch) zamknijTel(); }, { passive: true });
   function ustawMotyw(m) {                                      // (5.11) widok jasny / ciemny — w menu konta, jak w managerze
     document.documentElement.setAttribute('data-theme', m);
     try { localStorage.setItem('transport-motyw', m); } catch (e) { /* bez pamięci */ }
