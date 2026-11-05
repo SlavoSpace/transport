@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 10:52 · 9f2b887"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 11:42 · 0c79c16"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>transport.dysza.app</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -90,6 +90,26 @@ button { cursor: pointer; }
 @keyframes zdz-kiwa { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg) translateY(-2px); } }
 @media (prefers-reduced-motion: reduce) { .zdz-jedzie, .zdz-glowa { animation: none; } }
 @media (max-width: 600px) { .zdz-pas { display: none; } }
+.rtf { display: grid; gap: 8px; border-top: 1px dashed var(--linia2); padding-top: 8px; min-width: 0; }   /* (5.11) pasek ROUTIFIC */
+.rtf-w { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; min-width: 0; }
+.rtf-t { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--szary); font-weight: 700; margin-right: 4px; }
+.rtf-pl { display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 260px; min-width: 0; align-items: center; }
+.rtf-k { display: inline-flex; align-items: baseline; gap: 6px; border: 1px solid var(--linia2); background: var(--karta2); border-radius: 9px;
+  min-height: 40px; padding: 8px 10px; color: var(--tusz); text-decoration: none; font: inherit; font-size: 14px; font-variant-numeric: tabular-nums; }
+.rtf-k b { font-size: 15px; }
+.rtf-k span { color: var(--akcent); font-weight: 700; white-space: nowrap; }
+.rtf-k span.bl { color: var(--czer); }
+a.rtf-k:hover { border-color: var(--akcent); background: var(--akcent-tlo); }
+.rtf-k:disabled { opacity: .6; cursor: default; }
+.rtf-k:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
+.rtf-wgraj { margin-left: auto; }
+.rtf-m { color: var(--szary); font-size: 13px; }
+.rtf-wg { display: flex; flex-wrap: wrap; gap: 6px; font-size: 13px; }
+.rtf-s { border-radius: 8px; padding: 4px 8px; border: 1px solid var(--linia); background: var(--karta2); font-variant-numeric: tabular-nums; }
+.rtf-s.ok { color: var(--ok); background: var(--ok-tlo); border-color: transparent; }
+.rtf-s.uw { color: var(--uw); background: var(--uw-tlo); border-color: var(--uw-ramka); }
+.rtf-s.bl { color: var(--czer); background: var(--czer-tlo); border-color: transparent; }
+@media (max-width: 600px) { .rtf-wgraj { margin-left: 0; width: 100%; } }
 .tel-chm .tel-n { font-size: 22px; font-weight: 800; letter-spacing: .03em; font-variant-numeric: tabular-nums; white-space: nowrap; }
 @media (max-width: 480px) { .menu-imie { display: none; } .menu-btn { padding: 0 6px; } .znak .tyt { font-size: 28px; } }
 @media (max-width: 600px) {                                   /* telefon: TRANSPORT i konto w pierwszym rzędzie, godzina pod nimi */
@@ -568,6 +588,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     <div class="pliki-n"><b id="pliki-t">Pliki dnia</b><small>Dotknij godziny — pokażesz ją albo schowasz. „Cały dzień” — wszystkie albo żadna.</small></div>
     <div class="godziny-pl" id="godziny-pl"></div>
     <div class="bledy" id="bledy"></div>
+    <div class="rtf" id="rtf" hidden></div>
+    <input type="file" id="rtf-plik" class="ukryty" accept=".csv,text/csv" multiple tabindex="-1" aria-hidden="true">
   </section>
 
   <main id="widok"></main>
@@ -575,7 +597,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   <details class="zalozenia">
     <summary>Skąd dane i jak zapisują się wpisy</summary>
     <ul>
-      <li>Pliki dnia przychodzą same z Dysku Google: eksport z DYSZY <b>FABRYKA-RRRR-MM-DD-GG.csv</b> (katalog Fabryka) i z Routific <b>Routific solution - GG-GG - RRRR-MM-DD.csv</b> (katalog dnia › ROUTIFIC). Automat sprawdza je co minutę, strona odświeża się sama co 20 sekund.</li>
+      <li>Pliki dnia: eksport z DYSZY <b>FABRYKA-RRRR-MM-DD-GG.csv</b> przychodzi sam; eksport tras z Routific <b>Routific solution - GG-GG - RRRR-MM-DD.csv</b> dyspozytor wgrywa tutaj (pasek ROUTIFIC → WGRAJ EKSPORT TRASY) — automat kładzie go na Dysku. Tu też są pliki dla Routific (ROUTIFIC-DD.MM.RRRR-GG.xlsx) do pobrania. Załoga nie zagląda na Dysk. Automat sprawdza wszystko co minutę, strona odświeża się sama co 20 sekund.</li>
       <li>START, STOP, EXTRA, BONUS, KONIEC i zmiany płatności zapisują się w bazie od razu (napis nad plikami dnia: „zapisane gg:mm”). Wszyscy zalogowani widzą to samo — iPad dyspozytora, telefon obsługi, komputer w biurze.</li>
       <li>LISTY STARTOWE: szkic zapisuje się na bieżąco. „UTWÓRZ I WYŚLIJ LISTY” — w ciągu minuty automat Transport Listy robi 11 plików GHH-LS-RRRR-MM-DD.xlsx (katalog dnia › LISTY STARTOWE), kartę STAWKI w pliku T i mail do załogi. Formularz list startowych jest zablokowany — listy układa się tylko tutaj.</li>
       <li>Role nadaje manager.dysza.app: <b>Odczyt</b> — podgląd; <b>Płatności</b> — ZMIANA rodzaju płatności; <b>Dyspozytor</b> — listy startowe, START, STOP, EXTRA, BONUS i KONIEC. Można mieć kilka ról.</li>
@@ -819,6 +841,10 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     ZAMKNIETE: 'Rozliczenie kierowcy zamknięte (KONIEC) — najpierw „odblokuj”.',
     ZLY_DZIEN: 'Ten dzień jest poza zakresem (listy startowe: dziś albo jutro).',
     'ZLA_WARTOSC:res': 'Wybierz jednego RES.',
+    'ZLA_WARTOSC:nazwa': 'To nie eksport tras z Routific — wgraj „Routific solution - GG-GG - RRRR-MM-DD.csv”.',
+    'ZLA_WARTOSC:data': 'Eksport z innego dnia — wgraj dzisiejszy.',
+    'ZLA_WARTOSC:plik': 'Plik pusty, uszkodzony albo za duży.',
+    'NIE_MA:plik': 'Tego pliku dla Routific już nie ma — odśwież stronę.',
     'ZLA_WARTOSC:listy': 'Listy mają złe dane — odśwież stronę.',
     'ZLA_WARTOSC:extra': 'EXTRA: liczba km 0–300, np. 3 albo 2,5.',
     'ZLA_WARTOSC:bonus': 'BONUS: kwota w zł, np. 10.',
@@ -924,7 +950,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     sortL: 'kierowcy',
     ls: { dzien: '', plik: null, potw: false, dni: {} },        // listy startowe: { RRRR-MM-DD: { form, wysylki, edycja } } — dziś i jutro
     dniowka: null, resDnia: null,                               // z ostatnio wysłanych list dnia: dniówka RES (gr) i kto jest RES
-    baza: [], bazaTel: {}, telNr: {}, stawkiDni: {}, automat: {},          // kierowcy z KIEROWCY-PODSTAWOWI (ksywki), stawki dnia, znak życia automatu
+    baza: [], bazaTel: {}, telNr: {}, stawkiDni: {}, automat: {}, dlaRoutific: [], wgrane: [],          // kierowcy z KIEROWCY-PODSTAWOWI (ksywki), stawki dnia, znak życia automatu
     pamiec: {},                                                 // md5 pliku → tabela (treść przychodzi raz)
     wczytano: false, blad: '', offline: false, zapis: '', zapisZly: false, czekaRysuj: false
   };
@@ -976,6 +1002,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     (d.kierowcy || []).forEach(k => { S.bazaTel[k.nick] = !!k.ma_tel; if (k.tel) S.telNr[k.nick] = String(k.tel); });
     S.stawkiDni = d.stawki || {};
     S.automat = d.automat || {};
+    S.dlaRoutific = Array.isArray(d.dla_routific) ? d.dla_routific : [];   // (5.11) pliki dla Routific i eksporty tras — tylko Dyspozytor
+    S.wgrane = Array.isArray(d.wgrane) ? d.wgrane : [];
     const dni = {};
     Object.keys(d.ls || {}).sort().forEach(iso => {
       const x = d.ls[iso] || {}, byl = S.ls.dni[iso];
@@ -991,6 +1019,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   }
   function odcisk() {                                           // czy coś się zmieniło (żeby nie przerysowywać bez potrzeby)
     return JSON.stringify([S.wszystkie.map(p => p.md5 + p.czas), S.rozl, S.koniec, S.zmiany, S.role, S.baza, S.bazaTel, S.stawkiDni,
+      S.dlaRoutific.map(f => f.id + '|' + f.wgrano), S.wgrane.map(w => [w.id, w.status, w.zapisano]),
       Object.keys(S.ls.dni).map(iso => [iso, S.ls.dni[iso].form, S.ls.dni[iso].wysylki.map(w => [w.id, w.status, w.wersja, w.wynik])])]);
   }
   function przelicz() {
@@ -1196,7 +1225,88 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     const info = [];
     S.pliki.filter(p => p.blad).forEach(p => info.push(el('div', { class: 'info uw' }, el('b', null, p.nazwa), ` — ${p.blad}`)));
     bl.replaceChildren(...info);
+    rysujRoutific();
   }
+
+  // ── (5.11) PLIKI DLA ROUTIFIC i WGRAJ EKSPORT TRASY — Dyspozytor nie zagląda na Dysk ──
+  const RTF = { url: {}, laduje: {}, zly: {} };               // id pliku → adres blob (gotowy do zapisu), w trakcie, błąd
+  const RTF_TYP = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+  const godzRtf = n => { const m = /-(\d{1,2})(?:\s*\(\d+\))?\.xlsx$/i.exec(String(n || '')); return m ? String(Number(m[1])) : '?'; };
+  function rtfPrzygotuj() {                                     // po jednym pliku naraz, w tle
+    if (!maRole('dyspozytor')) return;
+    const f = S.dlaRoutific.find(x => !RTF.url[x.id + '|' + x.wgrano] && !RTF.laduje[x.id] && !RTF.zly[x.id + '|' + x.wgrano]);
+    if (!f || Object.keys(RTF.laduje).length) return;
+    const k = f.id + '|' + f.wgrano;
+    RTF.laduje[f.id] = true;
+    baza.rpc('transport_dla_routific_plik', { p_id: f.id }).then(r => {
+      const bin = atob(String(r.tresc || ''));
+      const u = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+      Object.keys(RTF.url).forEach(s => { if (s.split('|')[0] === String(f.id)) { URL.revokeObjectURL(RTF.url[s]); delete RTF.url[s]; } });
+      RTF.url[k] = URL.createObjectURL(new Blob([u], { type: RTF_TYP }));
+    }).catch(() => { RTF.zly[k] = true; }).finally(() => { delete RTF.laduje[f.id]; rysujRoutific(); });
+  }
+  function rtfWyczysc() { Object.keys(RTF.url).forEach(s => URL.revokeObjectURL(RTF.url[s])); RTF.url = {}; RTF.laduje = {}; RTF.zly = {}; }
+  function rysujRoutific() {
+    const box = $('rtf');
+    if (!box) return;
+    box.hidden = !maRole('dyspozytor');
+    if (box.hidden) return;
+    const pliki = S.dlaRoutific.slice().sort((a, b) => Number(godzRtf(a.nazwa)) - Number(godzRtf(b.nazwa)));
+    const chipy = pliki.map(f => {
+      const k = f.id + '|' + f.wgrano, url = RTF.url[k], g = godzRtf(f.nazwa), kiedy = godzinaZ(f.zmieniono || f.wgrano);
+      if (url) return el('a', { class: 'rtf-k', href: url, download: f.nazwa, title: `${f.nazwa} — zapisz i wczytaj w Routific` },
+        el('b', null, g), el('span', null, '↓ ' + kiedy));
+      if (RTF.zly[k]) return el('button', { type: 'button', class: 'rtf-k', title: `${f.nazwa} — nie pobrał się; dotknij, żeby spróbować jeszcze raz`,
+        onclick: () => { delete RTF.zly[k]; rtfPrzygotuj(); rysujRoutific(); } }, el('b', null, g), el('span', { class: 'bl' }, '↻ ponów'));
+      return el('button', { type: 'button', class: 'rtf-k', disabled: true, title: `${f.nazwa} — pobieram` }, el('b', null, g), el('span', null, '…'));
+    });
+    const wg = S.wgrane.slice(-6).reverse().map(w => {
+      const m = /- (\d{1,2})-(\d{1,2}) -/.exec(w.nazwa || ''), przedz = m ? `${m[1]}–${m[2]}` : (w.nazwa || 'eksport');
+      const [kl, t] = w.status === 'zapisane' ? ['ok', `na Dysku ${godzinaZ(w.zapisano)}`] : w.status === 'blad' ? ['bl', `BŁĄD — ${w.wynik || 'wgraj jeszcze raz'}`]
+        : ['uw', 'czeka na automat (co minutę)'];
+      return el('span', { class: 'rtf-s ' + kl, title: w.nazwa || '' }, el('b', null, przedz), ` · ${godzinaZ(w.kiedy)} · ${t}`);
+    });
+    box.replaceChildren(
+      el('div', { class: 'rtf-w' },
+        el('span', { class: 'rtf-t' }, 'Routific'),
+        el('div', { class: 'rtf-pl', role: 'group', 'aria-label': 'Pliki dla Routific — dotknij godziny, żeby zapisać plik' },
+          chipy.length ? chipy : el('span', { class: 'rtf-m' }, 'Pliki dla Routific pojawią się tu ok. :20 — po eksporcie z DYSZY.')),
+        el('button', { type: 'button', class: 'mb glowny rtf-wgraj', id: 'rtf-wgraj', onclick: () => $('rtf-plik').click() }, 'WGRAJ EKSPORT TRASY')),
+      wg.length ? el('div', { class: 'rtf-wg', 'aria-label': 'Eksporty tras wgrane dziś' }, wg) : null,
+      el('div', { class: 'rtf-m' }, 'Plik dla Routific: dotknij godziny — zapisze się (iPad: Pliki › Pobrane), potem wczytaj go w Routific. ' +
+        'Eksport trasy: w Routific „Export” (plik „Routific solution … .csv”) → tu WGRAJ EKSPORT TRASY.'));
+    rtfPrzygotuj();
+  }
+  function naBase64(buf) {
+    const u = new Uint8Array(buf);
+    let s = '';
+    for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000));
+    return btoa(s);
+  }
+  async function wgrajEksport(f) {                              // eksport tras z Routific → baza → automat → Dysk › ROUTIFIC
+    const n = String(f.name || '').trim();
+    if (/routific summary/i.test(n)) { stanZapisu('NIE WGRANO: to plik „summary” — wgraj „Routific solution … .csv”.', true); return; }
+    const m = /^routific solution - (\d{1,2})-(\d{1,2}) - (\d{4}-\d{2}-\d{2})\b.*\.csv$/i.exec(n);
+    if (!m) { stanZapisu(`NIE WGRANO: „${n}” to nie eksport tras z Routific — wgraj „Routific solution - GG-GG - RRRR-MM-DD.csv” (CSV, bez zmian).`, true); return; }
+    if (m[3] !== S.dzien) { stanZapisu(`NIE WGRANO: eksport z dnia ${m[3]} — wgraj dzisiejszy (${S.dzien}).`, true); return; }
+    if (!f.size || f.size > 2000000) { stanZapisu(`NIE WGRANO: „${n}” jest pusty albo za duży.`, true); return; }
+    const nazwa = `Routific solution - ${m[1]}-${m[2]} - ${m[3]}.csv`;          // dopiski przeglądarki („ 2”, „ (1)”) — bez nich
+    try {
+      stanZapisu(`wgrywam eksport ${m[1]}–${m[2]}…`);
+      const r = await baza.rpc('transport_wgraj_trase', { p_dzien: S.dzien, p_nazwa: nazwa, p_tresc: naBase64(await f.arrayBuffer()) });
+      if (!S.wgrane.some(w => w.id === r.id)) S.wgrane.push({ id: r.id, nazwa: nazwa, kiedy: r.kiedy, status: 'czeka', wynik: '', zapisano: null });
+      stanZapisu(`eksport ${m[1]}–${m[2]} wgrany ${godzinaZ(r.kiedy)} — automat położy go na Dysku w ciągu minuty`);
+      S.offline = false;
+      czestszeOdswiezanie();
+    } catch (e) { blad(e); }
+    rysujRoutific();
+  }
+  $('rtf-plik').addEventListener('change', async e => {
+    const pliki = Array.from(e.target.files || []);
+    e.target.value = '';
+    for (const f of pliki) await wgrajEksport(f);
+  });
 
   // ── widok KIEROWCY ──
   function widokKierowcy() {
@@ -2082,7 +2192,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     clearTimeout(CYKL);
     try { await zapiszWpisyTeraz(); await zapiszLSTeraz(); } catch (e) { /* bez sieci — trudno */ }
     await baza.wyloguj();
-    S.ja = null; S.role = []; S.pamiec = {}; S.wszystkie = []; S.wczytano = false; S.ls.dni = {};
+    S.ja = null; S.role = []; S.pamiec = {}; S.wszystkie = []; S.wczytano = false; S.ls.dni = {}; S.dlaRoutific = []; S.wgrane = []; rtfWyczysc();
     pokazLogowanie('Wylogowano.');
   }
   async function start() {
@@ -2191,6 +2301,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     if (e.target.closest && e.target.closest(NAZWY_KIER) === tch.cel) { clearTimeout(tchT); tchT = setTimeout(zamknijTel, 250); }
   });
   window.addEventListener('scroll', () => { if (tch) zamknijTel(); }, { passive: true });
+  window.addEventListener('resize', () => { if (tch) zamknijTel(); });   // (5.11) obrót iPada / zmiana okna — chmurka nie zostaje poza ekranem
   // ── (5.11) zegar: godzina teraz; easter egg — ZDZISŁAW w nagłówku mruga od czasu do czasu ──
   function zegarTeraz() {
     return new Intl.DateTimeFormat('pl-PL', { timeZone: 'Europe/Warsaw', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date());
