@@ -1,0 +1,2120 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 05:00 · fc62f14"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>transport.dysza.app</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root {
+  --tlo: #eef2f0; --karta: #ffffff; --karta2: #f7f9f8; --tusz: #1d2830; --szary: #5a6772; --szary2: #84909a;
+  --linia: #dbe2de; --linia2: #c3cdc7; --akcent: #2d6b57; --akcent-tlo: #e2efe8; --na-akcencie: #ffffff;
+  --uw: #8a5a1c; --uw-tlo: #fbf1df; --uw-ramka: #ecd3a6; --nieb: #2b5d86; --nieb-tlo: #e5eef7;
+  --ok: #2c6b4b; --ok-tlo: #e3f2e9; --czer: #a33b2b; --czer-tlo: #fbe9e5; --zaznacz: #fff3c4;
+  --koniec: #c62828; --koniec-zam: #000000; --koniec-zam-tekst: #ffd400; --koniec-zam-ramka: #000000; --odblokuj: #2e7d32;
+  --pl-g: #1f6b3a; --pl-g-tlo: #dcf1e2; --pl-g-ramka: #86c69b; --pl-k: #1f4f8f; --pl-k-tlo: #dde9fa; --pl-k-ramka: #8fb2e3;
+  --pl-bo: #5b3596; --pl-bo-tlo: #ece3f8; --pl-bo-ramka: #b9a0e0; --pl-bk: #8a4b06; --pl-bk-tlo: #fdebd2; --pl-bk-ramka: #e6b678;
+  --pl-r: #3f4f63; --pl-r-tlo: #e6ebf2; --pl-r-ramka: #a9b6c8;
+  --gp: #1f5b8f; --gp-tlo: #e1ecf8; --gp-ramka: #94b7dd; --gn: #5a3d96; --gn-tlo: #ede6f8; --gn-ramka: #b6a3de;
+  --res: #9c2c63; --res-tlo: #f9e3ee; --res-ramka: #dd9fc0;
+  --cien: rgba(20, 32, 27, .2);
+  --font: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --tlo: #111715; --karta: #19211e; --karta2: #1e2724; --tusz: #e2eae5; --szary: #9aa8a0; --szary2: #7b8981;
+    --linia: #2a3531; --linia2: #3a4842; --akcent: #79c3a6; --akcent-tlo: #1d2e28; --na-akcencie: #0f1513;
+    --uw: #e9b978; --uw-tlo: #2b2418; --uw-ramka: #5a4524; --nieb: #8cb9e0; --nieb-tlo: #182532;
+    --ok: #8fd3b4; --ok-tlo: #17291f; --czer: #f0a090; --czer-tlo: #2e1a16; --zaznacz: #3a3418; --koniec-zam-ramka: #ffd400; color-scheme: dark;
+    --pl-g: #93dcae; --pl-g-tlo: #16301f; --pl-g-ramka: #2f6a44; --pl-k: #9cc3f2; --pl-k-tlo: #172840; --pl-k-ramka: #33557f;
+    --pl-bo: #c9b0f0; --pl-bo-tlo: #261c3a; --pl-bo-ramka: #57427e; --pl-bk: #f0bd7c; --pl-bk-tlo: #33240f; --pl-bk-ramka: #6e4c1f;
+    --pl-r: #c2cede; --pl-r-tlo: #222a35; --pl-r-ramka: #4b5a6e;
+    --gp: #8fbbe8; --gp-tlo: #16263a; --gp-ramka: #34557c; --gn: #c3aef0; --gn-tlo: #241c38; --gn-ramka: #54427c;
+    --res: #f2a6cc; --res-tlo: #331a2a; --res-ramka: #713a5c;
+    --cien: rgba(0, 0, 0, .55);
+  }
+}
+:root[data-theme="dark"] {
+  --tlo: #111715; --karta: #19211e; --karta2: #1e2724; --tusz: #e2eae5; --szary: #9aa8a0; --szary2: #7b8981;
+  --linia: #2a3531; --linia2: #3a4842; --akcent: #79c3a6; --akcent-tlo: #1d2e28; --na-akcencie: #0f1513;
+  --uw: #e9b978; --uw-tlo: #2b2418; --uw-ramka: #5a4524; --nieb: #8cb9e0; --nieb-tlo: #182532;
+  --ok: #8fd3b4; --ok-tlo: #17291f; --czer: #f0a090; --czer-tlo: #2e1a16; --zaznacz: #3a3418; --koniec-zam-ramka: #ffd400; color-scheme: dark;
+  --pl-g: #93dcae; --pl-g-tlo: #16301f; --pl-g-ramka: #2f6a44; --pl-k: #9cc3f2; --pl-k-tlo: #172840; --pl-k-ramka: #33557f;
+  --pl-bo: #c9b0f0; --pl-bo-tlo: #261c3a; --pl-bo-ramka: #57427e; --pl-bk: #f0bd7c; --pl-bk-tlo: #33240f; --pl-bk-ramka: #6e4c1f;
+  --pl-r: #c2cede; --pl-r-tlo: #222a35; --pl-r-ramka: #4b5a6e;
+  --gp: #8fbbe8; --gp-tlo: #16263a; --gp-ramka: #34557c; --gn: #c3aef0; --gn-tlo: #241c38; --gn-ramka: #54427c;
+  --res: #f2a6cc; --res-tlo: #331a2a; --res-ramka: #713a5c;
+  --cien: rgba(0, 0, 0, .55);
+}
+* { box-sizing: border-box; }
+body { background: var(--tlo); color: var(--tusz); font: 16px/1.45 var(--font); }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+.app { max-width: 1480px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 14px 48px; display: grid; gap: 14px; }
+.app > * { min-width: 0; }
+
+/* ── góra ── */
+.gora { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.znak { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; min-width: 0; }
+.znak h1 { margin: 0; font-size: 22px; letter-spacing: .01em; }
+.znak h1 span { color: var(--akcent); }
+.wersja { font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--szary);
+  border: 1px solid var(--linia2); border-radius: 6px; padding: 2px 7px; }
+.pokaz-zn { font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--uw);
+  background: var(--uw-tlo); border: 1px solid var(--uw-ramka); border-radius: 6px; padding: 2px 7px; }
+.rola-b { font-family: inherit; cursor: pointer; }
+.rola-b[aria-expanded="true"] { border-color: var(--uw); }
+.rola-b:focus-visible, .motyw-b:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
+.motyw-b { font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; min-width: 44px; padding: 0 11px; border-radius: 12px;
+  border: 1px solid var(--linia); background: var(--karta); color: var(--szary); font-size: 13px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; cursor: pointer; }
+.motyw-b svg { width: 20px; height: 20px; }
+.prawa { margin-left: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px 12px; }
+.teraz { display: flex; align-items: baseline; gap: 10px; font-variant-numeric: tabular-nums; }
+.teraz-g { font-size: 26px; font-weight: 700; letter-spacing: .01em; }
+.teraz-d { font-size: 20px; font-weight: 700; letter-spacing: .03em; color: var(--szary); white-space: nowrap; }
+.widoki { display: flex; gap: 4px; background: var(--karta); border: 1px solid var(--linia);
+  border-radius: 12px; padding: 4px; flex: 1 1 100%; min-width: 0; }      /* cztery widoki — osobny rząd na całą szerokość (do 767 px dwa na dwa) */
+.widoki button { flex: 1 1 0; min-width: 0; border: 0; background: transparent; border-radius: 9px; padding: 10px 14px; min-height: 44px;
+  font-weight: 700; letter-spacing: .04em; color: var(--szary); line-height: 1.2; text-wrap: balance; }
+.widoki button[aria-selected="true"] { background: var(--akcent); color: var(--na-akcencie); }
+
+.mb { border: 1px solid var(--linia2); background: var(--karta2); border-radius: 9px; min-height: 40px; min-width: 40px;
+  padding: 6px 12px; font-weight: 700; }
+.mb:disabled { opacity: .45; cursor: default; }
+.mb.glowny { background: var(--akcent); border-color: var(--akcent); color: var(--na-akcencie); }
+.pole { border: 1px solid var(--linia2); background: var(--karta); border-radius: 8px; padding: 6px 8px; min-height: 38px;
+  font-variant-numeric: tabular-nums; }
+.pole:focus-visible, .mb:focus-visible, .widoki button:focus-visible, .zakl:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
+.ukryty { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* ── pliki dnia ── */
+.pliki { background: var(--karta); border: 1px solid var(--linia); border-radius: 12px; padding: 10px 12px; display: grid; gap: 8px; min-width: 0; }
+.pliki-n { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; justify-content: space-between; }
+.pliki-n b { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--szary); }
+.pliki-n small { color: var(--szary); font-size: 13px; }
+.godziny-pl { display: grid; grid-template-columns: minmax(104px, 1.25fr) repeat(12, minmax(84px, 1fr)); gap: 6px; overflow-x: auto; padding: 2px 2px 4px; }
+.gp { border: 1px solid var(--linia); border-radius: 9px; padding: 5px 6px; display: grid; gap: 2px; font-size: 12px;
+  background: var(--karta2); min-width: 0; }
+.gp .h { font-weight: 700; font-size: 14px; }
+.gp .z { display: flex; justify-content: space-between; gap: 4px; color: var(--szary2); font-variant-numeric: tabular-nums; }
+.gp .z.jest { color: var(--ok); font-weight: 700; }
+.gp .z .zr { white-space: nowrap; }
+.gp .z { font-size: 13px; }
+.gp.pusta { opacity: .55; }
+.bledy { display: grid; gap: 6px; }
+.info { border-radius: 10px; padding: 8px 12px; font-size: 14px; }
+.info.uw { background: var(--uw-tlo); color: var(--uw); border: 1px solid var(--uw-ramka); }
+.info.nb { background: var(--nieb-tlo); color: var(--nieb); }
+
+/* ── kierowcy — kafle jak „Pliki dnia” ── */
+.kafle { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-inline: auto; }
+.kier-b { flex: 0 0 auto; min-width: 58px; font-family: inherit; font-size: 18px; font-weight: 700; letter-spacing: .03em; color: var(--tusz);
+  background: var(--karta); border: 1px solid var(--linia2); border-radius: 8px; padding: 8px 14px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center; text-align: center; white-space: nowrap; cursor: pointer; }
+.kier-b[aria-selected="true"] { border-color: var(--akcent); background: var(--akcent-tlo); color: var(--akcent); box-shadow: inset 0 0 0 1px var(--akcent); }
+.kier-b:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
+.widok-k { display: grid; gap: 14px; }
+.widok-k > * { min-width: 0; }
+.kafel { font-family: inherit; line-height: 1.3; color: var(--tusz); text-align: left; cursor: pointer; min-height: 44px; align-content: start; }
+.kafel[aria-selected="true"], .kafel[aria-pressed="true"] { border-color: var(--akcent); background: var(--akcent-tlo); box-shadow: inset 0 0 0 1px var(--akcent); }
+.kafel[aria-selected="true"] .h, .kafel[aria-pressed="true"] .h { color: var(--akcent); }
+.kafel:disabled { cursor: default; }
+.kafel .h { white-space: nowrap; }
+.kier-b.poza { opacity: .45; }                                   /* kierowca bez zamówień w wybranych godzinach */
+.kafel:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
+
+/* ── zakładki ── */
+.zakladki { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 6px; }
+.zakladki-s, .zakladki-g { display: flex; gap: 8px; flex: 0 0 auto; }
+.zakl { flex: 0 0 auto; border: 2px solid var(--linia2); background: var(--karta); border-radius: 8px; padding: 8px 14px;
+  min-height: 44px; font-weight: 700; letter-spacing: .03em; white-space: nowrap; display: flex; gap: 8px; align-items: center; }
+.zakl small { font-weight: 400; color: var(--szary); font-variant-numeric: tabular-nums; }
+.zakl[aria-selected="true"], .zakl[aria-pressed="true"] { border-color: var(--akcent); background: var(--akcent-tlo); color: var(--akcent); }
+.zakl[aria-selected="true"] small, .zakl[aria-pressed="true"] small { color: var(--akcent); }
+.zakl.sort { font-size: 15px; }
+.zakladki .sep { flex: 0 0 1px; align-self: stretch; background: var(--linia2); margin: 6px 4px; }
+.zakl:disabled { opacity: .4; cursor: default; }
+.zakl.godz { min-width: 58px; justify-content: center; font-size: 18px; }
+
+/* ── tabele ── */
+.uklad { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(330px, 1fr); gap: 16px; align-items: start; }
+.tabela-w { background: var(--karta); border: 1px solid var(--linia); border-radius: 12px; overflow-x: auto; min-width: 0; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th { text-align: left; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--szary);
+  padding: 9px 10px; border-bottom: 2px solid var(--linia2); background: var(--karta2); white-space: nowrap; position: sticky; top: 0; }
+td { padding: 8px 10px; border-bottom: 1px solid var(--linia); vertical-align: top; }
+td.kw, th.kw { text-align: right; white-space: nowrap; }
+td.id { font-family: var(--mono); font-size: 14px; white-space: nowrap; }
+td.h { font-weight: 700; font-size: 18px; text-align: center; width: 48px; color: var(--akcent); }
+td.adr { min-width: 220px; }
+td.kier { font-weight: 700; white-space: nowrap; }
+td.tel { white-space: nowrap; font-variant-numeric: tabular-nums; }
+td.not { font-size: 14px; color: var(--szary); min-width: 110px; }
+tr.nowy-rzut td { border-top: 2px solid var(--linia2); }
+tr.suma td { font-weight: 700; background: var(--karta2); border-bottom: 0; }
+tr.grupa td { background: var(--karta2); font-size: 13px; font-weight: 700; color: var(--szary); padding: 6px 10px; letter-spacing: .04em; }
+.znacz { display: inline-block; border-radius: 6px; padding: 1px 7px; font-size: 12px; font-weight: 700; letter-spacing: .03em; white-space: nowrap; }
+.znacz.sz { background: var(--karta2); color: var(--szary); border: 1px solid var(--linia); }
+.znacz.uw { background: var(--uw-tlo); color: var(--uw); border: 1px solid var(--uw-ramka); }
+.znacz.nb { background: var(--nieb-tlo); color: var(--nieb); }
+.puste { padding: 28px 16px; text-align: center; color: var(--szary); }
+
+/* ── listy przewozowe: bez nagłówka; kwoty z oznaczeniem płatności; Phone / Notes / Notes 2 w chmurce ── */
+table.lista td { vertical-align: middle; padding-left: 8px; padding-right: 8px; }
+table.lista td.adr { min-width: 150px; }
+.kwoty { display: grid; gap: 4px; justify-items: end; }
+.kw-p { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.kw-p .kw-k { min-width: 8ch; text-align: right; }
+.kw-p.zero .kw-k { color: var(--szary2); }
+.pl { display: inline-block; width: 2.7em; text-align: center; border: 1.5px solid; border-radius: 6px; padding: 1px 0;
+  font-size: 12px; font-weight: 700; letter-spacing: .04em; line-height: 1.35; text-decoration: none; cursor: default; }
+.pl-g { color: var(--pl-g); background: var(--pl-g-tlo); border-color: var(--pl-g-ramka); }
+.pl-k { color: var(--pl-k); background: var(--pl-k-tlo); border-color: var(--pl-k-ramka); }
+.pl-bo { color: var(--pl-bo); background: var(--pl-bo-tlo); border-color: var(--pl-bo-ramka); }
+.pl-bk { color: var(--pl-bk); background: var(--pl-bk-tlo); border-color: var(--pl-bk-ramka); }
+.pl-r { color: var(--pl-r); background: var(--pl-r-tlo); border-color: var(--pl-r-ramka); }
+.kw-p.poza .kw-k { color: var(--szary); font-style: italic; }
+/* podsumowanie listy przewozowej: sortowanie, liczba zamówień, godziny, kwoty */
+table.lista tr.stopka td { background: var(--karta2); border-top: 2px solid var(--linia2); border-bottom: 0; padding-top: 10px; padding-bottom: 10px; }
+.st-kafel { font-family: inherit; display: inline-grid; justify-items: start; align-content: center; gap: 2px; border: 2px solid var(--linia2); background: var(--karta);
+  color: var(--tusz); border-radius: 10px; padding: 6px 9px; min-height: 50px; text-align: left; line-height: 1.15; white-space: nowrap; vertical-align: middle; }
+span.st-kafel { background: transparent; border-color: var(--linia); }
+.st-kafel small { font-size: 10px; font-weight: 700; letter-spacing: .04em; color: var(--szary); }
+.st-kafel b { font-size: 14px; letter-spacing: .02em; }
+button.st-kafel { cursor: pointer; }
+button.st-kafel[aria-pressed="true"] { border-color: var(--akcent); background: var(--akcent-tlo); color: var(--akcent); }
+button.st-kafel[aria-pressed="true"] small { color: var(--akcent); }
+button.st-kafel:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
+.st-kafel.liczba b, .st-kafel.godz-k b { font-size: 20px; letter-spacing: .01em; font-variant-numeric: tabular-nums; }
+.st-kafel.godz-k { white-space: normal; max-width: 240px; }
+.st-kafel.lacznie b { font-size: 17px; letter-spacing: .01em; font-variant-numeric: tabular-nums; }
+.st-adr { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
+.rzuty tr.poza td { opacity: .45; }
+table.lista.przew td.h { width: 34px; font-size: 16px; padding-left: 8px; padding-right: 2px; }
+table.lista.przew.wiele td.adr { min-width: 112px; }                 /* kilka godzin — dodatkowa kolumna; iPad w pionie bez przewijania */
+table.lista td.przyc { width: 1%; white-space: nowrap; padding-left: 3px; padding-right: 3px; }
+table.lista td.przyc:last-child { padding-right: 10px; }
+.inf { border: 1px solid var(--linia2); background: var(--karta2); color: var(--tusz); border-radius: 8px; min-height: 34px; padding: 4px 8px;
+  font-size: 13px; font-weight: 700; white-space: nowrap; }
+.inf[aria-expanded="true"] { background: var(--akcent); border-color: var(--akcent); color: var(--na-akcencie); }
+.inf:disabled { opacity: .35; cursor: default; }
+.inf:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
+.chmurka { position: absolute; z-index: 50; width: max-content; max-width: min(340px, calc(100vw - 24px)); background: var(--karta); color: var(--tusz);
+  border: 1px solid var(--linia2); border-radius: 12px; box-shadow: 0 10px 28px var(--cien); padding: 10px 12px 12px; display: grid; gap: 6px; }
+.chmurka::before { content: ""; position: absolute; top: -7px; left: var(--strz, 50%); width: 12px; height: 12px; background: var(--karta);
+  border-left: 1px solid var(--linia2); border-top: 1px solid var(--linia2); transform: translateX(-50%) rotate(45deg); }
+.chmurka.nad::before { top: auto; bottom: -7px; transform: translateX(-50%) rotate(225deg); }
+.chm-t { font-size: 12px; font-weight: 700; color: var(--szary); }
+.chm-t span:first-child { letter-spacing: .08em; text-transform: uppercase; }
+.chm-t .id { font-family: var(--mono); font-weight: 400; }
+.chm-tresc { font-size: 17px; white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; -webkit-user-select: text; }
+.chmurka .mb { justify-self: start; min-height: 36px; }
+.chm-l { font-size: 15px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.chm-m { font-size: 13px; color: var(--szary); max-width: 300px; }
+.chm-opcje { display: flex; flex-wrap: wrap; gap: 6px; }
+.chm-opcje .mb { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
+.chm-opcje .mb[aria-pressed="true"] { border-color: var(--akcent); background: var(--akcent-tlo); color: var(--akcent); opacity: 1; }
+.chm-role { display: grid; gap: 6px; }
+.chm-role .mb { text-align: left; display: grid; gap: 2px; justify-self: stretch; padding: 8px 12px; }
+.chm-role .mb small { font-weight: 400; color: var(--szary); }
+.chm-role .mb[aria-pressed="true"] { border-color: var(--akcent); background: var(--akcent-tlo); }
+/* ── ZMIANA płatności ── */
+.inf.zm-b.jest { border-color: var(--uw-ramka); background: var(--uw-tlo); color: var(--uw); }
+.pl.bylo { opacity: .55; text-decoration: line-through; text-decoration-thickness: 2px; }
+.kw-p .strz { color: var(--szary); font-weight: 700; }
+.lewa { display: grid; gap: 14px; align-content: start; min-width: 0; }
+.zmiany { background: var(--karta); border: 1px solid var(--uw-ramka); border-radius: 12px; padding: 10px 12px; display: grid; gap: 6px; }
+.zmiany > b { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--uw); }
+.zmiany ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.zmiany li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 15px; font-variant-numeric: tabular-nums; }
+.zmiany li .id { font-family: var(--mono); font-size: 14px; }
+.zmiany li small { color: var(--szary); font-size: 13px; }
+.pole:disabled { opacity: .7; }
+
+/* ── panel rozliczenia (prawa strona szkicu) ── */
+.panel { background: var(--karta); border: 2px solid var(--linia2); border-radius: 22px; padding: 16px 18px 18px; display: grid; gap: 14px; min-width: 0; }
+.panel h2 { margin: 0; font-size: 18px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
+.panel h2 small { font-size: 13px; font-weight: 400; color: var(--szary); }
+.ss { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.ss label { display: grid; gap: 4px; font-size: 13px; font-weight: 700; letter-spacing: .1em; color: var(--szary); min-width: 0; }
+.ss input { font-size: 20px; font-weight: 700; display: block; width: 100%; min-width: 0; max-width: 100%; min-height: 48px; margin: 0;
+  padding: 8px 12px; text-align: left; -webkit-appearance: none; appearance: none; font-family: inherit; color: var(--tusz); }
+.ss input::-webkit-date-and-time-value { text-align: left; margin: 0; }
+.ss input.start { color: var(--ok); }                              /* START — zielony */
+.ss input.stop { color: var(--czer); }                             /* STOP — czerwony */
+/* tabela rzutów — stała: mieści się w panelu i nie przesuwa się na boki */
+.rzuty-w { background: var(--karta); border: 1px solid var(--linia); border-radius: 12px; overflow: hidden; touch-action: pan-y; }
+table.rzuty { table-layout: fixed; }
+.rzuty .k-rz { width: 13%; }
+.rzuty .k-cz { width: 29%; }
+.rzuty .k-km { width: 29%; }
+.rzuty .k-ad { width: 29%; }                                       /* trzy równe kolumny — pola CZASÓWKA, EXTRA, BONUS tej samej szerokości */
+.rzuty th { position: static; letter-spacing: .04em; }
+.rzuty th, .rzuty td { padding: 6px; }
+.rzuty td:first-child { font-weight: 700; }
+.rzuty tr.brak td { color: var(--szary2); }
+.rzuty tr.razem td { border-top: 2px solid var(--linia2); border-bottom: 0; background: var(--karta2); font-weight: 700; vertical-align: bottom; }
+.wkl { display: inline-grid; grid-template-columns: auto auto; align-items: center; justify-content: end; gap: 4px 6px; }
+.wkl > span[id] { grid-column: 1 / -1; text-align: right; font-weight: 700; white-space: nowrap; }
+.wkl label, .wkl .etk { font-size: 11px; font-weight: 700; letter-spacing: .08em; border: 1.5px solid var(--tusz); border-radius: 4px; padding: 0 4px; }
+.wkl input { width: 64px; min-height: 32px; padding: 3px 6px; font-weight: 700; text-align: right; }
+.rzuty .wkl { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: end; gap: 3px; }
+.rzuty .wkl label, .rzuty .wkl .etk { display: block; width: 100%; max-width: 96px; letter-spacing: .05em; text-align: center; }   /* etykieta tej samej szerokości co pole pod nią */
+.rzuty .wkl.lewo { justify-items: start; grid-template-rows: auto 34px auto; }   /* etykieta na wysokości EXTRA / BONUS, kwota w jednej linii z nimi */
+.rzuty .wkl.lewo > #o-czasowka { grid-row: 3; width: 100%; max-width: 96px; }   /* „= kwota” równo z prawą krawędzią pola czasu */
+.rzuty .wkl.lewo > .czas-pole { grid-row: 2; }
+.czas-pole { display: block; text-align: right; line-height: 26px; width: 100%; max-width: 96px; min-width: 0; min-height: 34px; padding: 3px 6px;
+  border: 1px solid var(--linia2); border-radius: 8px; background: var(--karta2); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.czas-pole.pusty { color: var(--szary2); font-weight: 400; }
+.czas-pole small { font-size: .7em; font-weight: 600; }             /* „h” i „min” mniejsze — liczby czytelne na pierwszy rzut oka */
+@media (max-width: 359px) { .rzuty tr.razem td { font-size: 13px; } }   /* „= 307,50” mieści się w kolumnie CZASÓWKA na najwęższym telefonie */
+.rzuty .wkl input { width: 100%; max-width: 96px; min-width: 0; min-height: 34px; }
+.wynik { display: grid; gap: 8px; border-top: 1px solid var(--linia); padding-top: 12px; }
+.wynik .r { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 17px; }
+.wynik .r span:first-child { font-weight: 700; letter-spacing: .06em; color: var(--szary); font-size: 14px; }
+.wynik .r b { font-size: 20px; font-variant-numeric: tabular-nums; }
+.wynik .od { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.wynik .od div { border-radius: 12px; padding: 8px 12px; border: 1px solid var(--linia); display: grid; gap: 2px; }
+.wynik .od div span { font-size: 13px; font-weight: 700; letter-spacing: .1em; color: var(--szary); }
+.wynik .od div b { font-size: 22px; font-variant-numeric: tabular-nums; }
+.wynik .od div.akt { background: var(--zaznacz); border-color: var(--uw-ramka); }
+.koniec-r { display: flex; align-items: center; gap: 10px; margin-top: 4px; }   /* KONIEC i „odblokuj” — pod ODDAJE / DOSTAJE */
+.koniec-b { flex: 1 1 auto; min-width: 0; min-height: 52px; padding: 6px 16px; border-radius: 12px; border: 2px solid var(--koniec); background: var(--koniec);
+  color: #ffffff; font-family: inherit; font-size: 18px; font-weight: 700; letter-spacing: .14em; cursor: pointer; }
+.koniec-b[aria-pressed="true"] { background: var(--koniec-zam); color: var(--koniec-zam-tekst); border-color: var(--koniec-zam-ramka); cursor: default; }
+.odblokuj-b { flex: 0 0 auto; min-height: 40px; padding: 6px 14px; border-radius: 10px; border: 2px solid var(--odblokuj); background: var(--odblokuj);
+  color: #ffffff; font-family: inherit; font-size: 15px; font-weight: 700; letter-spacing: .03em; cursor: pointer; }
+.koniec-b:disabled, .odblokuj-b:disabled { opacity: .55; cursor: default; }
+.koniec-b:focus-visible, .odblokuj-b:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
+.koniec-s:empty { display: none; }
+.koniec-s.uw { color: var(--czer); font-weight: 700; }
+/* ── PODSUMOWANIE (zamiast pliku T) ── */
+.pods { display: grid; gap: 16px; min-width: 0; }
+.pods > .panel { gap: 12px; }
+table.pods-t th, table.pods-t td { padding: 10px 12px; }
+table.pods-t td { vertical-align: middle; }
+table.pods-t th { white-space: normal; letter-spacing: .05em; vertical-align: bottom; }   /* „ODDAJE / DOSTAJE” w dwóch liniach — tabela mieści się na iPadzie w pionie */
+.pods-t td small { display: block; font-size: 12px; font-weight: 400; color: var(--szary); white-space: nowrap; }
+.pods-t .stk { position: sticky; left: 0; z-index: 1; background: var(--karta); }        /* imię zostaje widoczne, gdy tabela przesuwa się w bok */
+.pods-t thead .stk { z-index: 2; background: var(--karta2); }
+.pods-t tfoot .stk { background: var(--karta2); }
+.pods-t tfoot td { border-top: 2px solid var(--linia2); border-bottom: 0; background: var(--karta2); font-weight: 700; }
+.kier-c { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; min-width: 96px; }
+.pods-k-b { font-family: inherit; font-size: 17px; font-weight: 700; letter-spacing: .03em; color: var(--tusz); background: none; border: 0; padding: 4px 0;
+  cursor: pointer; text-decoration: underline; text-decoration-color: var(--linia2); text-underline-offset: 4px; white-space: nowrap; }
+.pods-k-b:hover { text-decoration-color: var(--akcent); }
+.pods-k-b:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; border-radius: 4px; }
+.rozl-zn { display: inline-block; padding: 2px 7px; border-radius: 6px; background: var(--koniec-zam); color: var(--koniec-zam-tekst); border: 1px solid var(--koniec-zam-ramka);
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; white-space: nowrap; }                /* ROZLICZONY — jak KONIEC po wciśnięciu */
+.typ-zn { display: inline-block; padding: 1px 6px; border-radius: 6px; border: 1px solid var(--res-ramka); color: var(--res); background: var(--res-tlo);
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; }
+.st-gr { display: grid; gap: 8px; }
+.st-gr h3 { margin: 0; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--szary); }
+.st-siatka { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 10px; }
+.st-t { border: 1px solid var(--linia); border-radius: 12px; padding: 10px 12px; display: grid; gap: 3px; align-content: start; min-width: 0; background: var(--karta); }
+.st-t > span { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--szary); }
+.st-t > span .pl { font-size: 11px; letter-spacing: .02em; }
+.st-t > b { font-size: 22px; letter-spacing: .01em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.st-t > small { font-size: 12px; color: var(--szary); }
+.st-t.wyr { border-color: var(--akcent); background: var(--akcent-tlo); }
+@media (max-width: 900px) { table.pods-t th, table.pods-t td { padding: 9px 8px; } table.pods-t th { font-size: 11px; } .pods-k-b { font-size: 16px; } .kier-c { min-width: 88px; } }
+@media (max-width: 800px) { table.pods-t th, table.pods-t td { padding: 9px 6px; } .pods-t td small { font-size: 11px; } }   /* iPad mini w pionie (744) — bez przesuwania w bok */
+@media (max-width: 560px) { .st-siatka { grid-template-columns: 1fr 1fr; gap: 8px; } .st-t > b { font-size: 19px; } table.pods-t th, table.pods-t td { padding: 9px 8px; } }
+.notka { font-size: 13px; color: var(--szary); }
+
+/* ── LISTY STARTOWE ── */
+.ls { display: grid; gap: 14px; }
+.ls > * { min-width: 0; }
+.ls-dni { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.ls-dni .zakl { font-size: 17px; }
+.ls-stan { margin-left: auto; border: 1px solid; border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 700; letter-spacing: .06em; white-space: nowrap; }
+.ls-stan.ok { color: var(--ok); background: var(--ok-tlo); border-color: var(--ok); }
+.ls-stan.uw { color: var(--uw); background: var(--uw-tlo); border-color: var(--uw-ramka); }
+.karta { background: var(--karta); border: 1px solid var(--linia); border-radius: 12px; padding: 12px 14px 14px; display: grid; gap: 10px; min-width: 0; }
+.karta-n { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; justify-content: space-between; }
+.karta-n > b { display: inline-flex; align-items: center; font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: var(--tusz); }
+.karta-n > small { color: var(--szary); font-size: 13px; font-variant-numeric: tabular-nums; }
+.nr { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--akcent); color: var(--na-akcencie);
+  font-size: 13px; letter-spacing: 0; margin-right: 9px; flex: 0 0 auto; }
+.puste-m { color: var(--szary); font-size: 14px; }
+/* stawki dnia */
+.stawki { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px 12px; }
+.stawka { display: grid; gap: 4px; min-width: 0; align-content: start; }
+.stawka .st-n { font-size: 13px; font-weight: 700; letter-spacing: .08em; color: var(--szary); }
+.stawka.res .st-n { color: var(--res); }
+.stawka .wpis { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.stawka input, .stawka .stala { flex: 1 1 auto; width: 100%; min-width: 0; font-size: 20px; font-weight: 700; min-height: 48px; padding: 8px 10px; text-align: right; }
+.stawka .stala { display: block; border: 1px dashed var(--linia2); border-radius: 8px; color: var(--szary); font-variant-numeric: tabular-nums; }
+.stawka .jedn { flex: 0 0 auto; font-size: 13px; color: var(--szary); white-space: nowrap; }
+.stawka small { font-size: 12px; color: var(--szary); }
+.pole.zle { border-color: var(--czer); box-shadow: inset 0 0 0 1px var(--czer); }
+/* kierowcy podstawowi: przydział jednym dotknięciem */
+.legenda { display: grid; gap: 5px; font-size: 13px; color: var(--szary); }
+.legenda > span { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.zn { display: inline-block; border: 1.5px solid; border-radius: 6px; padding: 0 6px; font-size: 12px; font-weight: 700; letter-spacing: .05em; line-height: 1.5; white-space: nowrap; }
+.zn.p { color: var(--gp); background: var(--gp-tlo); border-color: var(--gp-ramka); }
+.zn.n { color: var(--gn); background: var(--gn-tlo); border-color: var(--gn-ramka); }
+.zn.r { color: var(--res); background: var(--res-tlo); border-color: var(--res-ramka); }
+.zn.zew { color: var(--szary); background: var(--karta2); border-color: var(--linia2); }
+.przydz { display: grid; }
+.przydz-w { display: grid; grid-template-columns: minmax(80px, 108px) minmax(0, 1fr); align-items: center; gap: 6px 12px; padding: 6px 0; border-top: 1px solid var(--linia); }
+.przydz-w:first-child { border-top: 0; }
+.przydz-w .nick { font-weight: 700; font-size: 18px; letter-spacing: .03em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.przydz-w.bez .nick { color: var(--uw); }
+.seg { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3px; background: var(--karta2); border: 1px solid var(--linia); border-radius: 10px; padding: 3px; min-width: 0; }
+.seg.seg2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.seg button { font-family: inherit; border: 1.5px solid transparent; background: transparent; border-radius: 8px; min-height: 40px; padding: 4px; min-width: 0;
+  font-size: 13px; font-weight: 700; letter-spacing: .04em; color: var(--szary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.seg button[aria-pressed="true"].p { color: var(--gp); background: var(--gp-tlo); border-color: var(--gp-ramka); }
+.seg button[aria-pressed="true"].n { color: var(--gn); background: var(--gn-tlo); border-color: var(--gn-ramka); }
+.seg button[aria-pressed="true"].r { color: var(--res); background: var(--res-tlo); border-color: var(--res-ramka); }
+.seg button[aria-pressed="true"].x { color: var(--tusz); background: var(--karta); border-color: var(--linia2); }
+.seg button:disabled { cursor: default; }
+.seg button:disabled:not([aria-pressed="true"]) { opacity: .45; }
+.seg button:focus-visible { outline: 3px solid var(--akcent); outline-offset: 1px; }
+/* ZEW */
+.zew { display: grid; }
+.zew-w { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 10px; padding: 8px 0; border-top: 1px solid var(--linia); }
+.zew-w:first-child { border-top: 0; padding-top: 0; }
+.zew-g { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; min-width: 0; }
+.zew-g .nick { display: grid; font-weight: 700; font-size: 17px; letter-spacing: .02em; white-space: nowrap; min-width: 104px; max-width: 48%; }
+.zew-g .nick > * { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.zew-g .nick small { font-size: 11px; letter-spacing: .1em; color: var(--szary); }
+.zew-g .nick.czeka .zew-nick { color: var(--szary); }
+.zew-g .seg { flex: 1 1 auto; }
+.mb.usun { color: var(--czer); flex: 0 0 auto; }
+.zew-pole { display: grid; gap: 6px; min-width: 0; font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--szary); }
+.zew-pole input { width: 100%; min-width: 0; min-height: 42px; font-size: 17px; font-weight: 400; letter-spacing: 0; color: var(--tusz); }
+.zew-dodaj { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.zew-dodaj > span { font-size: 13px; font-weight: 700; letter-spacing: .08em; color: var(--szary); text-transform: uppercase; }
+/* listy dla Routific */
+.lsp { gap: 12px; }
+.grupa-l { border: 1px solid var(--linia); border-radius: 14px; padding: 10px 12px 12px; display: grid; gap: 8px; background: var(--karta2); min-width: 0; }
+.grupa-l.p { border-left: 4px solid var(--gp-ramka); }
+.grupa-l.n { border-left: 4px solid var(--gn-ramka); }
+.grupa-n { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 10px; }
+.grupa-n small { color: var(--szary); font-size: 13px; }
+.kier-l { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--linia2); background: var(--karta); border-radius: 8px; padding: 3px 8px;
+  font-weight: 700; font-size: 15px; letter-spacing: .02em; white-space: nowrap; }
+.chip small { font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--szary); border: 1px solid var(--linia2); border-radius: 4px; padding: 0 3px; }
+.chip.res { color: var(--res); background: var(--res-tlo); border-color: var(--res-ramka); }
+.chip.res small { color: var(--res); border-color: var(--res-ramka); }
+.chip.bez-tel { border-style: dashed; border-color: var(--uw-ramka); }
+.pliki-ls { display: grid; grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); gap: 6px; }
+.plik-b { font-family: inherit; color: var(--tusz); border: 1px solid var(--linia2); background: var(--karta); border-radius: 9px; padding: 5px 7px; min-height: 44px;
+  display: grid; text-align: left; cursor: pointer; line-height: 1.25; }
+.plik-b .h { font-weight: 700; font-size: 16px; }
+.plik-b .z { font-size: 12px; color: var(--szary); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.plik-b.p .h { color: var(--gp); }
+.plik-b.n .h { color: var(--gn); }
+.plik-b[aria-pressed="true"] { border-color: var(--akcent); background: var(--akcent-tlo); box-shadow: inset 0 0 0 1px var(--akcent); }
+.plik-b:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
+.podglad { border: 1px solid var(--linia); border-radius: 12px; overflow-x: auto; background: var(--karta); }
+.podglad-n { display: flex; flex-wrap: wrap; gap: 2px 10px; align-items: baseline; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid var(--linia); background: var(--karta2); }
+.plik-nazwa { font-family: var(--mono); font-size: 13px; font-weight: 600; }
+.podglad-n small { font-size: 12px; color: var(--szary); }
+.podglad th { position: static; }
+.podglad th, .podglad td { padding: 6px 10px; }
+.podglad td.kier .zn { margin-left: 2px; }
+.podglad .notka { padding: 6px 10px 8px; }
+.braki-w { display: grid; gap: 4px; border-radius: 12px; padding: 8px 12px; }
+.braki-w > b { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.braki-w.blok { background: var(--czer-tlo); color: var(--czer); }
+.braki-w.ostrz { background: var(--uw-tlo); color: var(--uw); }
+.braki-w.zm { background: var(--nieb-tlo); color: var(--nieb); }
+.braki { margin: 0; padding-left: 1.1em; display: grid; gap: 2px; font-size: 14px; }
+.mb.wyslij { width: 100%; min-height: 52px; font-size: 17px; letter-spacing: .05em; border-radius: 12px; }
+.potw { border: 2px solid var(--akcent); background: var(--akcent-tlo); border-radius: 14px; padding: 10px 12px; display: grid; gap: 8px; }
+.potw > span { font-size: 14px; }
+.potw-b { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; }
+.potw-b .mb { min-height: 48px; letter-spacing: .04em; }
+.historia { display: grid; gap: 4px; }
+.historia > b { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--szary); }
+.historia ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.historia li { display: flex; flex-wrap: wrap; gap: 2px 10px; align-items: baseline; font-size: 15px; font-variant-numeric: tabular-nums; }
+.historia li small { color: var(--szary); font-size: 13px; }
+.ls-dni .zakladki-g { flex: 1 1 auto; min-width: 0; flex-wrap: wrap; }
+@media (max-width: 900px) { .teraz-g { font-size: 24px; } .teraz-d { font-size: 18px; } }
+@media (max-width: 640px) { .ls-stan { margin-left: 0; } }
+@media (max-width: 480px) {
+  .ls-dni .zakl { flex: 1 1 0; min-width: 0; flex-direction: column; align-items: flex-start; gap: 0; padding: 6px 10px; line-height: 1.25; }
+}
+@media (max-width: 359px) { .gora > .widoki button { font-size: 12px; letter-spacing: 0; padding: 6px 0; } }
+@media (max-width: 767px) { .widoki { display: grid; grid-template-columns: 1fr 1fr; } }   /* cztery widoki: dwa na dwa */
+@media (max-width: 560px) {
+  .przydz-w { grid-template-columns: 1fr; gap: 4px; padding: 8px 0; }
+  .seg:not(.seg2) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .zew-g { flex-wrap: wrap; }
+  .zew-g .seg { flex-basis: 100%; order: 3; }
+  .zew-g .nick { margin-right: auto; }
+}
+
+/* ── stopka ── */
+details.zalozenia { background: var(--karta); border: 1px solid var(--linia); border-radius: 12px; padding: 10px 14px; }
+details.zalozenia summary { cursor: pointer; font-weight: 700; min-height: 36px; display: flex; align-items: center; }
+details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; gap: 5px; max-width: 80ch; font-size: 15px; }
+
+@media (max-width: 1080px) { .uklad { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .znak h1 { font-size: 19px; }
+  .prawa { margin-left: 0; width: 100%; justify-content: flex-start; }
+  .teraz-g { font-size: 22px; }
+  .teraz-d { font-size: 18px; }
+  .widoki button { padding: 8px 6px; font-size: 14px; letter-spacing: .02em; }
+  .ss input { font-size: 18px; }
+  .panel { padding: 14px; border-radius: 18px; }
+  .wkl input { width: 52px; }
+  .rzuty { font-size: 15px; }
+  .rzuty th { font-size: 11px; letter-spacing: .02em; padding: 7px 5px; }
+  .rzuty td { padding: 6px 5px; }
+}
+@media (max-width: 359px) {
+  .panel { padding: 12px 10px; }
+  .rzuty th { font-size: 10px; padding: 7px 4px; }
+  .rzuty td { padding: 6px 4px; }
+}
+@media (max-width: 480px) { .kier-b { font-size: 16px; padding: 8px 12px; } }
+@media (max-width: 640px) {
+  .rzuty .wkl label, .rzuty .wkl .etk { font-size: 10px; letter-spacing: 0; padding: 0 3px; }
+  .rzuty .k-rz { width: 14%; }
+  .rzuty .k-cz { width: 33%; }
+  .rzuty .k-km { width: 28%; }
+  .rzuty .k-ad { width: 25%; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+/* ── produkcja: logowanie, stan zapisu, konto ── */
+.logw { min-height: 100vh; display: grid; place-items: center; padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px; }
+.logp { width: min(380px, 100%); display: grid; gap: 14px; }
+.logp .znak h1 { font-size: 24px; }
+.log-pole { display: grid; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--szary); }
+.log-pole .pole { width: 100%; font-size: 18px; padding: 10px 12px; }
+.logp .mb.glowny { justify-content: center; padding: 12px; font-size: 16px; }
+.log-blad { min-height: 1.4em; color: var(--czer); }
+.konto-b { color: var(--akcent); background: var(--akcent-tlo); border-color: var(--akcent); text-transform: none; letter-spacing: .02em; font-size: 13px; }
+.konto-b[aria-expanded="true"] { border-color: var(--tusz); }
+.stan { margin: 0; font-size: 14px; }
+.ls-stan.bl { color: var(--czer); background: var(--czer-tlo); border-color: var(--czer); }
+.wysylka-bl { color: var(--czer); }
+</style>
+
+<div class="logw" id="logowanie" hidden>
+  <form class="panel logp" id="log-f" autocomplete="on" novalidate>
+    <div class="znak"><h1>transport<span>.dysza.app</span></h1></div>
+    <p class="notka">Zaloguj się loginem i PIN-em z manager.dysza.app.</p>
+    <label class="log-pole"><span>LOGIN</span><input class="pole" id="log-login" name="username" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="40"></label>
+    <label class="log-pole"><span>PIN</span><input class="pole" id="log-pin" name="password" type="password" inputmode="numeric" autocomplete="current-password" maxlength="64"></label>
+    <button type="submit" class="mb glowny" id="log-b">ZALOGUJ</button>
+    <div class="notka log-blad" id="log-blad" role="alert"></div>
+  </form>
+</div>
+
+<div class="app" id="aplikacja" hidden>
+  <header class="gora">
+    <div class="znak">
+      <h1>transport<span>.dysza.app</span></h1>
+      <span class="wersja">V1.2</span>
+      <button type="button" class="pokaz-zn rola-b konto-b" id="rola" aria-haspopup="dialog" aria-expanded="false"
+        title="Konto i role Transportu — dotknij"></button>
+    </div>
+    <div class="prawa">
+      <div class="teraz">
+        <b class="teraz-g" id="czas" title="Godzina ostatniego pliku dnia"></b>
+        <span class="teraz-d" id="dzien"></span>
+      </div>
+      <button type="button" class="motyw-b" id="motyw"></button>
+    </div>
+    <div class="widoki" role="tablist" aria-label="Widok">
+      <button type="button" role="tab" id="w-kierowcy" aria-selected="true">KIEROWCY</button>
+      <button type="button" role="tab" id="w-listy" aria-selected="false">LISTY PRZEWOZOWE</button>
+      <button type="button" role="tab" id="w-startowe" aria-selected="false">LISTY STARTOWE</button>
+      <button type="button" role="tab" id="w-podsumowanie" aria-selected="false">PODSUMOWANIE</button>
+    </div>
+  </header>
+
+  <div class="info nb stan" id="stan" role="status" hidden></div>
+
+  <section class="pliki" id="pliki-dnia" aria-labelledby="pliki-t">
+    <div class="pliki-n"><b id="pliki-t">Pliki dnia</b><small>Dotknij godziny — pokażesz ją albo schowasz. „Cały dzień” — wszystkie albo żadna.</small></div>
+    <div class="godziny-pl" id="godziny-pl"></div>
+    <div class="bledy" id="bledy"></div>
+  </section>
+
+  <main id="widok"></main>
+
+  <details class="zalozenia">
+    <summary>Skąd dane i jak zapisują się wpisy</summary>
+    <ul>
+      <li>Pliki dnia przychodzą same z Dysku Google: eksport z DYSZY <b>FABRYKA-RRRR-MM-DD-GG.csv</b> (katalog Fabryka) i z Routific <b>Routific solution - GG-GG - RRRR-MM-DD.csv</b> (katalog dnia › ROUTIFIC). Automat sprawdza je co minutę, strona odświeża się sama co 20 sekund.</li>
+      <li>START, STOP, EXTRA, BONUS, KONIEC i zmiany płatności zapisują się w bazie od razu (napis nad plikami dnia: „zapisane gg:mm”). Wszyscy zalogowani widzą to samo — iPad dyspozytora, telefon obsługi, komputer w biurze.</li>
+      <li>LISTY STARTOWE: szkic zapisuje się na bieżąco. „UTWÓRZ I WYŚLIJ LISTY” — w ciągu minuty automat Transport Listy robi 11 plików GHH-LS-RRRR-MM-DD.xlsx (katalog dnia › LISTY STARTOWE), kartę STAWKI w pliku T i mail do załogi — jak po „Prześlij” w formularzu. Formularz zostaje jako zapas (liczą się nowsze listy).</li>
+      <li>Role nadaje manager.dysza.app: <b>Odczyt</b> — podgląd; <b>Płatności</b> — ZMIANA rodzaju płatności; <b>Dyspozytor</b> — listy startowe, START, STOP, EXTRA, BONUS i KONIEC. Można mieć kilka ról.</li>
+      <li>Rozliczenie jak w pliku T: CZASÓWKA = (STOP − START) × zł/h; KILOMETRY = (km z Routific + EXTRA) × zł/km; ADRESY = adresy × zł/adres + BONUS; WYPŁATA = suma; ODDAJE = gotówka − wypłata, DOSTAJE = wypłata − gotówka. ZEW — bez wypłaty, oddaje gotówkę; RES — dniówka z list startowych.</li>
+    </ul>
+  </details>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  // ───────── pomocnicze ─────────
+  const $ = id => document.getElementById(id);
+  function el(tag, at, ...dz) {
+    const e = document.createElement(tag);
+    if (at) Object.keys(at).forEach(k => {
+      const v = at[k];
+      if (v === null || v === undefined || v === false) return;
+      if (k === 'class') e.className = v;
+      else if (k === 'text') e.textContent = v;
+      else if (k.slice(0, 2) === 'on') e.addEventListener(k.slice(2), v);
+      else e.setAttribute(k, v === true ? '' : v);
+    });
+    dz.flat().forEach(d => { if (d !== null && d !== undefined && d !== false) e.append(d.nodeType ? d : String(d)); });
+    return e;
+  }
+  const dd = n => String(n).padStart(2, '0');
+  const czasPola = m => [m === null ? '--' : String(Math.floor(m / 60)), el('small', null, ' h '), m === null ? '--' : dd(m % 60), el('small', null, ' min')];   // „10 h 15 min”
+  const tys = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  function zl(gr) {                                     // grosze → „1 234,50”
+    if (gr === null || gr === undefined) return '';
+    const m = gr < 0 ? '−' : '';
+    const a = Math.abs(Math.round(gr));
+    return m + tys(Math.floor(a / 100)) + ',' + dd(a % 100);
+  }
+  const km = dz => tys(Math.floor(dz / 10)) + ',' + (dz % 10);   // dziesiąte części km → „103,1”
+  const klucz = s => String(s === null || s === undefined ? '' : s).replace(/\s+/g, ' ').trim().toUpperCase();
+  const tekst = v => String(v === null || v === undefined ? '' : v).replace(/^'/, '').trim();
+  const minuty = g => { const m = /^(\d{1,2}):(\d{2})/.exec(String(g || '')); return m ? Number(m[1]) * 60 + Number(m[2]) : 99999; };
+  const godzMin = m => dd(Math.floor(m / 60) % 24) + ':' + dd(m % 60);
+  const odm = (n, f) => (n === 1 ? f[0] : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? f[1] : f[2]);   // 1 adres, 2 adresy, 5 adresów
+  const DNI_TYG = ['NIEDZIELA', 'PONIEDZIAŁEK', 'WTOREK', 'ŚRODA', 'CZWARTEK', 'PIĄTEK', 'SOBOTA'];
+  function dzienNapis(iso) {                                    // „2026-11-04” → „4-11 ŚRODA”
+    const d = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ''));
+    return d ? `${Number(d[3])}-${Number(d[2])} ${DNI_TYG[new Date(Number(d[1]), Number(d[2]) - 1, Number(d[3])).getDay()]}` : '';
+  }
+  function nastepnyDzien(iso) {
+    const [r, m, d] = String(iso).split('-').map(Number), t = new Date(r, m - 1, d + 1);
+    return `${t.getFullYear()}-${dd(t.getMonth() + 1)}-${dd(t.getDate())}`;
+  }
+
+  // kwota z pliku („209,99”, „1 234,50”, „224”) → grosze albo null (jak kwota_ w automatach)
+  function kwotaGr(v) {
+    let s = String(v === null || v === undefined ? '' : v).replace(/\s/g, '').replace(/zł$/i, '');
+    if (s === '') return null;
+    const ost = Math.max(s.lastIndexOf(','), s.lastIndexOf('.'));
+    if (ost >= 0) s = s.slice(0, ost).replace(/[.,]/g, '') + '.' + s.slice(ost + 1);
+    const n = Number(s);
+    return isFinite(n) && /\d/.test(s) ? Math.round(n * 100) : null;
+  }
+  // liczba wpisana na stronie („3”, „3,5”) → dziesiąte części / grosze
+  function liczbaWpis(v, mnoznik) {
+    const s = String(v || '').replace(/\s/g, '').replace(',', '.');
+    if (s === '') return 0;
+    const n = Number(s);
+    return isFinite(n) && n >= 0 ? Math.round(n * mnoznik) : null;
+  }
+
+  // CSV → tabela (jak parsujCsv_ w Transport Dysza i Transport Routific: separator ; tab albo , z pierwszego wiersza)
+  function parsujCsv(t) {
+    let s = String(t || '');
+    if (s.charCodeAt(0) === 0xFEFF) s = s.slice(1);
+    const pierwsza = s.split(/\r?\n/)[0] || '';
+    const ile = z => pierwsza.split(z).length - 1;
+    const sep = [';', '\t', ','].reduce((a, z) => (ile(z) > ile(a) ? z : a), ';');
+    const wiersze = [];
+    let w = [], pole = '', wCudz = false, bylCudz = false;
+    for (let i = 0; i < s.length; i++) {
+      const c = s.charAt(i);
+      if (wCudz) {
+        if (c === '"') { if (s.charAt(i + 1) === '"') { pole += '"'; i++; } else wCudz = false; } else pole += c;
+      } else if (c === '"' && pole === '' && !bylCudz) { wCudz = true; bylCudz = true; }
+      else if (c === sep) { w.push(pole); pole = ''; bylCudz = false; }
+      else if (c === '\r' || c === '\n') {
+        if (c === '\r' && s.charAt(i + 1) === '\n') i++;
+        w.push(pole); wiersze.push(w); w = []; pole = ''; bylCudz = false;
+      } else pole += c;
+    }
+    if (pole !== '' || w.length) { w.push(pole); wiersze.push(w); }
+    return wiersze.filter(x => x.some(p => p.trim() !== ''));
+  }
+
+  // nazwy plików (jak w automatach)
+  const N_ISO = /^FABRYKA\s*-\s*(\d{4})-(\d{1,2})-(\d{1,2})[\s,;.]*-\s*(\d{1,2})(?:\s*\(\d{1,3}\))?(?:\.[A-Za-z0-9]+)?$/i;
+  const N_PL = /^FABRYKA\s*-\s*(\d{1,2})\.(\d{1,2})\.(\d{4})[\s,;.]*-\s*(\d{1,2})(?:\s*\(\d{1,3}\))?(?:\.[A-Za-z0-9]+)?$/i;
+  const N_R = /^Routific\s*solution\s*-\s*(.+?)\s*-\s*(\d{4})-(\d{1,2})-(\d{1,2})(?:\s*\(\d{1,3}\))?(?:\.([A-Za-z0-9]{1,5}))?$/i;
+  function rozpoznaj(nazwa) {
+    const n = String(nazwa).trim();
+    const iso = n.match(N_ISO), pl = iso ? null : n.match(N_PL);
+    if (iso || pl) {
+      const [r, m, d, g] = iso ? [iso[1], iso[2], iso[3], iso[4]] : [pl[3], pl[2], pl[1], pl[4]];
+      return { typ: 'F', dzien: `${r}-${dd(m)}-${dd(d)}`, h: Number(g) };
+    }
+    const ro = n.match(N_R);
+    if (ro) {
+      const h = /^(\d{1,2})/.exec(ro[1]);
+      return { typ: 'R', dzien: `${ro[2]}-${dd(ro[3])}-${dd(ro[4])}`, przedzial: ro[1].replace(/\s+/g, ''), h: h ? Number(h[1]) : 99 };
+    }
+    return null;
+  }
+
+  // Notes z DYSZY w Routific: „K-207.99” → { kod: 'K', kwota (gr) }; „B-0,00” — BLIK obsługi, „B-89,50” — BLIK kierowcy
+  function notes(v) {
+    const m = /^\s*([A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]{1,3})\s*-\s*(\d[\d\s]*(?:[.,]\d{1,2})?)\s*(?:zł)?\s*$/.exec(String(v || ''));
+    if (!m) return { kod: '', kwota: null };
+    return { kod: m[1].toUpperCase(), kwota: kwotaGr(m[2]) };
+  }
+
+  const R_BEZ = /^(unassigned|unserved|unscheduled|not assigned|no driver|bez kierowcy|nieprzypisan[aey]?)$/i;
+  // eksport „solution” → trasy (jak parsujRozwiazanie_ w Transport Routific 1.7)
+  function parsujRozwiazanie(tab) {
+    if (!tab.length) throw new Error('plik jest pusty');
+    const nagl = tab[0].map(x => klucz(x).replace(/\s+/g, ''));
+    const kol = n => nagl.indexOf(n);
+    const iK = kol('DRIVERNAME'), iS = kol('STOPNUMBER'), iD = kol('DISTANCE(KM)');
+    const brak = [['Driver Name', iK], ['Stop Number', iS], ['Distance(km)', iD]].filter(x => x[1] < 0).map(x => x[0]);
+    if (brak.length) throw new Error(`nie ma kolumn ${brak.join(', ')} — to nie jest eksport „solution” z Routific (są: ${tab[0].slice(0, 12).join(', ')})`);
+    const iV = kol('VISITNAME'), iId = kol('ID'), iN = kol('NOTES'), iA = kol('ARRIVEAT'), iSt = kol('STARTAT');
+    const pole = (w, i) => (i >= 0 && i < w.length ? w[i] : '');
+    const trasy = [], otwarte = {};
+    let bez = 0;
+    for (let r = 1; r < tab.length; r++) {
+      const w = tab[r];
+      const kier = String(pole(w, iK)).replace(/\s+/g, ' ').trim();
+      const nr = tekst(pole(w, iS));
+      let s = String(pole(w, iD)).replace(/\s/g, '');
+      if (/^\d+,\d+$/.test(s)) s = s.replace(',', '.');
+      const odc = s === '' ? 0 : Number(s);
+      if (!isFinite(odc) || odc < 0 || odc > 300) throw new Error(`wiersz ${r + 1}: nieczytelna odległość „${String(pole(w, iD)).slice(0, 20)}”`);
+      const godz = (/^(\d{1,2}):(\d{2})/.exec(tekst(pole(w, iA))) || [])[0] || '';
+      if (!kier || R_BEZ.test(kier)) { if (/^\d+$/.test(nr) && nr !== '0' && nr !== '999') bez++; continue; }
+      const k = klucz(kier);
+      let t = otwarte[k];
+      const nowa = wyj => { t = otwarte[k] = { kier: kier, wyjazd: wyj, stopy: [], km: 0 }; trasy.push(t); };
+      if (nr === '0') { nowa((/^(\d{1,2}):(\d{2})/.exec(tekst(pole(w, iSt))) || [])[0] || godz); continue; }
+      if (!t) nowa('');
+      t.km += odc;
+      if (nr === '999') { delete otwarte[k]; continue; }
+      if (!/^\d+$/.test(nr)) continue;                     // przerwa — km liczą się do rzutu
+      const n = notes(pole(w, iN));
+      t.stopy.push({ nr: Number(nr), id: tekst(pole(w, iId)) || tekst(pole(w, iV)), kod: n.kod, kwota: n.kwota, notes: tekst(pole(w, iN)), godz: godz });
+    }
+    return { trasy: trasy.filter(t => t.stopy.length), bez: bez };
+  }
+
+  const FIRMA = /(^|[ (/])(ZEW[ ._-]|ALL[ ._-]*IN|DELIGO)/;          // ZEW-Imię (od V1.2) i dawne ALL-IN-…, DELIGO-…
+  const typKierowcy = k => ((S.resDnia && klucz(k) === klucz(S.resDnia)) || /^ZZZ/.test(klucz(k)) ? 'res' : FIRMA.test(klucz(k)) ? 'firma' : 'kierowca');
+
+  // ───────── model dnia z plików ─────────
+  function przetworz(pliki) {
+    const F = pliki.filter(p => p.typ === 'F').sort((a, b) => a.czas - b.czas);
+    const najR = {};
+    pliki.filter(p => p.typ === 'R').forEach(p => { if (!najR[p.przedzial] || p.czas > najR[p.przedzial].czas) najR[p.przedzial] = p; });
+    const zam = new Map();
+    F.forEach(p => {
+      p.blad = '';
+      const t = p.tabela || [];
+      if (!t.length) { p.blad = 'plik jest pusty'; return; }
+      const kl = t[0].map(klucz);
+      const i = n => kl.indexOf(n);
+      const k = { id: i('ID'), adr: i('ADDRESS'), od: i('FROM'), do: i('TO'), tel: i('PHONE'), got: i('GOTÓWKA'), kar: i('KARTA'),
+        onl: i('ONLINE'), n1: i('NOTES'), n2: i('NOTES 2') };
+      if (k.id < 0 || k.adr < 0) { p.blad = `nie ma kolumny ${k.id < 0 ? 'ID' : 'Address'} (są: ${t[0].slice(0, 12).join(', ')})`; return; }
+      const pole = (w, j) => (j >= 0 && j < w.length ? tekst(w[j]) : '');
+      t.slice(1).forEach(w => {
+        const id = pole(w, k.id);
+        if (!id) return;
+        const od = pole(w, k.od);
+        const hOd = /^(\d{1,2}):/.exec(od);
+        zam.set(klucz(id), { id: id, adres: pole(w, k.adr), od: od, do_: pole(w, k.do), tel: pole(w, k.tel), got: kwotaGr(pole(w, k.got)),
+          kar: kwotaGr(pole(w, k.kar)), onl: kwotaGr(pole(w, k.onl)), n1: pole(w, k.n1), n2: pole(w, k.n2),
+          h: hOd ? Number(hOd[1]) : p.h, plik: p.nazwa });
+      });
+    });
+    const trasy = [];
+    Object.keys(najR).forEach(pk => {
+      const p = najR[pk];
+      p.blad = '';
+      try {
+        const r = parsujRozwiazanie(p.tabela || []);
+        r.trasy.forEach(t => { t.przedzial = pk; t.h = p.h; t.kmDz = Math.round(t.km * 10); trasy.push(t); });
+        p.bez = r.bez;
+      } catch (e) { p.blad = e.message; }
+    });
+    pliki.filter(p => p.typ === 'R' && najR[p.przedzial] !== p).forEach(p => { p.zastapiony = true; });
+    const poKier = {};
+    trasy.forEach(t => (poKier[t.kier] = poKier[t.kier] || []).push(t));
+    Object.keys(poKier).forEach(k => {
+      poKier[k].sort((a, b) => a.h - b.h || minuty(a.wyjazd) - minuty(b.wyjazd));
+      poKier[k].forEach((t, i) => { t.rzut = i + 1; });
+    });
+    const przyp = new Map();
+    trasy.forEach(t => t.stopy.forEach(s => { const k = klucz(s.id); if (k && !przyp.has(k)) przyp.set(k, { t: t, s: s }); }));
+    const godzinyR = {};
+    Object.keys(najR).forEach(pk => { if (!najR[pk].blad) godzinyR[najR[pk].h] = true; });
+    return { zam: zam, trasy: trasy, poKier: poKier, przyp: przyp, godzinyR: godzinyR };
+  }
+
+  // płatność zamówienia po BLIK z Routific (wiersz z „B-…”: kwota przechodzi do kolumny BLIK)
+  function platnosc(z, s) {
+    const p = { got: z ? z.got : null, kar: z ? z.kar : null, onl: z ? z.onl : null, blikO: null, blikK: null };
+    if (s && s.kod === 'B') {
+      const suma = (p.got || 0) + (p.kar || 0) + (p.onl || 0);
+      if (s.kwota > 0) p.blikK = s.kwota; else p.blikO = suma || 0;
+      p.got = p.kar = p.onl = null;
+    }
+    const przyDrzwiach = DRZWI.filter(r => p[r]);
+    p.drzwi = przyDrzwiach.length === 1 && p.blikO === null && !p.onl ? przyDrzwiach[0] : null;   // jedna płatność przy odbiorze → można ją zmienić
+    const zm = S.zmiany[klucz(z ? z.id : s ? s.id : '')];
+    if (zm && p.drzwi === zm.z) {
+      const kw = p[zm.z];
+      p[zm.z] = null;
+      p[zm.na] = (p[zm.na] || 0) + kw;
+      p.zmiana = zm;
+    }
+    return p;
+  }
+
+  // ───────── połączenie z bazą (Supabase „Tablica Mocy”; logowanie loginem i PIN-em z manager.dysza.app) ─────────
+  const URL_BAZY = 'https://srmiealxhcbjornmnboe.supabase.co';
+  const KLUCZ_API = 'sb_publishable_NkiS-_7GBmW5d3ufWjjFEg_CuCpaADz';   // klucz publiczny — dostęp sprawdzają funkcje bazy (role z managera)
+  const WERSJA = (document.querySelector('meta[name="transport-wersja"]') || {}).content || '';
+  const KL = { sesja: 'transport-sesja', login: 'transport-login' };
+  function czytaj(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+  function pisz(k, v) { try { if (v === null || v === undefined) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* bez pamięci przeglądarki — sesja tylko w tej karcie */ } }
+  const BLEDY = {
+    BRAK_DOSTEPU: 'Brak dostępu do Transportu — poproś kierownika o rolę w manager.dysza.app.',
+    'ROLA:dyspozytor': 'To robi Transport Dyspozytor — Twoja rola na to nie pozwala.',
+    'ROLA:platnosci': 'Zmianę płatności robi Transport Płatności.',
+    ZAMKNIETE: 'Rozliczenie kierowcy zamknięte (KONIEC) — najpierw „odblokuj”.',
+    ZLY_DZIEN: 'Ten dzień jest poza zakresem (listy startowe: dziś albo jutro).',
+    'ZLA_WARTOSC:res': 'Wybierz jednego RES.',
+    'ZLA_WARTOSC:listy': 'Listy mają złe dane — odśwież stronę.',
+    'ZLA_WARTOSC:extra': 'EXTRA: liczba km 0–300, np. 3 albo 2,5.',
+    'ZLA_WARTOSC:bonus': 'BONUS: kwota w zł, np. 10.',
+    'ZLA_WARTOSC:start': 'START: godzina, np. 11:00.',
+    'ZLA_WARTOSC:stop': 'STOP: godzina, np. 21:30.'
+  };
+  function tekstBledu(e) {
+    const m = String((e && e.message) || e || '');
+    if (BLEDY[m]) return BLEDY[m];
+    const k = m.split(':')[0];
+    if (k === 'ZLA_WARTOSC') return 'Baza nie przyjęła wartości (' + (m.split(':')[1] || 'dane') + ').';
+    return BLEDY[k] || m || 'Coś poszło nie tak.';
+  }
+  function bladSesji() { const e = new Error('Sesja wygasła — zaloguj się ponownie.'); e.sesja = true; return e; }
+  async function siec(adres, opcje) {
+    const ac = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const t = ac ? setTimeout(() => ac.abort(), 20000) : null;
+    try { return await fetch(adres, Object.assign({}, opcje, { signal: ac ? ac.signal : undefined })); }
+    catch (e) { const b = new Error('Brak połączenia z bazą — sprawdź internet.'); b.siec = true; throw b; }
+    finally { if (t) clearTimeout(t); }
+  }
+  async function czytajOdp(r) { const tx = await r.text(); let j = null; try { j = tx ? JSON.parse(tx) : null; } catch (e) { /* nie JSON */ } return j; }
+  function Baza(url, klucz) {                                  // jak w manager.dysza.app (wzór: Raporty)
+    let sesja = wczytaj(), odsw = null;
+    function wczytaj() { const s = czytaj(KL.sesja, null); return s && s.access_token ? s : null; }
+    function ustaw(s) { sesja = s; pisz(KL.sesja, s); }
+    window.addEventListener('storage', e => { if (e.key === KL.sesja) sesja = wczytaj(); });
+    function zrob(j, login) {
+      const u = j.user ? { id: j.user.id } : (sesja && sesja.user);
+      return { access_token: j.access_token, refresh_token: j.refresh_token,
+        expires_at: j.expires_at || Math.floor(Date.now() / 1000) + (j.expires_in || 3600), user: u, login: login || (sesja && sesja.login) || '' };
+    }
+    async function publiczna(nazwa, body) {
+      const r = await siec(url + '/functions/v1/' + nazwa, { method: 'POST', cache: 'no-store', headers: { apikey: klucz, 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}) });
+      const j = await czytajOdp(r);
+      if (!r.ok) {
+        const b = new Error((j && (j.blad || j.message || j.msg)) || ('Logowanie nie działa (' + r.status + ').'));
+        b.status = r.status; if (r.status >= 500 && !(j && j.blad)) b.siec = true;
+        throw b;
+      }
+      return j;
+    }
+    async function zaloguj(login, pin) {                       // blokada po 5 złych PIN-ach liczy się na serwerze
+      const j = await publiczna('dysza-logowanie', { akcja: 'zaloguj', login: login, pin: pin });
+      ustaw(zrob(j.sesja, j.login));
+      return j;
+    }
+    async function wyloguj() {
+      const t = sesja && sesja.access_token; ustaw(null);
+      if (t) { try { await siec(url + '/auth/v1/logout', { method: 'POST', headers: { apikey: klucz, Authorization: 'Bearer ' + t } }); } catch (e) { /* i tak wylogowany */ } }
+    }
+    async function odswiez() {
+      if (odsw) return odsw;
+      const f = async () => {
+        const z = wczytaj();
+        if (z && (!sesja || z.access_token !== sesja.access_token) && z.expires_at - Date.now() / 1000 > 120) { sesja = z; return sesja; }
+        const rt = (z || sesja || {}).refresh_token; if (!rt) throw bladSesji();
+        const r = await siec(url + '/auth/v1/token?grant_type=refresh_token', { method: 'POST', headers: { apikey: klucz, 'Content-Type': 'application/json' }, body: JSON.stringify({ refresh_token: rt }) });
+        const j = await czytajOdp(r);
+        if (!r.ok) { if (r.status === 400 || r.status === 401 || r.status === 403) { ustaw(null); throw bladSesji(); } const b = new Error('Nie odświeżyłem sesji (' + r.status + ').'); b.siec = true; throw b; }
+        ustaw(zrob(j, (z || sesja || {}).login)); return sesja;
+      };
+      odsw = (async () => ((navigator.locks && navigator.locks.request) ? navigator.locks.request('transport-odswiez-sesji', f) : f()))();
+      try { return await odsw; } finally { odsw = null; }
+    }
+    async function token() { if (!sesja) throw bladSesji(); if (sesja.expires_at - Date.now() / 1000 < 90) await odswiez(); return sesja.access_token; }
+    async function rpc(n, a, ponow) {
+      const tk = await token();
+      const r = await siec(url + '/rest/v1/rpc/' + n, { method: 'POST', cache: 'no-store',
+        headers: { apikey: klucz, Authorization: 'Bearer ' + tk, 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(a || {}) });
+      if (r.status === 401 && ponow !== false) { await odswiez(); return rpc(n, a, false); }
+      const j = await czytajOdp(r);
+      if (!r.ok) {
+        const b = new Error((j && (j.message || j.msg)) || ('Błąd bazy (' + r.status + ').'));
+        b.kod = j && j.code; b.status = r.status; if (r.status === 401) b.sesja = true;
+        if (r.status >= 500 || r.status === 408 || r.status === 429) b.siec = true;
+        throw b;
+      }
+      return j;
+    }
+    return { sesja: () => sesja, zaloguj: zaloguj, wyloguj: wyloguj, rpc: rpc };
+  }
+  const baza = Baza(URL_BAZY, KLUCZ_API);
+
+  // czas z bazy (UTC) → godzina w Warszawie
+  const FMT_W = new Intl.DateTimeFormat('pl-PL', { timeZone: 'Europe/Warsaw', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+  const msZ = iso => { const d = Date.parse(String(iso || '').replace(/(\.\d{3})\d+/, '$1')); return isNaN(d) ? 0 : d; };
+  function minutyZ(iso) { const ms = msZ(iso); if (!ms) return -1; const [h, m] = FMT_W.format(new Date(ms)).split(':').map(Number); return h * 60 + m; }
+  const godzinaZ = iso => { const m = minutyZ(iso); return m < 0 ? '' : godzMin(m); };
+  const terazGodz = () => godzinaZ(new Date().toISOString());
+  const kto = o => (o && (String(o.kafelek || '').trim() || [o.imie, o.nazwisko ? String(o.nazwisko).charAt(0) + '.' : ''].filter(Boolean).join(' '))) || '';
+
+  // ───────── stan strony ─────────
+  const S = {
+    zrodlo: 'baza', wszystkie: [], dzien: '',
+    widok: 'kierowcy', kierowca: null,
+    godz: null,                                                 // kafle godzin: null — cały dzień (także godziny, które dopiero przyjdą), [] — żadna, [12, 14] — te
+    stawki: null,                                               // grosze — z ostatnio wysłanych list startowych (KILOMETRÓWKA z ceny ON)
+    rozl: {}, model: null, pliki: [],
+    role: [], ja: null,                                         // role Transportu z manager.dysza.app — 'odczyt', 'platnosci', 'dyspozytor' (kilka naraz)
+    zmiany: {},                                                 // zmiany płatności: ID → { z, na, kwota, czas, kto }
+    koniec: {}, koniecInfo: null,                               // KONIEC: kierowca → { czas, kto }
+    sortL: 'kierowcy',
+    ls: { dzien: '', plik: null, potw: false, dni: {} },        // listy startowe: { RRRR-MM-DD: { form, wysylki, edycja } } — dziś i jutro
+    dniowka: null, resDnia: null,                               // z ostatnio wysłanych list dnia: dniówka RES (gr) i kto jest RES
+    baza: [], bazaTel: {}, stawkiDni: {}, automat: {},          // kierowcy z KIEROWCY-PODSTAWOWI (ksywki), stawki dnia, znak życia automatu
+    pamiec: {},                                                 // md5 pliku → tabela (treść przychodzi raz)
+    wczytano: false, blad: '', offline: false, zapis: '', zapisZly: false, czekaRysuj: false
+  };
+  const ROLE = { odczyt: 'Odczyt', platnosci: 'Płatności', dyspozytor: 'Dyspozytor' };
+  const maRole = r => S.role.indexOf(r) >= 0;
+  const tylkoOdczyt = () => !maRole('dyspozytor') && !maRole('platnosci');
+  const nazwaRol = () => (S.role.length > 1 ? S.role.filter(r => r !== 'odczyt') : S.role).map(r => ROLE[r] || r).join(' + ') || 'bez roli';
+  const DRZWI = ['got', 'kar', 'blikK'];                        // płatności przy odbiorze — tylko między nimi wolno zmienić
+  const NAZWA_PL = { got: 'Gotówka', kar: 'Karta', blikK: 'BLIK Kierowcy', rest: 'Restauracja' };
+  const CELE = DRZWI.concat('rest');                            // na co można zmienić: G, K, BK albo Restauracja (płatność obsługuje restauracja)
+
+  // ───────── dane dnia z bazy ─────────
+  const nowyForm = () => ({ stawki: { h: '0', adres: '0', dniowka: '0' }, przydzial: {}, zew: [] });   // nowy dzień: stawki od 0
+  function uzupelnijForm(x) {
+    const f = x && typeof x === 'object' ? JSON.parse(JSON.stringify(x)) : nowyForm();
+    f.stawki = Object.assign({ h: '0', adres: '0', dniowka: '0' }, f.stawki || {});
+    f.przydzial = f.przydzial && typeof f.przydzial === 'object' ? f.przydzial : {};
+    f.zew = Array.isArray(f.zew) ? f.zew : [];
+    return f;
+  }
+  function zastosujDzien(d) {
+    if (Array.isArray(d.role)) S.role = d.role;
+    const pliki = [], obecne = {};                              // pliki dnia: treść przychodzi raz (potem baza pomija znane md5)
+    (d.pliki || []).forEach(p => {
+      if (p.usuniety) return;
+      if (typeof p.tresc === 'string') S.pamiec[p.md5] = parsujCsv(p.tresc);
+      const tab = S.pamiec[p.md5], r = rozpoznaj(p.nazwa);
+      if (!tab || !r) return;
+      obecne[p.md5] = true;
+      pliki.push(Object.assign({ nazwa: p.nazwa, czas: Math.max(0, minutyZ(p.zmieniono || p.wgrano)), tabela: tab, md5: p.md5 }, r));
+    });
+    Object.keys(S.pamiec).forEach(m => { if (!obecne[m]) delete S.pamiec[m]; });
+    S.wszystkie = pliki.sort((a, b) => a.czas - b.czas);
+    const rozl = {}, koniec = {};
+    (d.rozliczenia || []).forEach(r => {
+      rozl[r.kierowca] = { start: r.start || '', stop: r.stop || '', extra: r.extra || '', bonus: r.bonus || '', wyplata: '' };
+      if (r.koniec) koniec[r.kierowca] = { czas: godzinaZ(r.koniec.kiedy), kto: r.koniec.kto || '' };
+    });
+    Object.keys(ZAPISY).forEach(kp => {                         // pole w trakcie zapisu zostaje takie, jak na ekranie
+      const i = kp.lastIndexOf('|'), k = kp.slice(0, i), pole = kp.slice(i + 1);
+      (rozl[k] = rozl[k] || { start: '', stop: '', extra: '', bonus: '', wyplata: '' })[pole] = ZAPISY[kp].v;
+    });
+    S.rozl = rozl; S.koniec = koniec;
+    const zm = {};
+    (d.zmiany || []).forEach(z => { zm[klucz(z.zamowienie)] = { id: z.zamowienie, z: z.z, na: z.na, kwota: z.kwota, czas: godzinaZ(z.kiedy), kto: z.kto || '' }; });
+    S.zmiany = zm;
+    S.baza = (d.kierowcy || []).map(k => k.nick);
+    S.bazaTel = {};
+    (d.kierowcy || []).forEach(k => { S.bazaTel[k.nick] = !!k.ma_tel; });
+    S.stawkiDni = d.stawki || {};
+    S.automat = d.automat || {};
+    const dni = {};
+    Object.keys(d.ls || {}).sort().forEach(iso => {
+      const x = d.ls[iso] || {}, byl = S.ls.dni[iso];
+      const wysylki = (x.wysylki || []).map(w => ({ id: w.id, nr: w.nr, czas: godzinaZ(w.wyslano || w.kiedy), kiedy: godzinaZ(w.kiedy), kto: w.kto || '',
+        opis: w.opis || '', form: uzupelnijForm(w.dane), status: w.status, wynik: w.wynik || '', wersja: w.wersja || null }));
+      const lokalny = byl && (byl.edycja || LS_ZAPIS[iso]);    // szkic w trakcie zapisu — zostaje ten z ekranu
+      dni[iso] = { form: lokalny ? byl.form : uzupelnijForm(x.dane), wysylki: wysylki, edycja: lokalny ? byl.edycja : 0, kto: x.kto || '' };
+    });
+    S.ls.dni = dni;
+    if (!S.ls.dni[S.ls.dzien]) S.ls.dzien = Object.keys(S.ls.dni).sort()[0] || S.dzien;
+    zastosujListy();
+    S.wczytano = true;
+  }
+  function odcisk() {                                           // czy coś się zmieniło (żeby nie przerysowywać bez potrzeby)
+    return JSON.stringify([S.wszystkie.map(p => p.md5 + p.czas), S.rozl, S.koniec, S.zmiany, S.role, S.baza, S.bazaTel, S.stawkiDni,
+      Object.keys(S.ls.dni).map(iso => [iso, S.ls.dni[iso].form, S.ls.dni[iso].wysylki.map(w => [w.id, w.status, w.wersja, w.wynik])])]);
+  }
+  function przelicz() {
+    S.pliki = S.wszystkie;                                      // model zawsze z całego dnia; kafle godzin tylko wybierają, co widać
+    S.model = przetworz(S.pliki);
+    const kier = listaKierowcow();
+    if (!S.kierowca || kier.indexOf(S.kierowca) < 0) S.kierowca = kier[0] || null;
+    rysuj();
+  }
+  function listaKierowcow() {
+    return Object.keys(S.model.poKier).sort((a, b) => {
+      const ra = typKierowcy(a) === 'kierowca' ? 0 : 1, rb = typKierowcy(b) === 'kierowca' ? 0 : 1;
+      return ra - rb || a.localeCompare(b, 'pl');
+    });
+  }
+  // kafle godzin „Pliki dnia”: dotknięcie godziny pokazuje ją albo chowa; „Cały dzień” — wszystkie albo żadna
+  function godzinyDostepne() {                                 // godziny z plikiem z DYSZY albo z Routific
+    return Array.from(new Set(S.wszystkie.map(p => p.h))).filter(h => h >= 12 && h <= 23).sort((a, b) => a - b);
+  }
+  function godzinyWybrane() {
+    const d = godzinyDostepne();
+    return S.godz === null ? d : d.filter(h => S.godz.indexOf(h) >= 0);
+  }
+  function przelaczGodzine(h) {
+    const d = godzinyDostepne(), w = godzinyWybrane();
+    const nowe = w.indexOf(h) >= 0 ? w.filter(x => x !== h) : w.concat(h).sort((a, b) => a - b);
+    S.godz = d.length && nowe.length === d.length ? null : nowe;   // wybrane wszystkie — znów „Cały dzień”
+    poGodzinach();
+  }
+  function przelaczDzien() { S.godz = S.godz === null ? [] : null; poGodzinach(); }   // „Cały dzień”: raz — wszystkie, drugi raz — żadna
+  function ustawGodziny(g) { S.godz = g === null ? null : g.slice(); poGodzinach(); }
+  function poGodzinach() {                                     // w KIEROWCACH: wybrany kierowca bez zamówień w wybranych godzinach → pierwszy, który je ma
+    const wyb = godzinyWybrane(), ma = k => (S.model.poKier[k] || []).some(t => wyb.indexOf(t.h) >= 0);
+    if (S.widok === 'kierowcy' && S.kierowca && !ma(S.kierowca)) { const k = listaKierowcow().find(ma); if (k) S.kierowca = k; }
+    rysuj();
+  }
+  function przedzialy(godz) {                                   // [12, 13, 14, 17] → „12–15 · 17–18”
+    const out = [];
+    godz.forEach(h => { const o = out[out.length - 1]; if (o && o[1] === h) o[1] = h + 1; else out.push([h, h + 1]); });
+    return out.map(o => `${o[0]}–⁠${o[1]}`).join(' · ');
+  }
+
+  // ───────── chmurka z treścią (Phone, Notes, Notes 2) ─────────
+  let chm = null;
+  function zamknijChmurke() {
+    if (!chm) return;
+    chm.btn.setAttribute('aria-expanded', 'false');
+    chm.el.remove();
+    chm = null;
+  }
+  function kopiuj(tekst, wezel, przycisk) {
+    const zaznacz = () => {
+      const r = document.createRange(); r.selectNodeContents(wezel);
+      const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      przycisk.textContent = 'zaznaczone — skopiuj';
+    };
+    try { navigator.clipboard.writeText(tekst).then(() => { przycisk.textContent = 'skopiowane'; }, zaznacz); } catch (e) { zaznacz(); }
+  }
+  function otworzChmurke(btn, nazwa, id, dzieci) {
+    const taSama = chm && chm.btn === btn;
+    zamknijChmurke();
+    if (taSama) return;
+    const c = el('div', { class: 'chmurka', role: 'dialog', 'aria-label': id ? `${nazwa} · ${id}` : nazwa },
+      el('div', { class: 'chm-t' }, el('span', null, nazwa), id ? [' · ', el('span', { class: 'id' }, id)] : null), dzieci);
+    document.body.append(c);
+    btn.setAttribute('aria-expanded', 'true');
+    chm = { el: c, btn: btn };
+    ustawChmurke();
+  }
+  function pokazChmurke(btn, nazwa, id, tresc, zKopiuj) {
+    const tekst = el('div', { class: 'chm-tresc' }, tresc);
+    otworzChmurke(btn, nazwa, id, [tekst,
+      zKopiuj ? el('button', { type: 'button', class: 'mb', onclick: e => kopiuj(tresc, tekst, e.currentTarget) }, 'kopiuj') : null]);
+  }
+  function pokazZmiane(btn, id, p) {                          // ZMIANA: klient przy odbiorze płaci inaczej
+    const teraz = p.zmiana ? p.zmiana.na : p.drzwi, bylo = p.zmiana ? p.zmiana.z : p.drzwi, kw = p[teraz];
+    const opcje = CELE.map(r => {
+      const d = PLATNOSCI.find(x => x[0] === r);
+      return el('button', { type: 'button', class: 'mb', 'aria-pressed': String(r === teraz), disabled: r === teraz,
+        onclick: () => zmienPlatnosc(id, bylo, r, kw) }, el('abbr', { class: 'pl pl-' + d[3], title: d[2] }, d[1]), NAZWA_PL[r]);
+    });
+    otworzChmurke(btn, 'Zmiana płatności', id, [
+      el('div', { class: 'chm-l' }, 'Kierowca wyjechał z:', kwotaZ(bylo, kw)),
+      el('div', { class: 'chm-l' }, 'Klient płaci:'),
+      el('div', { class: 'chm-opcje' }, opcje),
+      el('div', { class: 'chm-m' }, 'Restauracja — płatność obsługuje i raportuje restauracja (Rejestr Restauracji); kwota nie wlicza się do rozliczenia kierowcy ani transportu.'),
+      el('div', { class: 'chm-m' }, p.zmiana
+        ? `Zmienione ${p.zmiana.czas} · ${p.zmiana.kto}. Powrót — wybierz „${NAZWA_PL[bylo]}”.`
+        : 'Kwota zostaje ta sama — zmienia się tylko sposób płatności.')]);
+  }
+  async function zmienPlatnosc(id, z, na, kwota) {
+    if (!maRole('platnosci')) return;                           // rodzaj płatności zmienia tylko Transport Płatności
+    const prz = S.model && S.model.przyp.get(klucz(id));
+    if (prz && S.koniec[prz.t.kier]) return;                    // rozliczenie kierowcy zamknięte (KONIEC) — najpierw „odblokuj”
+    const k = klucz(id);
+    zamknijChmurke();
+    stanZapisu('zapisuję…');
+    try {
+      const r = await baza.rpc('transport_zmiana', { p_dzien: S.dzien, p_zamowienie: id, p_kierowca: prz ? prz.t.kier : '', p_z: z, p_na: na, p_kwota: Math.round(kwota || 0) });
+      if (r.aktywna) S.zmiany[k] = { id: id, z: r.z, na: r.na, kwota: Math.round(kwota || 0), czas: godzinaZ(r.kiedy), kto: kto(S.ja) };
+      else delete S.zmiany[k];
+      stanZapisu('zapisane ' + godzinaZ(r.kiedy));
+    } catch (e) { blad(e); }
+    rysuj();
+  }
+  function pokazKonto(btn) {                                    // konto: kto zalogowany, role z manager.dysza.app, odśwież, wyloguj
+    const ja = S.ja || {};
+    const a = S.automat.zasilanie;
+    otworzChmurke(btn, 'Konto', '', [
+      el('div', { class: 'chm-l' }, el('b', null, kto(ja) || '—'), ja.login ? el('small', null, ` · login ${ja.login}`) : null),
+      el('div', { class: 'chm-l' }, 'Role Transportu: ', el('b', null, nazwaRol())),
+      el('div', { class: 'chm-m' }, 'Role nadaje kierownik w manager.dysza.app: Odczyt — podgląd; Płatności — ZMIANA rodzaju płatności; Dyspozytor — listy startowe, START, STOP, EXTRA, BONUS, KONIEC.'),
+      el('div', { class: 'chm-opcje' },
+        el('button', { type: 'button', class: 'mb', onclick: () => { zamknijChmurke(); odswiezTeraz(false); } }, 'ODŚWIEŻ'),
+        el('button', { type: 'button', class: 'mb', id: 'wyloguj', onclick: wyloguj }, 'WYLOGUJ')),
+      el('div', { class: 'chm-m' }, `Strona ${WERSJA || '—'} · automat plików: ${a ? 'ostatnio ' + godzinaZ(a.kiedy) : 'jeszcze się nie odezwał'}.`)]);
+  }
+  function ustawChmurke() {                                    // przy przycisku; idzie za nim, gdy lista przesuwa się w bok
+    if (!chm) return;
+    const c = chm.el, r = chm.btn.getBoundingClientRect();
+    const kont = chm.btn.closest('.tabela-w');
+    if (kont) { const k = kont.getBoundingClientRect(); if (r.right < k.left + 4 || r.left > k.right - 4) { zamknijChmurke(); return; } }
+    const w = c.offsetWidth, wys = c.offsetHeight, szer = document.documentElement.clientWidth;
+    const x = Math.max(12, Math.min(r.left + r.width / 2 - w / 2, szer - w - 12));
+    const nad = r.bottom + 10 + wys > window.innerHeight && r.top - 10 - wys > 0;
+    c.classList.toggle('nad', nad);
+    c.style.left = Math.round(x + window.scrollX) + 'px';
+    c.style.top = Math.round((nad ? r.top - 10 - wys : r.bottom + 10) + window.scrollY) + 'px';
+    c.style.setProperty('--strz', Math.round(Math.max(14, Math.min(w - 14, r.left + r.width / 2 - x))) + 'px');
+  }
+  document.addEventListener('click', e => { if (chm && !chm.el.contains(e.target) && !chm.btn.contains(e.target)) zamknijChmurke(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && chm) { const b = chm.btn; zamknijChmurke(); b.focus(); } });
+  window.addEventListener('resize', () => { zamknijChmurke(); wyrownajKafle(); });
+
+  // ───────── rysowanie ─────────
+  function rysuj() {
+    zamknijChmurke();
+    $('dzien').textContent = dzienNapis(S.dzien);
+    const ost = S.pliki.reduce((m, p) => Math.max(m, p.czas), -1);
+    $('czas').textContent = ost < 0 ? '—' : godzMin(ost);
+    $('rola').textContent = `${kto(S.ja) || '…'} · ${nazwaRol()} ▾`;
+    $('rola').setAttribute('aria-label', `Zalogowany: ${kto(S.ja)}, role Transportu: ${nazwaRol()} — konto`);
+    rysujStan();
+    rysujMotyw();
+    [['w-kierowcy', 'kierowcy'], ['w-listy', 'listy'], ['w-startowe', 'startowe'], ['w-podsumowanie', 'podsumowanie']].forEach(([id, v]) => $(id).setAttribute('aria-selected', String(S.widok === v)));
+    $('pliki-dnia').hidden = S.widok === 'startowe' || S.widok === 'podsumowanie';   // listy startowe i podsumowanie (cały dzień) nie potrzebują plików dnia
+    rysujPliki();
+    const w = $('widok');
+    w.replaceChildren(S.widok === 'kierowcy' ? widokKierowcy() : S.widok === 'listy' ? widokListy() : S.widok === 'podsumowanie' ? widokPodsumowania() : widokStartowe());
+    wyrownajKafle();
+  }
+  function wyrownajKafle() {                                   // przyciski kierowców jak godziny: szerokość wg imienia; rzędy wyśrodkowane i możliwie równe
+    const k = document.querySelector('.kafle');
+    if (!k || !k.children.length) return;
+    k.style.maxWidth = '';
+    const cs = getComputedStyle(k.parentElement);
+    const W = k.parentElement.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    k.style.maxWidth = W + 'px';
+    const rzedy = () => new Set(Array.from(k.children).map(b => Math.round(b.getBoundingClientRect().top))).size;
+    const r = rzedy();
+    if (r < 2) { k.style.maxWidth = ''; return; }
+    let lo = Math.max(...Array.from(k.children).map(b => b.getBoundingClientRect().width)), hi = W;
+    while (hi - lo > 1) {                                       // najwęższy rząd, przy którym rzędów jest tyle samo → rzędy możliwie równe
+      const m = Math.floor((lo + hi) / 2);
+      k.style.maxWidth = m + 'px';
+      if (rzedy() > r) lo = m; else hi = m;
+    }
+    k.style.maxWidth = Math.ceil(hi) + 'px';
+  }
+
+
+  function rysujPliki() {
+    const box = $('godziny-pl');
+    const F = {}, R = {};                                       // najnowszy plik każdej godziny (z całego dnia)
+    S.wszystkie.forEach(p => {
+      if (p.typ === 'F' && (!F[p.h] || p.czas > F[p.h].czas)) F[p.h] = p;
+      if (p.typ === 'R' && (!R[p.h] || p.czas > R[p.h].czas)) R[p.h] = p;
+    });
+    const wyb = godzinyWybrane(), caly = S.godz === null, nF = Object.keys(F).length, nR = Object.keys(R).length;
+    const kafle = [el('button', { type: 'button', class: 'gp kafel', 'aria-pressed': String(caly),
+      title: (caly ? 'Cały dzień — dotknij, żeby schować wszystkie godziny' : 'Dotknij — pokaż cały dzień') + `\nPliki dnia — z DYSZY: ${nF}, z Routific: ${nR}`, onclick: przelaczDzien },
+      el('span', { class: 'h' }, 'CAŁY DZIEŃ'),
+      el('span', { class: 'z' + (nF ? ' jest' : '') }, el('span', { class: 'zr' }, 'D →'), el('span', null, String(nF))),
+      el('span', { class: 'z' + (nR ? ' jest' : '') }, el('span', { class: 'zr' }, 'R →'), el('span', null, String(nR))))];
+    for (let h = 12; h <= 23; h++) {
+      const f = F[h], r = R[h], jest = wyb.indexOf(h) >= 0;
+      kafle.push(el('button', { type: 'button', class: 'gp kafel' + (f || r ? '' : ' pusta'), 'data-h': String(h), 'aria-pressed': String(jest),
+        disabled: !(f || r), title: (f || r ? `${jest ? 'Schowaj' : 'Pokaż'} ${h}–${h + 1}\n` : '') + ([f && f.nazwa, r && r.nazwa].filter(Boolean).join('\n') || 'brak plików'),
+        onclick: () => przelaczGodzine(h) },
+        el('span', { class: 'h' }, String(h)),
+        el('span', { class: 'z' + (f && !f.blad ? ' jest' : '') }, el('span', { class: 'zr', title: 'plik z DYSZY' }, 'D →'), el('span', null, f ? (f.blad ? '!' : godzMin(f.czas)) : '—')),
+        el('span', { class: 'z' + (r && !r.blad ? ' jest' : '') }, el('span', { class: 'zr', title: 'plik z Routific' }, 'R →'), el('span', null, r ? (r.blad ? '!' : godzMin(r.czas)) : '—'))));
+    }
+    box.replaceChildren(...kafle);
+    const bl = $('bledy');
+    const info = [];
+    S.pliki.filter(p => p.blad).forEach(p => info.push(el('div', { class: 'info uw' }, el('b', null, p.nazwa), ` — ${p.blad}`)));
+    bl.replaceChildren(...info);
+  }
+
+  // ── widok KIEROWCY ──
+  function widokKierowcy() {
+    const kier = listaKierowcow();
+    if (!kier.length) return el('div', { class: 'tabela-w' }, el('div', { class: 'puste' }, 'Kierowcy pojawią się po pierwszym eksporcie z Routific.'));
+    const wyb = godzinyWybrane(), wGodz = t => wyb.indexOf(t.h) >= 0;
+    const trasyW = k => S.model.poKier[k].filter(wGodz);
+    const adresow = k => trasyW(k).reduce((a, t) => a + t.stopy.length, 0);
+    const widac = kier.filter(k => adresow(k) > 0);
+    const wszystkich = widac.reduce((a, k) => a + adresow(k), 0);
+    const opis = `${widac.length} ${odm(widac.length, ['kierowca', 'kierowcy', 'kierowców'])} · ${wszystkich} ${odm(wszystkich, ['adres', 'adresy', 'adresów'])}`;
+    const zakl = el('section', { class: 'pliki', 'aria-labelledby': 'kier-t' },
+      el('div', { class: 'pliki-n' }, el('b', { id: 'kier-t' }, 'Kierowcy'),
+        el('small', null, S.godz === null ? opis : !wyb.length ? 'nie wybrano godzin' : `${przedzialy(wyb)}: ${opis}`)),
+      el('div', { class: 'kafle', role: 'tablist', 'aria-labelledby': 'kier-t' },
+        kier.map(k => {
+          const ile = adresow(k), rzutow = trasyW(k).length;
+          return el('button', { type: 'button', class: 'kier-b' + (ile ? '' : ' poza'), role: 'tab', 'aria-selected': String(k === S.kierowca),
+            title: ile ? `${ile} ${odm(ile, ['adres', 'adresy', 'adresów'])} · ${rzutow} ${odm(rzutow, ['rzut', 'rzuty', 'rzutów'])}` : 'bez zamówień w wybranych godzinach',
+            onclick: () => { S.kierowca = k; rysuj(); } }, k);
+        })));
+    const k = S.kierowca;
+    const trasy = S.model.poKier[k] || [];
+    const wiersze = [];
+    const sumy = { got: 0, kar: 0, blikO: 0, blikK: 0, rest: 0 };   // widoczne wiersze (wybrane godziny)
+    let gotowkaDnia = 0;                                             // panel rozliczenia — cały dzień
+    const zm = [];
+    trasy.forEach(t => {
+      const widoczna = wGodz(t);
+      t.stopy.slice().sort((a, b) => a.nr - b.nr).forEach((s, i) => {
+        const z = S.model.zam.get(klucz(s.id));
+        const p = platnosc(z, s);
+        gotowkaDnia += p.got || 0;
+        if (p.zmiana) zm.push(p.zmiana);
+        if (!widoczna) return;
+        ['got', 'kar', 'blikO', 'blikK', 'rest'].forEach(r => { sumy[r] += p[r] || 0; });
+        wiersze.push(el('tr', { class: i === 0 && wiersze.length ? 'nowy-rzut' : null },
+          el('td', { class: 'h' }, String(t.h)),
+          el('td', { class: 'id' }, s.id || '—'),
+          el('td', { class: 'adr' }, z ? z.adres : el('span', { class: 'znacz uw' }, 'brak w eksporcie DYSZY')),
+          el('td', { class: 'przyc' }, maRole('platnosci') && z && p.drzwi
+            ? el('button', { type: 'button', class: 'inf zm-b' + (p.zmiana ? ' jest' : ''), 'aria-expanded': 'false', disabled: !!S.koniec[k],
+              title: S.koniec[k] ? 'Rozliczenie zamknięte (KONIEC) — zmiana po odblokowaniu przez dyspozytora' : null,
+              'aria-label': `Zmiana płatności — ${s.id}`, onclick: e => pokazZmiane(e.currentTarget, z.id, p) }, 'ZMIANA')
+            : null),
+          el('td', { class: 'kw' }, kwotyKomorka(p, z))));
+      });
+    });
+    const tabela = wiersze.length
+      ? el('div', { class: 'tabela-w', onscroll: ustawChmurke }, el('table', { class: 'lista', 'aria-label': `Zamówienia kierowcy ${k}` },
+        el('tbody', null, wiersze, el('tr', { class: 'suma' }, el('td', { colspan: '4' }, el('span', { class: 'st-kafel lacznie', title: 'łącznie w wybranych godzinach — km z Routific, bez EXTRA' },
+          el('small', null, 'ŁĄCZNIE'), el('b', null, `${wiersze.length} ${odm(wiersze.length, ['adres', 'adresy', 'adresów'])}`),
+          el('b', null, `${km(trasy.filter(wGodz).reduce((a, x) => a + x.kmDz, 0))} km`))),
+          el('td', { class: 'kw' }, kwotySumy(sumy))))))
+      : el('div', { class: 'tabela-w' }, el('div', { class: 'puste' }, wyb.length ? `${k} — bez zamówień w wybranych godzinach (${przedzialy(wyb)}).`
+        : 'Wybierz godziny w kafelkach „Pliki dnia” — dotknij godziny albo „Cały dzień”.'));
+    const listaZmian = zm.length ? el('section', { class: 'zmiany', 'aria-label': 'Zmiany płatności' },
+      el('b', null, `Zmiany płatności (${zm.length})`),
+      el('ul', null, zm.map(x => el('li', null, el('span', null, x.czas), el('span', { class: 'id' }, x.id), kwotaZ(x.na, x.kwota, '', x.z), el('small', null, x.kto))))) : null;
+    return el('div', { class: 'widok-k' }, zakl, el('div', { class: 'uklad' }, el('div', { class: 'lewa' }, tabela, listaZmian), panelRozliczenia(k, trasy, gotowkaDnia)));
+  }
+
+  function rozliczenie(k, trasy, gotowka) {
+    const r = S.rozl[k] = S.rozl[k] || { start: '', stop: '', extra: '', bonus: '', wyplata: '' };
+    const typ = typKierowcy(k);
+    const kmDz = trasy.reduce((a, t) => a + t.kmDz, 0);
+    const adresy = trasy.reduce((a, t) => a + t.stopy.length, 0);
+    const out = { typ: typ, kmDz: kmDz, adresy: adresy, gotowka: gotowka, czas: null, czasowka: null, kmZl: null, adresZl: null, wyplata: null, bledy: [] };
+    if (typ === 'firma') { out.wyplata = 0; }
+    else if (typ === 'res') { out.wyplata = S.dniowka === null || S.dniowka === undefined ? null : S.dniowka; }   // RES: cała wypłata = dniówka z list startowych
+    else {
+      const a = minuty(r.start), b = minuty(r.stop);
+      if (a < 99999 && b < 99999) out.czas = ((b - a) % 1440 + 1440) % 1440;
+      const ex = liczbaWpis(r.extra, 10), bo = liczbaWpis(r.bonus, 100);
+      if (ex === null) out.bledy.push('EXTRA'); if (bo === null) out.bledy.push('BONUS');
+      if (!S.stawki) out.bezStawek = true;                      // stawki — z formularza (w basic przy plikach jeszcze ich nie ma)
+      else {
+        if (out.czas !== null) out.czasowka = Math.round(out.czas * S.stawki.h / 60);
+        out.kmZl = Math.round((kmDz + (ex || 0)) * S.stawki.km / 10);
+        out.adresZl = adresy * S.stawki.adres + (bo || 0);
+        out.wyplata = out.czasowka === null ? null : out.czasowka + out.kmZl + out.adresZl;
+      }
+    }
+    if (out.wyplata !== null) { out.oddaje = Math.max(0, gotowka - out.wyplata); out.dostaje = out.oddaje > 0 ? 0 : Math.max(0, out.wyplata - gotowka); }
+    return out;
+  }
+
+  async function zakonczKierowce(k, trasy, gotowka) {          // KONIEC: rozliczenie kierowcy zamknięte — idzie do raportu transportu
+    if (!maRole('dyspozytor') || S.koniec[k]) return;
+    const o = rozliczenie(k, trasy, gotowka);
+    const brak = o.typ === 'kierowca'
+      ? (o.czas === null ? 'Najpierw wpisz START i STOP.' : o.bledy.length ? `Popraw ${o.bledy.join(' i ')} — wpisz liczbę, np. 3 albo 2,5.`
+        : o.wyplata === null ? 'Brak stawek dnia — KONIEC po wysłaniu list startowych.' : '')
+      : o.typ === 'res' && o.wyplata === null ? 'Brak dniówki RES — ustaw ją w LISTACH STARTOWYCH.' : '';
+    if (brak) { const s = $('o-koniec-s'); if (s) { s.textContent = brak; s.classList.add('uw'); } return; }
+    try {
+      await zapiszWpisyTeraz();                                 // najpierw ostatnie START / STOP / EXTRA / BONUS
+      stanZapisu('zapisuję…');
+      const r = await baza.rpc('transport_koniec', { p_dzien: S.dzien, p_kierowca: k, p_zamknij: true,
+        p_dane: { typ: o.typ, czas: o.czas, kmDz: o.kmDz, adresy: o.adresy, gotowka: o.gotowka, wyplata: o.wyplata, oddaje: o.oddaje || 0, dostaje: o.dostaje || 0 } });
+      if (r.koniec) S.koniec[k] = { czas: godzinaZ(r.koniec.kiedy), kto: r.koniec.kto || kto(S.ja) };
+      S.koniecInfo = null;
+      stanZapisu('zapisane ' + (r.koniec ? godzinaZ(r.koniec.kiedy) : terazGodz()));
+    } catch (e) { blad(e); }
+    rysuj();
+    const b = $('o-koniec'); if (b) b.focus();
+  }
+  async function odblokujKierowce(k) {                         // „odblokuj”: powrót do poprawek; potem znów KONIEC
+    if (!maRole('dyspozytor') || !S.koniec[k]) return;
+    try {
+      await baza.rpc('transport_koniec', { p_dzien: S.dzien, p_kierowca: k, p_zamknij: false, p_dane: null });
+      delete S.koniec[k];
+      S.koniecInfo = { k: k, t: `Odblokowane ${terazGodz()} — popraw i wciśnij KONIEC.` };
+      stanZapisu('zapisane ' + terazGodz());
+    } catch (e) { blad(e); }
+    rysuj();
+    const b = $('o-koniec'); if (b) b.focus();
+  }
+
+  function panelRozliczenia(k, trasy, gotowka) {
+    const wybrane = godzinyWybrane();                          // rozliczenie zawsze za cały dzień; rzuty spoza wybranych godzin — przygaszone
+    const r = S.rozl[k] = S.rozl[k] || { start: '', stop: '', extra: '', bonus: '', wyplata: '' };
+    const typ = typKierowcy(k);
+    const odswiez = () => {
+      const o = rozliczenie(k, trasy, gotowka);
+      const ust = (id, t) => { const e = $(id); if (e) e.textContent = t; };
+      ust('o-czas', o.czas === null ? 'wpisz START i STOP' : `${Math.floor(o.czas / 60)} h ${dd(o.czas % 60)} min`);
+      ust('o-czasowka', o.czasowka === null ? '—' : '= ' + zl(o.czasowka));
+      const cg = $('o-czasg');                                 // łączny czas od START do STOP
+      if (cg) { cg.classList.toggle('pusty', o.czas === null); cg.replaceChildren(...czasPola(o.czas)); }
+      ust('o-kmzl', o.kmZl === null ? '—' : '= ' + zl(o.kmZl));
+      ust('o-adrzl', o.adresZl === null ? '—' : '= ' + zl(o.adresZl));
+      ust('o-gotowka', zl(o.gotowka) + ' zł');
+      ust('o-wyplata', o.wyplata === null ? (typ === 'res' ? 'dniówka — w listach startowych' : o.bezStawek ? '—' : 'wpisz START i STOP') : zl(o.wyplata) + ' zł');
+      ust('o-oddaje', o.wyplata === null ? '—' : zl(o.oddaje) + ' zł');
+      ust('o-dostaje', o.wyplata === null ? '—' : zl(o.dostaje) + ' zł');
+      const od = $('o-od'), ds = $('o-ds');
+      if (od) od.classList.toggle('akt', !!(o.wyplata !== null && o.oddaje > 0));
+      if (ds) ds.classList.toggle('akt', !!(o.wyplata !== null && o.dostaje > 0));
+      ust('o-blad', o.bledy.length ? `Nie rozumiem: ${o.bledy.join(', ')} — wpisz liczbę, np. 3 albo 2,5.` : '');
+      const ks = $('o-koniec-s'); if (ks && ks.classList.contains('uw')) { ks.classList.remove('uw'); ks.textContent = ''; }   // po poprawce uwaga przy KONIEC znika
+    };
+    const wpis = (pole, at) => el('input', Object.assign({ class: 'pole', value: r[pole] || '', disabled: !maRole('dyspozytor') || !!S.koniec[k],
+      oninput: e => { r[pole] = e.target.value; odswiez(); zapiszWpis(k, pole, e.target.value); },
+      onchange: e => { zapiszWpis(k, pole, e.target.value, true); } }, at));
+    const rz = [];
+    for (let i = 0; i < Math.max(7, trasy.length); i++) {
+      const t = trasy[i];
+      rz.push(el('tr', { class: t ? (wybrane.indexOf(t.h) >= 0 ? null : 'poza') : 'brak' }, el('td', null, String(i + 1)), el('td', null, t ? `${t.przedzial.replace('-', '–')}` : ''),
+        el('td', { class: 'kw' }, t ? `${km(t.kmDz)} km` : ''), el('td', { class: 'kw' }, t ? String(t.stopy.length) : '')));
+    }
+    const o0 = rozliczenie(k, trasy, gotowka);
+    const naglowek = el('h2', null, k, el('small', null, typ === 'firma' ? 'ZEW — kierowca innej firmy: bez wypłaty, oddaje gotówkę' : typ === 'res' ? 'RES — kierowca restauracji: wypłata = dniówka' : `${trasy.length} ${odm(trasy.length, ['rzut', 'rzuty', 'rzutów'])} · ${km(o0.kmDz)} km · ${o0.adresy} adr.`));
+    const gora = typ === 'kierowca'
+      ? el('div', { class: 'ss' },
+        el('label', null, 'START', wpis('start', { type: 'time', class: 'pole start', 'aria-label': 'START' })),
+        el('label', null, 'STOP', wpis('stop', { type: 'time', class: 'pole stop', 'aria-label': 'STOP' })))
+      : null;
+    const razem = typ === 'kierowca'
+      ? el('tr', { class: 'razem' }, el('td', null, 'Σ'), el('td', null, el('span', { class: 'wkl lewo' }, el('span', { class: 'etk', title: 'czas między START a STOP × zł/h' }, 'CZASÓWKA'),
+        el('span', { class: 'czas-pole pusty', id: 'o-czasg', title: 'łączny czas od START do STOP' }, czasPola(null)), el('span', { id: 'o-czasowka' }))),
+        el('td', { class: 'kw' }, el('span', { class: 'wkl' }, el('label', { for: 'w-extra', title: 'km ponad trasę z Routific (objazd, blokada drogi)' }, 'EXTRA'),
+          wpis('extra', { id: 'w-extra', inputmode: 'decimal', 'aria-label': 'EXTRA — km ponad trasę', placeholder: '0' }), el('span', { id: 'o-kmzl' }))),
+        el('td', { class: 'kw' }, el('span', { class: 'wkl' }, el('label', { for: 'w-bonus', title: 'BONUS w złotych — wpisuje dyspozytor pod koniec dnia' }, 'BONUS'),
+          wpis('bonus', { id: 'w-bonus', inputmode: 'decimal', 'aria-label': 'BONUS w złotych', placeholder: '0' }), el('span', { id: 'o-adrzl' }))))
+      : el('tr', { class: 'razem' }, el('td', null, 'Σ'), el('td', null, ''), el('td', { class: 'kw' }, `${km(o0.kmDz)} km`), el('td', { class: 'kw' }, String(o0.adresy)));
+    const tab = el('div', { class: 'rzuty-w' }, el('table', { class: 'rzuty', 'aria-label': 'Rzuty kierowcy' },
+      el('colgroup', null, ['k-rz', 'k-cz', 'k-km', 'k-ad'].map(c => el('col', { class: c }))),
+      el('thead', null, el('tr', null, el('th', null, 'Rzut'), el('th', null, 'Przedział'), el('th', { class: 'kw' }, 'Kilometry'), el('th', { class: 'kw' }, 'Adresy'))),
+      el('tbody', null, rz.map((tr, i) => {                   // w kolumnie czasówki — przedział rzutu (czasówka jest w wierszu Σ)
+        return tr;
+      }), razem)));
+    const zamk = S.koniec[k] || null, mozeK = maRole('dyspozytor');
+    const info = zamk ? `Zamknięte ${zamk.czas} · ${zamk.kto} — w PODSUMOWANIU: ROZLICZONY.` : S.koniecInfo && S.koniecInfo.k === k ? S.koniecInfo.t : '';
+    const koniec = [el('div', { class: 'koniec-r' },
+        el('button', { type: 'button', class: 'koniec-b', id: 'o-koniec', 'aria-pressed': String(!!zamk), disabled: !mozeK,
+          title: zamk ? 'Rozliczenie zamknięte — poprawki po „odblokuj”' : mozeK ? 'Koniec pracy kierowcy — w PODSUMOWANIU będzie ROZLICZONY' : 'KONIEC wciska Transport Dyspozytor',
+          onclick: () => zakonczKierowce(k, trasy, gotowka) }, 'KONIEC'),
+        zamk && mozeK ? el('button', { type: 'button', class: 'odblokuj-b', id: 'o-odblokuj', title: 'Powrót do poprawek: START, STOP, EXTRA, BONUS', onclick: () => odblokujKierowce(k) }, 'odblokuj') : null),
+      el('div', { class: 'notka koniec-s', id: 'o-koniec-s', role: 'status' }, info)];
+    const wynik = el('div', { class: 'wynik' },
+      typ === 'kierowca' ? el('div', { class: 'r' }, el('span', null, 'CZAS PRACY'), el('b', { id: 'o-czas' })) : null,
+      el('div', { class: 'r' }, el('span', null, 'GOTÓWKA OD KLIENTA'), el('b', { id: 'o-gotowka' })),
+      el('div', { class: 'r' }, el('span', null, typ === 'res' ? 'WYPŁATA · DNIÓWKA' : 'WYPŁATA'), el('b', { id: 'o-wyplata' })),
+      el('div', { class: 'od' }, el('div', { id: 'o-od' }, el('span', null, 'ODDAJE'), el('b', { id: 'o-oddaje' })),
+        el('div', { id: 'o-ds' }, el('span', null, 'DOSTAJE'), el('b', { id: 'o-dostaje' }))),
+      koniec,
+      el('div', { class: 'notka', id: 'o-blad', role: 'status' }));
+    const panel = el('section', { class: 'panel', 'aria-label': `Rozliczenie ${k}` }, naglowek, gora, tab, wynik,
+      el('div', { class: 'notka' }, (tylkoOdczyt() ? 'Rola Transport Odczyt — tylko podgląd. ' : !maRole('dyspozytor') ? 'Rola Transport Płatności — START, STOP, EXTRA i BONUS wpisuje dyspozytor. ' + (zamk ? 'Rozliczenie zamknięte (KONIEC) — zmiana płatności po odblokowaniu przez dyspozytora. ' : '') : '') + (typ === 'kierowca' ? (S.stawki ? '' : 'Stawki przyjdą z list startowych — do tego czasu kwoty to „—”. ') + 'EXTRA — km ponad trasę z Routific; BONUS — zł.'
+        : typ === 'res' ? 'Dniówkę RES ustala dyspozytor w LISTACH STARTOWYCH (stawki dnia).' : '')
+        + (trasy.some(t => wybrane.indexOf(t.h) < 0) ? ' Rozliczenie liczy cały dzień — przygaszone rzuty są poza wybranymi godzinami.' : '')));
+    setTimeout(odswiez, 0);
+    return panel;
+  }
+
+  // ── widok PODSUMOWANIE: kierowcy dnia (zamiast pliku T) i statystyka dnia — zawsze cały dzień ──
+  function danePodsumowania() {
+    const M = S.model, RODZ = ['got', 'kar', 'blikO', 'blikK', 'rest', 'onl'];
+    const pusta = () => { const o = { zmian: 0, bezDanych: 0 }; RODZ.forEach(r => { o[r] = 0; o['n_' + r] = 0; }); return o; };
+    const dzien = pusta();
+    const kier = listaKierowcow().map(k => {
+      const trasy = M.poKier[k] || [], pl = pusta();
+      trasy.forEach(t => t.stopy.forEach(s => {
+        const z = M.zam.get(klucz(s.id));
+        if (!z) { pl.bezDanych++; dzien.bezDanych++; }
+        const p = platnosc(z, s);
+        RODZ.forEach(r => { const v = p[r]; if (v === null || v === undefined || (!(v > 0) && r !== 'blikO')) return; pl[r] += v || 0; pl['n_' + r]++; dzien[r] += v || 0; dzien['n_' + r]++; });
+        if (p.zmiana) { pl.zmian++; dzien.zmian++; }
+      }));
+      const o = rozliczenie(k, trasy, pl.got), r = S.rozl[k] || {};
+      const wartosc = RODZ.reduce((a, x) => a + pl[x], 0);
+      return { k: k, typ: o.typ, o: o, rzuty: trasy.length, pl: pl, wartosc: wartosc, ex: o.typ === 'kierowca' ? (liczbaWpis(r.extra, 10) || 0) : 0, bo: o.typ === 'kierowca' ? (liczbaWpis(r.bonus, 100) || 0) : 0,
+        start: r.start || '', stop: r.stop || '', zamk: S.koniec[k] || null };
+    });
+    const suma = (f, war) => kier.filter(w => !war || war(w)).reduce((a, w) => a + (f(w) || 0), 0);
+    const wl = w => w.typ !== 'firma';                          // własni i RES — bez ZEW (firmy rozliczają się fakturą)
+    const zW = w => w.typ === 'kierowca' && w.o.wyplata !== null; // zwykły kierowca z policzoną wypłatą
+    let bezKier = 0;
+    M.zam.forEach(z => { if (!M.przyp.has(klucz(z.id))) bezKier++; });
+    return { kier: kier, dzien: dzien, zam: M.zam.size, bezKier: bezKier,
+      adresy: suma(w => w.o.adresy), rzuty: suma(w => w.rzuty), kmDz: suma(w => w.o.kmDz), exDz: suma(w => w.ex),
+      nWl: kier.filter(w => w.typ === 'kierowca').length, nRes: kier.filter(w => w.typ === 'res').length, nZew: kier.filter(w => w.typ === 'firma').length,
+      czas: suma(w => w.o.czas, w => w.typ === 'kierowca'), nCzas: kier.filter(w => w.typ === 'kierowca' && w.o.czas !== null).length,
+      wyplaty: suma(w => w.o.wyplata), brakWypl: kier.filter(w => w.o.wyplata === null).map(w => w.k),
+      czasowka: suma(w => w.o.czasowka, zW), kmZl: suma(w => w.o.kmZl, zW), adresZl: suma(w => w.o.adresZl - w.bo, zW), bonus: suma(w => w.bo, zW),   // części wypłat (tylko kierowcy z wypłatą)
+      dniowka: suma(w => w.o.wyplata, w => w.typ === 'res'),
+      oddaja: suma(w => w.o.wyplata === null ? 0 : w.o.oddaje), dostaja: suma(w => w.o.wyplata === null ? 0 : w.o.dostaje),
+      wyplWl: suma(w => w.o.wyplata, wl), adresyWl: suma(w => w.o.adresy, wl), wartoscWl: suma(w => w.wartosc, wl),
+      rozl: kier.filter(w => w.zamk).length, doRozl: kier.filter(w => !w.zamk).map(w => w.k) };
+  }
+  function widokPodsumowania() {
+    if (!S.model || !Object.keys(S.model.poKier).length) return el('div', { class: 'tabela-w' }, el('div', { class: 'puste' }, 'Podsumowanie pojawi się po pierwszym eksporcie z Routific.'));
+    const D = danePodsumowania(), d = D.dzien;
+    const ost = S.pliki.reduce((m, p) => Math.max(m, p.czas), -1);
+    const czasTxt = m => `${Math.floor(m / 60)} h ${dd(m % 60)} min`;
+    const bonusTxt = g => `+${g % 100 ? zl(g) : tys(g / 100)} BONUS`;   // „+10 BONUS” — zł; BONUS za dużą odległość do klienta
+    const ul = (a, b) => (b ? (a / b).toFixed(1).replace('.', ',') : '0');
+    const otworz = k => { S.widok = 'kierowcy'; S.kierowca = k; rysuj(); window.scrollTo(0, 0); };
+    const kwOd = w => w.o.wyplata === null ? '—' : w.o.oddaje > 0 ? [zl(w.o.oddaje), el('small', null, 'oddaje')] : w.o.dostaje > 0 ? [zl(w.o.dostaje), el('small', null, 'dostaje')] : '0,00';
+    const wiersze = D.kier.map(w => el('tr', { class: w.zamk ? 'rozl' : null },
+      el('td', { class: 'stk' }, el('div', { class: 'kier-c' },
+        el('button', { type: 'button', class: 'pods-k-b', title: `Otwórz kartę kierowcy ${w.k}`, onclick: () => otworz(w.k) }, w.k),
+        w.typ === 'res' ? el('span', { class: 'typ-zn', title: 'RES — kierowca restauracji: wypłata = dniówka' }, 'RES') : null,
+        w.zamk ? el('span', { class: 'rozl-zn', title: `KONIEC ${w.zamk.czas} · ${w.zamk.kto}` }, 'ROZLICZONY') : null)),
+      el('td', { class: 'kw' }, w.typ === 'kierowca' ? (w.o.czas === null ? ['—', el('small', null, 'brak START / STOP')] : [czasTxt(w.o.czas), el('small', null, `${w.start}–${w.stop}`)])
+        : w.typ === 'res' ? ['dniówka', el('small', null, 'RES')] : ['—', el('small', null, 'ZEW')]),
+      el('td', { class: 'kw' }, String(w.rzuty)),
+      el('td', { class: 'kw' }, String(w.o.adresy), w.bo ? el('small', null, bonusTxt(w.bo)) : null),
+      el('td', { class: 'kw' }, km(w.o.kmDz + w.ex), w.ex ? el('small', null, `+${km(w.ex)} EXTRA`) : null),
+      el('td', { class: 'kw' }, zl(w.pl.got)),
+      el('td', { class: 'kw' }, w.o.wyplata === null ? '—' : zl(w.o.wyplata)),
+      el('td', { class: 'kw' }, kwOd(w))));
+    const stopka = el('tr', null, el('td', { class: 'stk' }, 'RAZEM'),
+      el('td', { class: 'kw' }, D.nCzas ? czasTxt(D.czas) : '—'),
+      el('td', { class: 'kw' }, String(D.rzuty)), el('td', { class: 'kw' }, String(D.adresy), D.bonus ? el('small', null, bonusTxt(D.bonus)) : null),
+      el('td', { class: 'kw' }, km(D.kmDz + D.exDz)), el('td', { class: 'kw' }, zl(d.got)), el('td', { class: 'kw' }, zl(D.wyplaty)),
+      el('td', { class: 'kw' }, zl(D.oddaja), el('small', null, 'oddają'), D.dostaja ? [zl(D.dostaja), el('small', null, 'dostają')] : null));
+    const tabela = el('section', { class: 'panel', 'aria-labelledby': 'pods-k-t' },
+      el('div', { class: 'karta-n' }, el('b', { id: 'pods-k-t' }, 'Kierowcy dnia'),
+        el('small', null, `${dzienNapis(S.dzien)} · cały dzień · stan na ${ost < 0 ? '—' : godzMin(ost)} · rozliczeni ${D.rozl} z ${D.kier.length}`)),
+      el('div', { class: 'tabela-w' }, el('table', { class: 'pods-t', 'aria-label': 'Kierowcy dnia — podsumowanie' },
+        el('thead', null, el('tr', null, el('th', { class: 'stk' }, 'Kierowca'), ['Czas', 'Rzuty', 'Adresy', 'Km', 'Gotówka', 'Wypłata', 'Oddaje / dostaje'].map(x => el('th', { class: 'kw' }, x)))),
+        el('tbody', null, wiersze), el('tfoot', null, stopka))),
+      el('div', { class: 'notka' }, D.doRozl.length
+        ? `Do rozliczenia: ${D.doRozl.join(', ')}. Dotknij imienia — otworzysz kartę kierowcy; KONIEC na karcie = ROZLICZONY tutaj.`
+        : 'Wszyscy kierowcy rozliczeni.'));
+    const kafel = (etk, wart, opis, cls) => el('div', { class: 'st-t' + (cls ? ' ' + cls : '') }, el('span', null, etk), el('b', null, wart), opis ? el('small', null, opis) : null);
+    const plE = r => { const x = PLATNOSCI.find(y => y[0] === r); return [el('abbr', { class: 'pl pl-' + x[3], title: x[2] }, x[1]), x[2].split(' — ')[0].toUpperCase()]; };
+    const zam = n => `${n} ${odm(n, ['zamówienie', 'zamówienia', 'zamówień'])}`;
+    const grupa = (tytul, kafle) => el('div', { class: 'st-gr' }, el('h3', null, tytul), el('div', { class: 'st-siatka' }, kafle));
+    const wartosc = d.got + d.kar + d.blikO + d.blikK + d.onl + d.rest;
+    const statystyka = el('section', { class: 'panel', 'aria-labelledby': 'pods-s-t' },
+      el('div', { class: 'karta-n' }, el('b', { id: 'pods-s-t' }, 'Statystyka dnia'), el('small', null, 'z eksportów DYSZY i Routific oraz wpisów dyspozytora')),
+      grupa('Dostawy', [
+        kafel('ZAMÓWIENIA', String(D.zam), D.bezKier ? `bez kierowcy: ${D.bezKier}` : 'wszystkie u kierowców'),
+        kafel('ADRESY', String(D.adresy), `${ul(D.kmDz + D.exDz, D.adresy * 10)} km na adres`),
+        kafel('KILOMETRY', km(D.kmDz + D.exDz) + ' km', D.exDz ? `Routific ${km(D.kmDz)} · EXTRA ${km(D.exDz)}` : 'z Routific'),
+        kafel('RZUTY', String(D.rzuty), `średnio ${ul(D.adresy, D.rzuty)} adresu na rzut`),
+        kafel('KIEROWCY', String(D.kier.length), `własni ${D.nWl} · RES ${D.nRes} · ZEW ${D.nZew}`),
+        kafel('CZAS PRACY', D.nCzas ? czasTxt(D.czas) : '—', `${D.nCzas} ${odm(D.nCzas, ['kierowca', 'kierowcy', 'kierowców'])} z czasówką`)]),
+      grupa('Płatności', [
+        kafel(plE('got'), zl(d.got) + ' zł', zam(d.n_got)),
+        kafel(plE('kar'), zl(d.kar) + ' zł', zam(d.n_kar)),
+        kafel(plE('blikO'), zl(d.blikO) + ' zł', zam(d.n_blikO)),
+        kafel(plE('blikK'), zl(d.blikK) + ' zł', zam(d.n_blikK)),
+        kafel([el('span', { class: 'znacz sz' }, 'online'), 'ZAPŁACONE'], zl(d.onl) + ' zł', zam(d.n_onl)),
+        d.n_rest ? kafel(plE('rest'), zl(d.rest) + ' zł', zam(d.n_rest) + ' — rozlicza restauracja') : null,
+        kafel('WARTOŚĆ ZAMÓWIEŃ', zl(wartosc) + ' zł', `zamówienia u kierowców${d.zmian ? ` · zmiany płatności: ${d.zmian}` : ''}`)]),
+      grupa('Rozliczenie', [
+        kafel('ROZLICZENI', `${D.rozl} z ${D.kier.length}`, D.doRozl.length ? `do rozliczenia: ${D.doRozl.length}` : 'wszyscy — dzień zamknięty', D.doRozl.length ? null : 'wyr'),
+        kafel('WYPŁATY', zl(D.wyplaty) + ' zł', `czasówka ${zl(D.czasowka)} · km ${zl(D.kmZl)} · adresy ${zl(D.adresZl)}${D.bonus ? ` + BONUS ${zl(D.bonus)}` : ''}${D.dniowka ? ` · dniówka RES ${zl(D.dniowka)}` : ''}`
+          + (D.brakWypl.length ? ` · bez: ${D.brakWypl.join(', ')}` : '')),
+        kafel('ODDAJĄ', zl(D.oddaja) + ' zł', 'gotówka po potrąceniu wypłaty'),
+        kafel('DOSTAJĄ', zl(D.dostaja) + ' zł', 'wypłata większa niż gotówka'),
+        kafel('DO KASY', zl(D.oddaja - D.dostaja) + ' zł', 'oddają − dostają', 'wyr'),
+        kafel('KOSZT DOSTAWY', D.adresyWl ? zl(Math.round(D.wyplWl / D.adresyWl)) + ' zł' : '—',
+          `na adres · ${D.wartoscWl ? (D.wyplWl * 100 / D.wartoscWl).toFixed(1).replace('.', ',') + ' %' : '—'} wartości zamówień (wypłaty bez ZEW)`)]));
+    return el('div', { class: 'pods' }, tabela, statystyka,
+      el('div', { class: 'notka' }, 'PODSUMOWANIE zastępuje plik T — liczy się samo z eksportów i wpisów dyspozytora, zawsze za cały dzień. Pokaz: dane zmyślone, stan tylko w tej przeglądarce.'));
+  }
+
+  // ── widok LISTY PRZEWOZOWE ──
+  function widokListy() {
+    const wyb = godzinyWybrane();
+    if (!godzinyDostepne().length) return el('div', { class: 'tabela-w' }, el('div', { class: 'puste' }, 'Listy pojawią się po pierwszym eksporcie z DYSZY.'));
+    if (!wyb.length) return el('div', { class: 'tabela-w' }, el('div', { class: 'puste' }, 'Wybierz godziny w kafelkach „Pliki dnia” — dotknij godziny albo „Cały dzień”.'));
+    const M = S.model, wGodz = h => wyb.indexOf(h) >= 0, wiele = wyb.length > 1;
+    const wiersze = [];
+    M.zam.forEach(z => { if (wGodz(z.h)) { const pr = M.przyp.get(klucz(z.id)); wiersze.push({ z: z, t: pr ? pr.t : null, s: pr ? pr.s : null, h: z.h }); } });
+    M.trasy.filter(t => wGodz(t.h)).forEach(t => t.stopy.forEach(s => { if (!M.zam.has(klucz(s.id))) wiersze.push({ z: null, t: t, s: s, h: t.h }); }));
+    const adr = w => (w.z ? String(w.z.adres || '') : '');
+    const wgAdresu = (a, b) => adr(a).localeCompare(adr(b), 'pl', { numeric: true, sensitivity: 'base' });
+    if (S.sortL === 'adresy') wiersze.sort((a, b) => (adr(a) ? 0 : 1) - (adr(b) ? 0 : 1) || wgAdresu(a, b) || a.h - b.h);   // adresy A–Z (bez adresu — na końcu)
+    else wiersze.sort((a, b) => (a.t ? 1 : 0) - (b.t ? 1 : 0)                                                 // bez kierowcy — na górze
+      || (a.t && b.t ? a.t.kier.localeCompare(b.t.kier, 'pl') || a.t.rzut - b.t.rzut || a.s.nr - b.s.nr : a.h - b.h) || wgAdresu(a, b));
+    const bezGodz = wiersze.filter(w => !w.t).map(w => w.h);
+    const bezNapis = bezGodz.length && bezGodz.every(h => M.godzinyR[h])
+      ? `BEZ KIEROWCY — nie ma ich w eksporcie z Routific ${wiele ? 'tych godzin' : 'tej godziny'}` : 'BEZ KIEROWCY — czeka na eksport z Routific';
+    const kol = wiele ? 8 : 7;                                  // przy kilku godzinach pierwsza kolumna — godzina
+    const sumy = { got: 0, kar: 0, blikO: 0, blikK: 0, rest: 0 };
+    const tr = [];
+    let poprzedni = null;
+    wiersze.forEach(w => {
+      const p = platnosc(w.z, w.s);
+      ['got', 'kar', 'blikO', 'blikK', 'rest'].forEach(k => { sumy[k] += p[k] || 0; });
+      const kier = w.t ? w.t.kier : '', grupa = w.t ? `${kier}|${w.t.rzut}` : '';
+      if (S.sortL !== 'adresy' && grupa !== poprzedni) {
+        tr.push(el('tr', { class: 'grupa' }, el('td', { colspan: String(kol) }, w.t ? `${kier} · rzut ${w.t.rzut}${wiele ? ' · ' + w.t.przedzial.replace('-', '–') : ''}` : bezNapis)));
+        poprzedni = grupa;
+      }
+      const idZ = w.z ? w.z.id : w.s.id;
+      const info = (nazwa, tresc, zKop) => el('td', { class: 'przyc' }, el('button', { type: 'button', class: 'inf', 'aria-expanded': 'false', disabled: !tresc,
+        'aria-label': tresc ? `${nazwa} — pokaż` : `${nazwa} — puste`, onclick: e => pokazChmurke(e.currentTarget, nazwa, idZ, tresc, zKop) }, nazwa));
+      tr.push(el('tr', null,
+        wiele ? el('td', { class: 'h' }, String(w.h)) : null,
+        el('td', { class: 'kier' }, kier || el('span', { class: 'znacz uw' }, '—')),
+        el('td', { class: 'id' }, idZ),
+        el('td', { class: 'adr' }, w.z ? w.z.adres : el('span', { class: 'znacz uw' }, 'brak w eksporcie DYSZY')),
+        el('td', { class: 'kw' }, kwotyKomorka(p, w.z)),
+        info('Phone', w.z ? String(w.z.tel || '').trim() : '', true),
+        info('Notes', String((w.s && w.s.kod === 'B' ? w.s.notes : w.z ? w.z.n1 : (w.s ? w.s.notes : '')) || '').trim(), false),
+        info('Notes 2', w.z ? String(w.z.n2 || '').trim() : '', false)));
+    });
+    const sortuj = (tryb, napis) => el('button', { type: 'button', class: 'st-kafel sort', 'aria-pressed': String(S.sortL === tryb),
+      title: `Sortuj alfabetycznie: ${napis.toLowerCase()}`, onclick: () => { S.sortL = tryb; rysuj(); } }, el('small', null, 'SORTUJ'), el('b', null, napis));
+    tr.push(el('tr', { class: 'stopka' },
+      wiele ? el('td', null) : null,
+      el('td', null, sortuj('kierowcy', 'KIEROWCY')),
+      el('td', null, el('span', { class: 'st-kafel liczba', title: 'liczba zamówień na liście' }, el('small', null, 'LICZBA ZAM.'), el('b', null, String(wiersze.length)))),
+      el('td', null, el('div', { class: 'st-adr' }, sortuj('adresy', 'ADRESY'),
+        el('span', { class: 'st-kafel godz-k', title: 'godziny wybrane w kafelkach „Pliki dnia”' }, el('small', null, S.godz === null ? 'CAŁY DZIEŃ' : 'GODZINY'), el('b', null, przedzialy(wyb))))),
+      el('td', { class: 'kw' }, kwotySumy(sumy)),
+      el('td', { colspan: '3' })));
+    return el('div', { class: 'tabela-w', onscroll: ustawChmurke }, el('table', { class: 'lista przew' + (wiele ? ' wiele' : ''), 'aria-label': `Lista przewozowa ${przedzialy(wyb)}` },
+      el('tbody', null, tr)));
+  }
+  // oznaczenie płatności w kolorowej ramce + kwota bez ramki
+  const PLATNOSCI = [['got', 'G', 'Gotówka', 'g'], ['kar', 'K', 'Karta', 'k'], ['blikO', 'BO', 'BLIK Obsługi', 'bo'], ['blikK', 'BK', 'BLIK Kierowcy', 'bk'],
+    ['rest', 'R', 'Restauracja — poza rozliczeniem kierowcy i transportu', 'r']];
+  function kwotaZ(rodzaj, kwota, dodatkowa, bylo) {
+    const d = PLATNOSCI.find(x => x[0] === rodzaj), db = bylo ? PLATNOSCI.find(x => x[0] === bylo) : null;
+    return el('span', { class: 'kw-p' + (dodatkowa ? ' ' + dodatkowa : '') },
+      db ? [el('abbr', { class: 'pl pl-' + db[3] + ' bylo', title: 'było: ' + db[2] }, db[1]), el('span', { class: 'strz', 'aria-hidden': 'true' }, '→')] : null,
+      el('abbr', { class: 'pl pl-' + d[3], title: d[2] }, d[1]), el('span', { class: 'kw-k' }, zl(kwota)));
+  }
+  function kwotyKomorka(p, z) {                             // G / K / BO / BK z kwotą; bez kwot — „online” albo „bez kwoty”
+    const pary = [];
+    const bylo = r => (p.zmiana && p.zmiana.na === r ? p.zmiana.z : null);
+    if (p.got) pary.push(kwotaZ('got', p.got, '', bylo('got')));
+    if (p.kar) pary.push(kwotaZ('kar', p.kar, '', bylo('kar')));
+    if (p.blikO !== null) pary.push(kwotaZ('blikO', p.blikO));
+    if (p.blikK) pary.push(kwotaZ('blikK', p.blikK, '', bylo('blikK')));
+    if (p.rest) pary.push(kwotaZ('rest', p.rest, 'poza', bylo('rest')));
+    if (!pary.length && z) pary.push(el('span', { class: 'znacz sz' }, p.onl ? 'online' : 'bez kwoty'));
+    return el('div', { class: 'kwoty' }, pary);
+  }
+  function kwotySumy(sumy) {                                // podsumowanie: G, K, BO, BK zawsze w tej kolejności; R (Restauracja) tylko dla informacji
+    return el('div', { class: 'kwoty' }, PLATNOSCI.filter(d => d[0] !== 'rest').map(d => kwotaZ(d[0], sumy[d[0]], sumy[d[0]] ? '' : 'zero')),
+      sumy.rest ? kwotaZ('rest', sumy.rest, 'poza') : null);
+  }
+
+  // ───────── LISTY STARTOWE dla Routific (rola Transport Dyspozytor) ─────────
+  const GODZ = { P: [11, 13, 15, 17, 19, 21], N: [12, 14, 16, 18, 20] };   // plik GHH: start o HH, dostawy (HH+1)–(HH+2)
+  const GR = { P: 'PARZYSTE', N: 'NIEPARZYSTE', R: 'RES', X: 'NIEOBECNY' };
+  const STAWKI_LS = [['h', 'CZASÓWKA'], ['adres', 'ADRESÓWKA'], ['dniowka', 'DNIÓWKA RES']];
+  const kopia = o => JSON.parse(JSON.stringify(o));
+  function imieZew(v) {                                         // jak w formularzu 3.3: na początku litera, dalej litery, cyfry, spacja, - ' . (do 20 znaków); „ZEW” przed imieniem — odcięte
+    const s = String(v || '').replace(/\s+/g, ' ').trim().replace(/^ZEW(?:[ ._-]+|$)/i, '').trim();
+    if (!s) return { pusty: true, ok: true, imie: '' };
+    const ok = s.length <= 20 && /^[A-Za-zÀ-ÖØ-öø-ÿĄĆĘŁŃÓŚŹŻąćęłńóśźż][A-Za-z0-9À-ÖØ-öø-ÿĄĆĘŁŃÓŚŹŻąćęłńóśźż '.-]*$/.test(s);
+    return { pusty: false, ok: ok, imie: ok ? s : '' };
+  }
+  function nickiZew(f) {                                        // id → „ZEW-Imię”; to samo imię drugi raz (bez względu na wielkość liter) — „-2”, „-3”; bez imienia — ''
+    const out = {}, zajete = new Set(S.baza.map(klucz));
+    f.zew.forEach(z => {
+      const im = imieZew(z.imie).imie;
+      if (!im) { out[z.id] = ''; return; }
+      let n = 'ZEW-' + im;
+      for (let i = 2; zajete.has(klucz(n)); i++) n = `ZEW-${im}-${i}`;
+      zajete.add(klucz(n));
+      out[z.id] = n;
+    });
+    return out;
+  }
+  const nazwaPliku = (h, d) => `G${h}-LS-${d}.xlsx`;
+  function stawkaLS(v) {                                        // „30”, „30,5”, „4,00” → grosze; 0–999, do dwóch cyfr po przecinku (jak w formularzu)
+    const s = String(v === null || v === undefined ? '' : v).trim();
+    if (s === '') return { pusta: true, gr: null };
+    if (!/^\d{1,3}(?:[.,]\d{1,2})?$/.test(s)) return { zla: true, gr: null };
+    return { gr: Math.round(Number(s.replace(',', '.')) * 100) };
+  }
+  function telefonZew(v) {                                      // 9 cyfr → 0048…; zagraniczny od 00 albo +; puste — dopisze się po przyjeździe
+    if (String(v || '').trim() === '•') return { pusty: false, ok: true, num: '•' };   // telefon ZEW ukryty (widzi go tylko dyspozytor)
+    const s = String(v || '').replace(/[\s\-().]/g, '');
+    if (!s) return { pusty: true, ok: true, num: '' };
+    const t = s.charAt(0) === '+' ? '00' + s.slice(1) : s;
+    const num = /^\d{9}$/.test(t) ? '0048' + t : t;
+    const ok = /^0048\d{9}$/.test(num) || (/^00\d{6,15}$/.test(num) && !/^0048/.test(num));
+    return { pusty: false, ok: ok, num: ok ? num : '' };
+  }
+  function sklad(f) {                                           // kto jest na listach dnia
+    const s = { P: [], N: [], R: null, X: [], bez: [], zew: { P: [], N: [], '': [] }, nicki: nickiZew(f) };
+    S.baza.forEach(b => {
+      const g = f.przydzial[b] || '';
+      if (g === 'P' || g === 'N') s[g].push(b); else if (g === 'R') s.R = b; else if (g === 'X') s.X.push(b); else s.bez.push(b);
+    });
+    f.zew.forEach(z => s.zew[z.grupa === 'P' || z.grupa === 'N' ? z.grupa : ''].push(z));
+    return s;
+  }
+  const zewNaLiscie = (s, g) => s.zew[g].filter(z => s.nicki[z.id]);   // ZEW trafia na listy dopiero z imieniem
+  function wierszeListy(f, g) {                                 // każdy plik grupy: podstawowi alfabetycznie, potem ZEW, RES — ostatni
+    const s = sklad(f);
+    return s[g].map(n => ({ nick: n, typ: 'baza', tel: S.bazaTel[n] !== false }))
+      .concat(zewNaLiscie(s, g).map(z => ({ nick: s.nicki[z.id], typ: 'zew', tel: !!telefonZew(z.tel).num })))
+      .concat(s.R ? [{ nick: s.R, typ: 'res', tel: S.bazaTel[s.R] !== false }] : []);
+  }
+  function sprawdzLS(f) {                                       // blokuje — popraw przed wysłaniem; uwagi — można wysłać
+    const bl = [], uw = [];
+    STAWKI_LS.forEach(([k, n]) => {
+      const x = stawkaLS(f.stawki[k]);
+      if (x.zla) bl.push(`Stawki: ${n} — liczba 0–999, np. 30 albo 30,50.`);
+      else if (!x.gr) bl.push(`Stawki: ${n} — wpisz stawkę dnia${x.gr === 0 ? ' (teraz 0)' : ''}.`);   // na nowy dzień pola startują od 0
+    });
+    const s = sklad(f);
+    if (s.bez.length) bl.push(`Przydziel: ${s.bez.join(', ')}.`);
+    if (!s.R) bl.push('Wybierz RES — jednego kierowcę na cały dzień.');
+    let bezImienia = 0;
+    f.zew.forEach(z => {
+      const im = imieZew(z.imie), t = telefonZew(z.tel), n = s.nicki[z.id];
+      if (!im.ok) bl.push(`ZEW „${String(z.imie).trim()}” — imię: na początku litera, dalej litery, cyfry, spacja, - ' . (do 20 znaków).`);
+      else if (im.pusty) bezImienia++;
+      if (n && !z.grupa) bl.push(`${n} — wybierz PARZYSTE albo NIEPARZYSTE.`);
+      if (!t.ok) bl.push(`${n || 'ZEW'} — telefon: 9 cyfr (np. 600 000 000) albo zagraniczny od 00.`);
+      else if (t.pusty && n && z.grupa) uw.push(`${n} bez telefonu — dopisz, gdy się stawi, i wyślij poprawkę.`);
+    });
+    if (bezImienia) uw.push(`ZEW bez imienia (${bezImienia}) — nie trafi na listy; wpisz imię, gdy kierowca się stawi, i wyślij poprawkę.`);
+    if (!s.bez.length && !s.P.length && !zewNaLiscie(s, 'P').length) uw.push('PARZYSTE — nikt poza RES: pliki G11 … G21 tylko z RES.');
+    if (!s.bez.length && !s.N.length && !zewNaLiscie(s, 'N').length) uw.push('NIEPARZYSTE — nikt poza RES: pliki G12 … G20 tylko z RES.');
+    return { blokuje: bl, uwagi: uw };
+  }
+  function zmianyLS(a, b) {                                     // co się zmieni w plikach względem ostatnio wysłanych list
+    const z = [];
+    const kw = v => { const x = stawkaLS(v); return x.gr === null ? '—' : zl(x.gr); };
+    STAWKI_LS.forEach(([k, n]) => { if (stawkaLS(a.stawki[k]).gr !== stawkaLS(b.stawki[k]).gr) z.push(`${n} ${kw(a.stawki[k])} → ${kw(b.stawki[k])}`); });
+    S.baza.forEach(n => { const x = a.przydzial[n] || '', y = b.przydzial[n] || ''; if (x !== y) z.push(`${n}: ${GR[x] || '—'} → ${GR[y] || '—'}`); });
+    const wpisy = f => {                                        // ZEW na listach: id → ZEW-Imię, grupa, telefon
+      const s = sklad(f), m = {};
+      ['P', 'N'].forEach(g => zewNaLiscie(s, g).forEach(x => { m[x.id] = { nick: s.nicki[x.id], grupa: g, tel: telefonZew(x.tel).num }; }));
+      return m;
+    };
+    const pa = wpisy(a), pb = wpisy(b);
+    Object.keys(pb).forEach(id => {
+      const x = pa[id], y = pb[id];
+      if (!x) { z.push(`${y.nick}: dopisany — ${GR[y.grupa]}`); return; }
+      if (x.nick !== y.nick) z.push(`${x.nick} → ${y.nick}`);
+      if (x.grupa !== y.grupa) z.push(`${y.nick}: ${GR[x.grupa]} → ${GR[y.grupa]}`);
+      if (x.tel !== y.tel) z.push(`${y.nick}: telefon ${!x.tel ? 'dopisany' : !y.tel ? 'usunięty' : 'zmieniony'}`);
+    });
+    Object.keys(pa).forEach(id => { if (!pb[id]) z.push(`${pa[id].nick}: usunięty z list`); });
+    return z;
+  }
+  const dzienLS = () => S.ls.dni[S.ls.dzien];
+  const ostatnieLS = D => { const w = D ? D.wysylki.filter(x => x.status === 'wyslane') : []; return w.length ? w[w.length - 1] : null; };   // ostatnio wysłane (automat zrobił pliki)
+  const oczekujaceLS = D => { const w = D && D.wysylki.length ? D.wysylki[D.wysylki.length - 1] : null; return w && (w.status === 'czeka' || w.status === 'w toku' || w.status === 'blad') ? w : null; };
+  const numerLS = o => (o && o.wersja > 1 ? ` · POPRAWKA nr ${o.wersja}` : '');
+  const nastepnyNr = o => (o ? (o.wersja || 1) + 1 : 1);       // numer jak w mailu z listami: 1 — listy, 2 i dalej — POPRAWKA nr N
+  const kmDnia = iso => { const s = S.stawkiDni[iso]; return s && s.km !== null && s.km !== undefined ? s.km : null; };
+  function zastosujListy() {                                    // rozliczenie dnia (KIEROWCY) — stawki, dniówka i RES z ostatnio wysłanych list
+    const D = S.ls.dni[S.dzien], o = ostatnieLS(D), sd = S.stawkiDni[S.dzien] || null, km = kmDnia(S.dzien);
+    const a = S.automat.listy && S.automat.listy.dane && S.automat.listy.dane.dni ? S.automat.listy.dane.dni[S.dzien] : null;
+    if (o && !(a && a.zrodlo === 'formularz')) {
+      const h = stawkaLS(o.form.stawki.h).gr, ad = stawkaLS(o.form.stawki.adres).gr;
+      S.stawki = h && ad && km !== null ? { h: h, km: km, adres: ad } : null;
+      S.dniowka = stawkaLS(o.form.stawki.dniowka).gr;
+      S.resDnia = sklad(o.form).R;
+    } else if (sd && sd.h && sd.adres && km !== null) {         // listy z formularza (zapas) — stawki z karty STAWKI, bez dniówki i RES
+      S.stawki = { h: sd.h, km: km, adres: sd.adres };
+      S.dniowka = null; S.resDnia = null;
+    } else { S.stawki = null; S.dniowka = null; S.resDnia = null; }
+  }
+
+  function widokStartowe() {
+    if (!dzienLS()) return el('div', { class: 'tabela-w' }, el('div', { class: 'puste' }, 'Listy startowe — wczytuję z bazy…'));
+    const f = dzienLS().form, mozna = maRole('dyspozytor');
+    return el('div', { class: 'ls' }, pasekDni(),
+      el('div', { class: 'uklad' }, el('div', { class: 'lewa' }, kartaStawek(f, mozna), kartaKierowcow(f, mozna), kartaZew(f, mozna)), panelLS()));
+  }
+  function pasekDni() {
+    const dzien = (iso, napis) => el('button', { type: 'button', class: 'zakl', role: 'tab', 'aria-selected': String(S.ls.dzien === iso),
+      onclick: () => { S.ls.dzien = iso; S.ls.plik = null; S.ls.potw = false; rysuj(); } }, napis, el('small', null, dzienNapis(iso)));
+    return el('div', { class: 'ls-dni' },
+      el('div', { class: 'zakladki-g', role: 'tablist', 'aria-label': 'Na który dzień są listy' },
+        Object.keys(S.ls.dni).sort().map((iso, i) => dzien(iso, i === 0 ? 'DZIŚ' : 'JUTRO'))),
+      statusLS());
+  }
+  function statusLS() {
+    const D = dzienLS(), o = ostatnieLS(D), zm = o ? zmianyLS(o.form, D.form) : [], p = oczekujaceLS(D);
+    const [kl, t] = p ? (p.status === 'blad' ? ['bl', 'BŁĄD WYSYŁKI'] : ['uw', 'WYSYŁAM… (automat co minutę)'])
+      : !o ? ['uw', 'NIE WYSŁANE'] : zm.length ? ['uw', `ZMIANY DO WYSŁANIA · ${zm.length}`] : ['ok', `WYSŁANE ${o.czas}${numerLS(o)}`];
+    return el('span', { class: 'ls-stan ' + kl, id: 'ls-stan', role: 'status' }, t);
+  }
+  function licznikLS(f) {
+    const s = sklad(f);
+    return `PARZYSTE\u00a0${s.P.length} · NIEPARZYSTE\u00a0${s.N.length} · RES\u00a0${s.R ? 1 : 0} · NIEOBECNI\u00a0${s.X.length}` + (s.bez.length ? ` · do przydzielenia\u00a0${s.bez.length}` : '');
+  }
+  function kartaStawek(f, mozna) {
+    const pole = (k, nazwa, jedn, opis, kl) => el('label', { class: 'stawka' + (kl ? ' ' + kl : '') },
+      el('span', { class: 'st-n' }, nazwa),
+      el('span', { class: 'wpis' }, el('input', { class: 'pole' + (stawkaLS(f.stawki[k]).zla ? ' zle' : ''), id: 'ls-' + k, inputmode: 'decimal', autocomplete: 'off',
+        value: f.stawki[k] || '', placeholder: '0', disabled: !mozna, 'aria-label': `${nazwa} — ${jedn}`,
+        onfocus: e => { const p = e.target; if (stawkaLS(p.value).gr === 0) setTimeout(() => { try { p.select(); } catch (er) { /* bez zaznaczenia */ } }, 0); },   // „0” od razu do zastąpienia
+        oninput: e => { f.stawki[k] = e.target.value; e.target.classList.toggle('zle', !!stawkaLS(e.target.value).zla); S.ls.potw = false; zapiszLS(); odswiezLS(); } }),
+        el('span', { class: 'jedn' }, jedn)),
+      el('small', null, opis));
+    return el('section', { class: 'karta', 'aria-labelledby': 'ls-st-t' },
+      el('div', { class: 'karta-n' }, el('b', { id: 'ls-st-t' }, el('span', { class: 'nr' }, '1'), 'Stawki dnia'), el('small', null, dzienNapis(S.ls.dzien))),
+      el('div', { class: 'stawki' },
+        pole('h', 'CZASÓWKA', 'zł / h', 'czas od START do STOP'),
+        pole('adres', 'ADRESÓWKA', 'zł / adres', 'każdy adres z Routific'),
+        pole('dniowka', 'DNIÓWKA RES', 'zł / dzień', 'cała wypłata RES', 'res'),
+        el('div', { class: 'stawka' }, el('span', { class: 'st-n' }, 'KILOMETRÓWKA'),
+          el('span', { class: 'wpis' }, el('span', { class: 'stala', title: 'cena ON × 10 l / 100 km, w górę do pełnych 5 gr' }, kmDnia(S.ls.dzien) === null ? '—' : zl(kmDnia(S.ls.dzien))), el('span', { class: 'jedn' }, 'zł / km')),
+          el('small', null, 'z ceny ON — liczy mechanizm'))));
+  }
+  function kartaKierowcow(f, mozna) {
+    const wiersz = b => el('div', { class: 'przydz-w' + (f.przydzial[b] ? '' : ' bez'), 'data-nick': b },
+      el('span', { class: 'nick' }, b),
+      el('div', { class: 'seg', role: 'group', 'aria-label': `${b} — przydział` }, ['P', 'N', 'R', 'X'].map(g =>
+        el('button', { type: 'button', class: g.toLowerCase(), 'data-g': g, 'aria-pressed': String(f.przydzial[b] === g), disabled: !mozna,
+          onclick: () => ustawPrzydzial(b, g) }, GR[g]))));
+    return el('section', { class: 'karta', 'aria-labelledby': 'ls-k-t' },
+      el('div', { class: 'karta-n' }, el('b', { id: 'ls-k-t' }, el('span', { class: 'nr' }, '2'), 'Kierowcy podstawowi'), el('small', { id: 'ls-licz' }, licznikLS(f))),
+      el('div', { class: 'legenda' },
+        el('span', null, el('span', { class: 'zn p' }, 'PARZYSTE'), 'start G11 · G13 · G15 · G17 · G19 · G21 — dostawy 12–\u206013, 14–\u206015 … 22–\u206023'),
+        el('span', null, el('span', { class: 'zn n' }, 'NIEPARZYSTE'), 'start G12 · G14 · G16 · G18 · G20 — dostawy 13–\u206014, 15–\u206016 … 21–\u206022'),
+        el('span', null, el('span', { class: 'zn r' }, 'RES'), 'jeden na dzień — na każdej liście G11 … G21, wypłata = dniówka')),
+      el('div', { class: 'przydz' }, S.baza.map(wiersz)),
+      el('div', { class: 'notka' }, 'Z pliku KIEROWCY-PODSTAWOWI na Dysku. Kierowca jest tylko w jednej grupie — nie zdąży wrócić po następny załadunek. RES może być każdy, ale jeden na dzień.'));
+  }
+  function ustawPrzydzial(b, g) {
+    if (!maRole('dyspozytor')) return;
+    const f = dzienLS().form;
+    if (g === 'R') Object.keys(f.przydzial).forEach(k => { if (k !== b && f.przydzial[k] === 'R') f.przydzial[k] = ''; });   // RES jeden na dzień — poprzedni do przydzielenia
+    f.przydzial[b] = g;
+    S.ls.potw = false;
+    zapiszLS();
+    document.querySelectorAll('.przydz-w').forEach(w => {     // bez przerysowania strony — zostaje miejsce na liście
+      const n = w.getAttribute('data-nick');
+      w.classList.toggle('bez', !f.przydzial[n]);
+      w.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', String(f.przydzial[n] === x.getAttribute('data-g'))));
+    });
+    odswiezLS();
+  }
+  function licznikZew(f) {
+    const s = sklad(f), bez = f.zew.filter(z => !s.nicki[z.id]).length;
+    return f.zew.length ? `na listach: PARZYSTE\u00a0${zewNaLiscie(s, 'P').length} · NIEPARZYSTE\u00a0${zewNaLiscie(s, 'N').length}` + (bez ? ` · bez imienia\u00a0${bez}` : '')
+      : 'kierowcy innych firm';
+  }
+  function kartaZew(f, mozna) {
+    const s = sklad(f);
+    const wiersz = (z, i) => {
+      const n = s.nicki[z.id];
+      const imie = el('input', { class: 'pole' + (imieZew(z.imie).ok ? '' : ' zle'), autocomplete: 'off', autocapitalize: 'words', spellcheck: 'false', value: z.imie || '',
+        maxlength: '24', placeholder: 'gdy się stawi', disabled: !mozna, 'aria-label': `ZEW ${i + 1} — imię (w Routific: ZEW-Imię)`,
+        oninput: e => { z.imie = e.target.value; e.target.classList.toggle('zle', !imieZew(z.imie).ok); S.ls.potw = false; zapiszLS(); odswiezLS(); } });
+      const tel = el('input', { class: 'pole' + (telefonZew(z.tel).ok ? '' : ' zle'), type: 'tel', inputmode: 'tel', autocomplete: 'off', value: z.tel || '',
+        placeholder: 'gdy się stawi', disabled: !mozna, 'aria-label': `ZEW ${i + 1} — telefon`,
+        oninput: e => { z.tel = e.target.value; e.target.classList.toggle('zle', !telefonZew(z.tel).ok); S.ls.potw = false; zapiszLS(); odswiezLS(); } });
+      return el('div', { class: 'zew-w', 'data-id': String(z.id) },
+        el('div', { class: 'zew-g' },
+          el('span', { class: 'nick' + (n ? '' : ' czeka') }, el('span', { class: 'zew-nick' }, n || 'ZEW-…'), ' ', el('small', null, n ? 'w Routific' : 'czeka na imię')),
+          el('div', { class: 'seg seg2', role: 'group', 'aria-label': `ZEW ${i + 1} — grupa` }, ['P', 'N'].map(g =>
+            el('button', { type: 'button', class: g.toLowerCase(), 'aria-pressed': String(z.grupa === g), disabled: !mozna,
+              onclick: () => { z.grupa = g; S.ls.potw = false; zapiszLS(); rysuj(); } }, GR[g]))),
+          mozna ? el('button', { type: 'button', class: 'mb usun', 'aria-label': `Usuń ZEW ${i + 1}`, onclick: () => { f.zew.splice(i, 1); S.ls.potw = false; zapiszLS(); rysuj(); } }, 'USUŃ') : null),
+        el('label', { class: 'zew-pole' }, 'IMIĘ', imie),
+        el('label', { class: 'zew-pole' }, 'TELEFON', tel));
+    };
+    const dodaj = el('button', { type: 'button', class: 'mb', disabled: f.zew.length >= 20,
+      onclick: () => {
+        f.zew.push({ id: f.zew.reduce((m, x) => Math.max(m, Number(x.id) || 0), 0) + 1, imie: '', tel: '', grupa: '' });
+        S.ls.potw = false; zapiszLS(); rysuj();
+        const p = document.querySelector('.zew-w:last-child input'); if (p) p.focus();   // od razu do imienia
+      } }, '+ DODAJ ZEW');
+    return el('section', { class: 'karta', 'aria-labelledby': 'ls-z-t' },
+      el('div', { class: 'karta-n' }, el('b', { id: 'ls-z-t' }, el('span', { class: 'nr' }, '3'), 'Zewnętrzni (ZEW)'), el('small', { id: 'ls-zlicz' }, licznikZew(f))),
+      f.zew.length ? el('div', { class: 'zew' }, f.zew.map(wiersz)) : el('div', { class: 'puste-m' }, 'Bez kierowców innych firm.'),
+      mozna ? el('div', { class: 'zew-dodaj' }, dodaj) : null,
+      el('div', { class: 'notka' }, 'W Routific ZEW jest jako ZEW-Imię (np. ZEW-Adam; to samo imię drugi raz — ZEW-Adam-2). Rano imienia i telefonu jeszcze nie znasz — dodaj ZEW bez nich: na listy trafi, gdy wpiszesz imię. Imię i telefon dopisz, gdy kierowca się stawi, i wyślij poprawkę. ZEW — bez wypłaty, oddaje gotówkę.'));
+  }
+  function panelLS() {
+    const d = S.ls.dzien, D = dzienLS(), f = D.form, o = ostatnieLS(D), p = oczekujaceLS(D);
+    const spr = sprawdzLS(f), zm = o ? zmianyLS(o.form, f) : [], s = sklad(f), mozna = maRole('dyspozytor');
+    const grupa = g => {
+      const w = wierszeListy(f, g);
+      return el('div', { class: 'grupa-l ' + g.toLowerCase() },
+        el('div', { class: 'grupa-n' }, el('span', { class: 'zn ' + g.toLowerCase() }, GR[g]),
+          el('small', null, `${GODZ[g].length} ${odm(GODZ[g].length, ['plik', 'pliki', 'plików'])} · na każdym ${w.length} ${odm(w.length, ['kierowca', 'kierowcy', 'kierowców'])}`)),
+        el('div', { class: 'kier-l' }, w.length ? w.map(r => el('span', { class: 'chip ' + r.typ + (r.tel ? '' : ' bez-tel'),
+          title: r.typ === 'res' ? 'RES — ostatni wiersz każdego pliku' : r.typ === 'zew' ? (r.tel ? 'ZEW — telefon wpisany' : 'ZEW — bez telefonu') : r.tel ? 'z KIEROWCY-PODSTAWOWI' : 'brak telefonu w KIEROWCY-PODSTAWOWI' },
+          r.nick, r.typ === 'res' ? [' ', el('small', null, 'RES')] : null)) : el('span', { class: 'puste-m' }, 'nikt — przydziel kierowców')),
+        el('div', { class: 'pliki-ls' }, GODZ[g].map(h => el('button', { type: 'button', class: 'plik-b ' + g.toLowerCase(), 'aria-pressed': String(S.ls.plik === h),
+          'aria-label': `${nazwaPliku(h, d)} — podgląd`, onclick: () => { S.ls.plik = S.ls.plik === h ? null : h; odswiezLS(); } },
+          el('span', { class: 'h' }, 'G' + h), el('span', { class: 'z' }, `${h + 1}–${h + 2}`)))));
+    };
+    const lista = (kl, tytul, t) => (t.length ? el('div', { class: 'braki-w ' + kl }, el('b', null, tytul), el('ul', { class: 'braki' }, t.map(x => el('li', null, x)))) : null);
+    const czeka = p && p.status !== 'blad';
+    let akcja;
+    if (!mozna) akcja = el('div', { class: 'info nb' }, `Rola Transport ${nazwaRol()} — listy tylko do podglądu; układa je i wysyła Transport Dyspozytor.`);
+    else if (czeka) akcja = el('div', { class: 'info uw' }, `Wysłane do automatu ${p.kiedy} — w ciągu minuty powstanie 11 plików, karta STAWKI i mail do załogi. Strona sama pokaże wynik.`);
+    else if (S.ls.potw) akcja = el('div', { class: 'potw', role: 'group', 'aria-label': 'Potwierdzenie wysyłki' },
+      el('b', null, o ? `Wysłać POPRAWKĘ nr ${nastepnyNr(o)}?` : 'Wysłać listy?'),
+      el('span', null, `${dzienNapis(d)} · 11 plików · PARZYSTE ${s.P.length + zewNaLiscie(s, 'P').length} · NIEPARZYSTE ${s.N.length + zewNaLiscie(s, 'N').length} · RES ${s.R}`),
+      el('div', { class: 'potw-b' }, el('button', { type: 'button', class: 'mb glowny', id: 'ls-tak', onclick: wyslijLS }, 'TAK — WYŚLIJ'),
+        el('button', { type: 'button', class: 'mb', onclick: () => { S.ls.potw = false; odswiezLS(); } }, 'WRÓĆ')));
+    else {
+      const bezZmian = !!o && !zm.length && !p;
+      akcja = el('button', { type: 'button', class: 'mb glowny wyslij', id: 'ls-wyslij', disabled: spr.blokuje.length > 0 || bezZmian,
+        onclick: () => { S.ls.potw = true; odswiezLS(); const b = $('ls-tak'); if (b) b.focus(); } },
+        bezZmian ? `WYSŁANE ${o.czas} — BEZ ZMIAN` : o ? `WYŚLIJ POPRAWKĘ nr ${nastepnyNr(o)}` : 'UTWÓRZ I WYŚLIJ LISTY');
+    }
+    const bladW = p && p.status === 'blad' ? el('div', { class: 'braki-w blok' }, el('b', null, `Wysyłka z ${p.kiedy} — automat nie zrobił plików`),
+      el('ul', { class: 'braki' }, el('li', null, p.wynik || 'nieznany błąd'), el('li', null, 'Wyślij jeszcze raz; gdy znów nie wyjdzie — wypełnij formularz list startowych (zapas) i daj znać Sławkowi.'))) : null;
+    const pokaz = D.wysylki.filter(w => w.status === 'wyslane' || w.status === 'blad');
+    const historia = pokaz.length ? el('div', { class: 'historia' }, el('b', null, 'Wysłane'),
+      el('ul', null, pokaz.slice().reverse().map(w => el('li', null, el('b', null, w.czas),
+        el('span', { class: w.status === 'blad' ? 'wysylka-bl' : null }, w.status === 'blad' ? 'BŁĄD — pliki nie powstały' : w.wersja > 1 ? `POPRAWKA nr ${w.wersja}` : 'listy — 11 plików'),
+        w.opis ? el('small', null, w.opis) : null, el('small', null, w.kto))))) : null;
+    return el('section', { class: 'panel lsp', id: 'ls-panel', 'aria-labelledby': 'ls-p-t' },
+      el('div', { class: 'karta-n' }, el('b', { id: 'ls-p-t' }, el('span', { class: 'nr' }, '4'), 'Listy dla Routific'), el('small', null, `11 plików · ${dzienNapis(d)}`)),
+      grupa('P'), grupa('N'),
+      S.ls.plik ? podgladPliku(S.ls.plik, f, d) : el('div', { class: 'notka' }, 'Dotknij pliku (G11 … G21) — zobaczysz, co trafi do Routific.'),
+      lista('blok', 'Do uzupełnienia', spr.blokuje), lista('ostrz', 'Uwaga', spr.uwagi), o && zm.length && !czeka ? lista('zm', `Zmiany od ${o.czas} — pójdą w poprawce`, zm) : null,
+      bladW, akcja, historia,
+      el('div', { class: 'notka' }, 'Po wysłaniu automat Transport Listy w ciągu minuty robi 11 plików GHH-LS-RRRR-MM-DD.xlsx w katalogu dnia › LISTY STARTOWE, wpisuje stawki do karty STAWKI w pliku T i wysyła mail z plikami do załogi — jak po „Prześlij” w formularzu. Formularz zostaje jako zapas.'));
+  }
+  function podgladPliku(h, f, d) {
+    const g = GODZ.P.indexOf(h) >= 0 ? 'P' : 'N', w = wierszeListy(f, g);
+    return el('div', { class: 'podglad' },
+      el('div', { class: 'podglad-n' }, el('span', { class: 'plik-nazwa' }, nazwaPliku(h, d)), el('small', null, `start ${h}:00 · dostawy ${h + 1}–${h + 2} · ${GR[g]}`)),
+      el('table', { 'aria-label': `Plik ${nazwaPliku(h, d)}` },
+        el('thead', null, el('tr', null, el('th', null, '#'), el('th', null, 'Kierowca — A'), el('th', null, 'Telefon — F'))),
+        el('tbody', null, w.length ? w.map((r, i) => el('tr', null, el('td', null, String(i + 1)),
+          el('td', { class: 'kier' }, r.nick, r.typ === 'res' ? [' ', el('span', { class: 'zn r' }, 'RES')] : null),
+          el('td', null, r.tel ? (r.typ === 'zew' ? 'wpisany' : 'z KIEROWCY-PODSTAWOWI') : el('span', { class: 'znacz uw' }, r.typ === 'zew' ? 'brak — dopisz' : 'brak w KIEROWCY-PODSTAWOWI'))))
+          : el('tr', null, el('td', { colspan: '3' }, 'Pusto — przydziel kierowców.')))),
+      el('div', { class: 'notka' }, 'Plik jak dotąd: nagłówek i wiersz tej godziny z MAPA (kolumny A–I) na każdego kierowcę — nick w A, telefon w F. Podstawowi alfabetycznie, potem ZEW, RES na końcu.'));
+  }
+  function odswiezLS() {                                        // bez przerysowania całej strony — pole z kursorem zostaje
+    const p = $('ls-panel'); if (p) p.replaceWith(panelLS());
+    const s = $('ls-stan'); if (s) s.replaceWith(statusLS());
+    const f = dzienLS().form, sk = sklad(f);
+    const l = $('ls-licz'); if (l) l.textContent = licznikLS(f);
+    const zc = $('ls-zlicz'); if (zc) zc.textContent = licznikZew(f);
+    document.querySelectorAll('.zew-w[data-id]').forEach(w => {   // ZEW-Imię na bieżąco, kursor zostaje w polu
+      const n = sk.nicki[w.getAttribute('data-id')] || '';
+      w.querySelector('.zew-nick').textContent = n || 'ZEW-…';
+      w.querySelector('.zew-g .nick').classList.toggle('czeka', !n);
+      w.querySelector('.zew-g .nick small').textContent = n ? 'w Routific' : 'czeka na imię';
+    });
+  }
+  async function wyslijLS() {
+    if (!maRole('dyspozytor')) return;
+    const iso = S.ls.dzien, D = dzienLS();
+    if (sprawdzLS(D.form).blokuje.length || oczekujaceLS(D) && oczekujaceLS(D).status !== 'blad') return;
+    const o = ostatnieLS(D);
+    S.ls.potw = false;
+    try {
+      await zapiszLSTeraz();
+      stanZapisu('wysyłam listy…');
+      const r = await baza.rpc('transport_ls_wyslij', { p_dzien: iso, p_dane: formDoBazy(D.form), p_opis: o ? zmianyLS(o.form, D.form).join('; ') : '' });
+      D.wysylki.push({ id: r.id, nr: r.nr, czas: godzinaZ(r.kiedy), kiedy: godzinaZ(r.kiedy), kto: kto(S.ja), opis: '', form: kopia(D.form), status: 'czeka', wynik: '', wersja: null });
+      stanZapisu('listy wysłane do automatu ' + godzinaZ(r.kiedy) + ' — pliki w ciągu minuty');
+      czestszeOdswiezanie();
+    } catch (e) { blad(e); }
+    rysuj();
+  }
+
+  // ───────── zapisy do bazy (od razu; pole w trakcie zapisu nie wraca do starej wartości) ─────────
+  const ZAPISY = {};                                            // 'kierowca|pole' → { v, t, w, znow }
+  const LS_ZAPIS = {};                                          // dzień list → { t, w, znow }
+  function stanZapisu(t, zly) { S.zapis = t; S.zapisZly = !!zly; rysujStan(); }
+  function blad(e) {
+    if (e && e.sesja) { pokazLogowanie('Sesja wygasła — zaloguj się ponownie.'); return; }
+    if (e && e.siec) S.offline = true;
+    stanZapisu('NIE ZAPISANO: ' + tekstBledu(e), true);
+  }
+  function wpisPoprawny(pole, v) {
+    const s = String(v === null || v === undefined ? '' : v).replace(/\s/g, '');
+    if (pole === 'start' || pole === 'stop') return s === '' || /^([01]?\d|2[0-3]):[0-5]\d$/.test(s);
+    if (!/^\d{0,4}([.,]\d{1,2})?$/.test(s)) return false;
+    const n = s === '' ? 0 : Number(s.replace(',', '.'));
+    return isFinite(n) && n >= 0 && n <= (pole === 'extra' ? 300 : 9999);
+  }
+  function zapiszWpis(k, pole, v, odRazu) {
+    const kp = k + '|' + pole, z = ZAPISY[kp] || (ZAPISY[kp] = {});
+    z.v = v;
+    clearTimeout(z.t);
+    if (!wpisPoprawny(pole, v)) { stanZapisu(`${pole.toUpperCase()} — zapiszę, gdy wpis będzie poprawny (np. 3 albo 2,5).`, true); return; }
+    z.t = setTimeout(() => wyslijWpis(k, pole), odRazu ? 0 : 700);
+  }
+  async function wyslijWpis(k, pole) {
+    const kp = k + '|' + pole, z = ZAPISY[kp];
+    if (!z) return;
+    if (z.w) { z.znow = true; return; }
+    const v = z.v;
+    if (!wpisPoprawny(pole, v)) return;
+    z.w = true;
+    stanZapisu('zapisuję…');
+    try {
+      const r = await baza.rpc('transport_wpis', { p_dzien: S.dzien, p_kierowca: k, p_pola: { [pole]: v } });
+      const rr = S.rozl[k] = S.rozl[k] || { start: '', stop: '', extra: '', bonus: '', wyplata: '' };
+      z.w = false;
+      if (z.v === v && !z.znow) { rr[pole] = r[pole]; delete ZAPISY[kp]; }
+      stanZapisu('zapisane ' + godzinaZ(r.zmieniono));
+      S.offline = false;
+    } catch (e) {
+      z.w = false;
+      blad(e);
+      if (e && e.siec) { clearTimeout(z.t); z.t = setTimeout(() => wyslijWpis(k, pole), 15000); }   // bez sieci — ponowię
+      else delete ZAPISY[kp];                                   // baza odmówiła — przy odświeżeniu wróci zapisana wartość
+      return;
+    }
+    if (ZAPISY[kp] && (ZAPISY[kp].znow || ZAPISY[kp].v !== v)) { ZAPISY[kp].znow = false; return wyslijWpis(k, pole); }
+  }
+  async function zapiszWpisyTeraz() {
+    for (const kp of Object.keys(ZAPISY)) {
+      const i = kp.lastIndexOf('|'), k = kp.slice(0, i), pole = kp.slice(i + 1);
+      clearTimeout(ZAPISY[kp].t);
+      if (wpisPoprawny(pole, ZAPISY[kp].v)) await wyslijWpis(k, pole);
+    }
+  }
+  function formDoBazy(f) {
+    const p = {};
+    Object.keys(f.przydzial || {}).forEach(n => { const g = f.przydzial[n] || ''; if (['', 'P', 'N', 'R', 'X'].indexOf(g) >= 0) p[n] = g; });
+    return { stawki: { h: String(f.stawki.h === undefined ? '' : f.stawki.h), adres: String(f.stawki.adres === undefined ? '' : f.stawki.adres),
+      dniowka: String(f.stawki.dniowka === undefined ? '' : f.stawki.dniowka) }, przydzial: p,
+      zew: (f.zew || []).slice(0, 20).map(z => ({ id: z.id, imie: String(z.imie || ''), grupa: z.grupa === 'P' || z.grupa === 'N' ? z.grupa : '', tel: String(z.tel || '') })) };
+  }
+  function zapiszLS() {                                         // szkic list — do bazy po chwili spokoju
+    const iso = S.ls.dzien, D = S.ls.dni[iso];
+    if (!D || !maRole('dyspozytor')) return;
+    D.edycja = Date.now();
+    const z = LS_ZAPIS[iso] || (LS_ZAPIS[iso] = {});
+    clearTimeout(z.t);
+    z.t = setTimeout(() => wyslijSzkic(iso), 800);
+  }
+  async function wyslijSzkic(iso) {
+    const z = LS_ZAPIS[iso], D = S.ls.dni[iso];
+    if (!z || !D) return;
+    if (z.w) { z.znow = true; return; }
+    z.w = true;
+    const edycja = D.edycja;
+    try {
+      await baza.rpc('transport_ls_zapisz', { p_dzien: iso, p_dane: formDoBazy(D.form) });
+      if (D.edycja === edycja) D.edycja = 0;
+      stanZapisu('listy startowe: szkic zapisany ' + terazGodz());
+      S.offline = false;
+    } catch (e) {
+      blad(e);
+      if (e && e.siec) { clearTimeout(z.t); z.t = setTimeout(() => wyslijSzkic(iso), 15000); }
+    }
+    z.w = false;
+    if (z.znow) { z.znow = false; return wyslijSzkic(iso); }
+    if (!D.edycja) delete LS_ZAPIS[iso];
+  }
+  async function zapiszLSTeraz() {
+    const iso = S.ls.dzien, z = LS_ZAPIS[iso];
+    if (z) { clearTimeout(z.t); await wyslijSzkic(iso); }
+  }
+
+  // ───────── odświeżanie, logowanie ─────────
+  let CYKL = null, SZYBKO_DO = 0, POBIERA = false;
+  function zaplanuj(ms) { clearTimeout(CYKL); CYKL = setTimeout(odswiezCyklicznie, ms); }
+  function czestszeOdswiezanie() { SZYBKO_DO = Date.now() + 3 * 60 * 1000; zaplanuj(5000); }
+  const wPolu = () => { const a = document.activeElement; return !!(a && a.tagName === 'INPUT' && $('widok').contains(a)); };
+  function przeliczBezpiecznie() {                              // pole z kursorem albo otwarta chmurka — przerysuję po wyjściu
+    if (wPolu() || chm) { S.czekaRysuj = true; rysujStan(); return; }
+    S.czekaRysuj = false;
+    przelicz();
+  }
+  async function odswiezCyklicznie() {
+    if (document.hidden) { zaplanuj(20000); return; }
+    await odswiezTeraz(true);
+    if (S.czekaRysuj && !wPolu() && !chm) przeliczBezpiecznie();
+    const czeka = Object.keys(S.ls.dni).some(iso => { const p = oczekujaceLS(S.ls.dni[iso]); return p && p.status !== 'blad'; });
+    if (baza.sesja() && !$('aplikacja').hidden) zaplanuj(czeka || Date.now() < SZYBKO_DO ? 5000 : 20000);
+  }
+  async function odswiezTeraz(cicho) {
+    if (POBIERA || !baza.sesja()) return;
+    POBIERA = true;
+    try {
+      const d = await baza.rpc('transport_dzien', { p_dzien: S.dzien, p_znane: Object.keys(S.pamiec) });
+      if (d.dzis && d.dzis !== S.dzien && new Date().getHours() >= 6 && !Object.keys(ZAPISY).length && !Object.keys(LS_ZAPIS).length) {
+        S.dzien = d.dzis; S.ls.dzien = d.dzis; S.pamiec = {}; S.godz = null; S.kierowca = null;   // nowy dzień pracy (od 6:00)
+        POBIERA = false;
+        return odswiezTeraz(false);
+      }
+      const przed = odcisk();
+      zastosujDzien(d);
+      S.blad = ''; S.offline = false;
+      if (!cicho || przed !== odcisk()) przeliczBezpiecznie(); else rysujStan();
+    } catch (e) {
+      if (e && e.sesja) pokazLogowanie('Sesja wygasła — zaloguj się ponownie.');
+      else if (String(e && e.message) === 'BRAK_DOSTEPU') { await baza.wyloguj(); pokazLogowanie(BLEDY.BRAK_DOSTEPU); }
+      else { S.offline = !!(e && e.siec); S.blad = tekstBledu(e); rysujStan(); }
+    } finally { POBIERA = false; }
+  }
+  function rysujStan() {                                        // napis nad plikami dnia: zapis, połączenie, automat
+    const e = $('stan');
+    if (!e) return;
+    const t = [];
+    let zly = false;
+    if (S.offline) { t.push('Brak połączenia — strona próbuje dalej, wpisy poczekają.'); zly = true; }
+    else if (S.blad) { t.push(S.blad); zly = true; }
+    if (S.zapis) { t.push(S.zapis); zly = zly || S.zapisZly; }
+    const a = S.automat.zasilanie, min = a ? Math.round((Date.now() - msZ(a.kiedy)) / 60000) : null, h = new Date().getHours();
+    if (S.wczytano && h >= 7 && (min === null || min > 5)) {
+      t.push(min === null ? 'Automat plików jeszcze się nie odezwał — pliki dnia i listy startowe czekają na niego.'
+        : `Automat plików milczy od ${min} min — pliki dnia mogą być nieaktualne; listy startowe w razie potrzeby z formularza.`);
+      zly = true;
+    }
+    if (S.czekaRysuj) t.push('Są nowe dane — pokażę je, gdy skończysz wpis.');
+    e.textContent = t.join(' · ');
+    e.hidden = !t.length;
+    e.className = 'info stan ' + (zly ? 'uw' : 'nb');
+  }
+  function pokazLogowanie(komunikat) {
+    clearTimeout(CYKL);
+    zamknijChmurke();
+    $('aplikacja').hidden = true;
+    $('logowanie').hidden = false;
+    $('log-blad').textContent = komunikat || '';
+    const l = czytaj(KL.login, '');
+    if (l && !$('log-login').value) $('log-login').value = l;
+    setTimeout(() => { const p = $('log-login').value ? $('log-pin') : $('log-login'); if (p) p.focus(); }, 50);
+  }
+  async function zalogujZFormularza(e) {
+    e.preventDefault();
+    const login = $('log-login').value.trim(), pin = $('log-pin').value;
+    if (!login || !pin) { $('log-blad').textContent = 'Wpisz login i PIN.'; return; }
+    $('log-b').disabled = true;
+    $('log-blad').textContent = 'Loguję…';
+    try {
+      const j = await baza.zaloguj(login, pin);
+      $('log-pin').value = '';
+      if (j.stary) {
+        await baza.wyloguj();
+        $('log-blad').textContent = j.nowy_login ? `To login ze starej aplikacji. Twój login: ${j.nowy_login} (PIN z managera).`
+          : 'To login ze starej aplikacji — Transport działa z kontem z manager.dysza.app (poproś kierownika).';
+        return;
+      }
+      pisz(KL.login, j.login || login);
+      $('log-blad').textContent = '';
+      await start();
+    } catch (er) {
+      $('log-blad').textContent = (er && er.message) || 'Nie udało się zalogować.';
+    } finally { $('log-b').disabled = false; }
+  }
+  async function wyloguj() {
+    zamknijChmurke();
+    clearTimeout(CYKL);
+    try { await zapiszWpisyTeraz(); await zapiszLSTeraz(); } catch (e) { /* bez sieci — trudno */ }
+    await baza.wyloguj();
+    S.ja = null; S.role = []; S.pamiec = {}; S.wszystkie = []; S.wczytano = false; S.ls.dni = {};
+    pokazLogowanie('Wylogowano.');
+  }
+  async function start() {
+    if (!baza.sesja()) { pokazLogowanie(''); return; }
+    try {
+      const ja = await baza.rpc('transport_ja', {});
+      S.ja = ja;
+      S.role = Array.isArray(ja.role) ? ja.role : [];
+      if (!ja.id || !S.role.length) {
+        await baza.wyloguj();
+        pokazLogowanie(`${kto(ja) ? kto(ja) + ': b' : 'B'}rak roli Transport — poproś kierownika o rolę w manager.dysza.app (Odczyt, Płatności albo Dyspozytor).`);
+        return;
+      }
+      if (S.dzien !== ja.dzis) { S.dzien = ja.dzis; S.ls.dzien = ja.dzis; S.pamiec = {}; S.godz = null; }
+      $('logowanie').hidden = true;
+      $('aplikacja').hidden = false;
+      await odswiezTeraz(false);
+      if (!S.wczytano) przelicz();
+      zaplanuj(20000);
+    } catch (e) {
+      if (e && e.sesja) { pokazLogowanie('Sesja wygasła — zaloguj się ponownie.'); return; }
+      $('logowanie').hidden = true;
+      $('aplikacja').hidden = false;
+      S.offline = !!(e && e.siec); S.blad = tekstBledu(e);
+      if (!S.model) { S.model = przetworz([]); rysuj(); }
+      rysujStan();
+      clearTimeout(CYKL); CYKL = setTimeout(start, 15000);
+    }
+  }
+  $('log-f').addEventListener('submit', zalogujZFormularza);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && baza.sesja() && !$('aplikacja').hidden) zaplanuj(300); });
+  document.addEventListener('focusout', () => setTimeout(() => { if (S.czekaRysuj && !wPolu() && !chm) przeliczBezpiecznie(); }, 200));
+
+  // ───────── jasny / ciemny ─────────
+  const SLONCE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>';
+  const KSIEZYC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>';
+  function motywTeraz() {
+    const d = document.documentElement.getAttribute('data-theme');
+    if (d === 'dark' || d === 'light') return d;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function rysujMotyw() {
+    const b = $('motyw'), ciemny = motywTeraz() === 'dark';
+    b.innerHTML = ciemny ? SLONCE : KSIEZYC;
+    b.setAttribute('aria-label', ciemny ? 'Jasny widok' : 'Ciemny widok');
+    b.title = ciemny ? 'Jasny widok' : 'Ciemny widok';
+  }
+  try { const m = localStorage.getItem('transport-motyw'); if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-theme', m); } catch (e) { /* bez pamięci — widok jak w systemie */ }
+  $('motyw').addEventListener('click', () => {
+    const m = motywTeraz() === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', m);
+    try { localStorage.setItem('transport-motyw', m); } catch (e) { /* bez pamięci */ }
+    rysujMotyw();
+  });
+  $('rola').addEventListener('click', e => pokazKonto(e.currentTarget));
+
+  $('w-kierowcy').addEventListener('click', () => { S.widok = 'kierowcy'; rysuj(); });
+  $('w-listy').addEventListener('click', () => { S.widok = 'listy'; rysuj(); });
+  $('w-startowe').addEventListener('click', () => { S.widok = 'startowe'; rysuj(); });
+  $('w-podsumowanie').addEventListener('click', () => { S.widok = 'podsumowanie'; rysuj(); });
+  window.__transport = { S: S, przetworz: przetworz, parsujCsv: parsujCsv, rozliczenie: rozliczenie, przelicz: przelicz, ustawGodziny: ustawGodziny,
+    przelaczGodzine: przelaczGodzine, przelaczDzien: przelaczDzien, godzinyWybrane: godzinyWybrane, zmienPlatnosc: zmienPlatnosc, sprawdzLS: sprawdzLS,
+    zmianyLS: zmianyLS, telefonZew: telefonZew, stawkaLS: stawkaLS, wierszeListy: wierszeListy, wyslijLS: wyslijLS, danePodsumowania: danePodsumowania,
+    zastosujDzien: zastosujDzien, odswiezTeraz: odswiezTeraz, start: start, formDoBazy: formDoBazy };
+  start();
+})();
+</script>
+
+</body></html>
