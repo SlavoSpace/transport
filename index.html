@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 11:42 · 0c79c16"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 12:17 · fbc7c3c"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>transport.dysza.app</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -959,8 +959,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   const tylkoOdczyt = () => !maRole('dyspozytor') && !maRole('platnosci');
   const nazwaRol = () => (S.role.length > 1 ? S.role.filter(r => r !== 'odczyt') : S.role).map(r => ROLE[r] || r).join(' + ') || 'bez roli';
   const DRZWI = ['got', 'kar', 'blikK'];                        // płatności przy odbiorze — tylko między nimi wolno zmienić
-  const NAZWA_PL = { got: 'Gotówka', kar: 'Karta', blikK: 'BLIK Kierowcy', rest: 'Restauracja' };
-  const CELE = DRZWI.concat('rest');                            // na co można zmienić: G, K, BK albo Restauracja (płatność obsługuje restauracja)
+  const NAZWA_PL = { got: 'Gotówka', kar: 'Karta', blikO: 'BLIK Obsługi', blikK: 'BLIK Kierowcy', rest: 'Restauracja' };
+  const CELE = ['got', 'kar', 'blikO', 'blikK', 'rest'];        // na co można zmienić: G, K, BO (od 5.11, 12:05 — BLIK Obsługi), BK albo Restauracja
 
   // ───────── dane dnia z bazy ─────────
   const nowyForm = () => ({ stawki: { h: '0', adres: '0', dniowka: '0' }, przydzial: {}, zew: [] });   // nowy dzień: stawki od 0
@@ -1105,6 +1105,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       el('div', { class: 'chm-l' }, 'Kierowca wyjechał z:', kwotaZ(bylo, kw)),
       el('div', { class: 'chm-l' }, 'Klient płaci:'),
       el('div', { class: 'chm-opcje' }, opcje),
+      el('div', { class: 'chm-m' }, 'BLIK Obsługi (BO) — klient zapłacił BLIK-iem Obsłudze Zamówień; kierowca nic nie pobiera.'),
       el('div', { class: 'chm-m' }, 'Restauracja — płatność obsługuje i raportuje restauracja (Rejestr Restauracji); kwota nie wlicza się do rozliczenia kierowcy ani transportu.'),
       el('div', { class: 'chm-m' }, p.zmiana
         ? `Zmienione ${p.zmiana.czas} · ${p.zmiana.kto}. Powrót — wybierz „${NAZWA_PL[bylo]}”.`
@@ -1267,7 +1268,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         : ['uw', 'czeka na automat (co minutę)'];
       return el('span', { class: 'rtf-s ' + kl, title: w.nazwa || '' }, el('b', null, przedz), ` · ${godzinaZ(w.kiedy)} · ${t}`);
     });
-    box.replaceChildren(
+    box.replaceChildren(...[                                    // (12:20) bez pustych — replaceChildren(null) pisało „null”
       el('div', { class: 'rtf-w' },
         el('span', { class: 'rtf-t' }, 'Routific'),
         el('div', { class: 'rtf-pl', role: 'group', 'aria-label': 'Pliki dla Routific — dotknij godziny, żeby zapisać plik' },
@@ -1275,7 +1276,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         el('button', { type: 'button', class: 'mb glowny rtf-wgraj', id: 'rtf-wgraj', onclick: () => $('rtf-plik').click() }, 'WGRAJ EKSPORT TRASY')),
       wg.length ? el('div', { class: 'rtf-wg', 'aria-label': 'Eksporty tras wgrane dziś' }, wg) : null,
       el('div', { class: 'rtf-m' }, 'Plik dla Routific: dotknij godziny — zapisze się (iPad: Pliki › Pobrane), potem wczytaj go w Routific. ' +
-        'Eksport trasy: w Routific „Export” (plik „Routific solution … .csv”) → tu WGRAJ EKSPORT TRASY.'));
+        'Eksport trasy: w Routific „Export” (plik „Routific solution … .csv”) → tu WGRAJ EKSPORT TRASY.')].filter(Boolean));
     rtfPrzygotuj();
   }
   function naBase64(buf) {
@@ -1678,7 +1679,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     const bylo = r => (p.zmiana && p.zmiana.na === r ? p.zmiana.z : null);
     if (p.got) pary.push(kwotaZ('got', p.got, '', bylo('got')));
     if (p.kar) pary.push(kwotaZ('kar', p.kar, '', bylo('kar')));
-    if (p.blikO !== null) pary.push(kwotaZ('blikO', p.blikO));
+    if (p.blikO !== null) pary.push(kwotaZ('blikO', p.blikO, '', bylo('blikO')));   // po ZMIANIE na BO: „G → BO”
     if (p.blikK) pary.push(kwotaZ('blikK', p.blikK, '', bylo('blikK')));
     if (p.rest) pary.push(kwotaZ('rest', p.rest, 'poza', bylo('rest')));
     if (!pary.length && z) pary.push(el('span', { class: 'znacz sz' }, p.onl ? 'online' : 'bez kwoty'));
