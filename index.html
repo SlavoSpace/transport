@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 16:27 · f413158"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 17:23 · c219e2f"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1375,8 +1375,9 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   const tylkoOdczyt = () => !maRole('dyspozytor') && !maRole('platnosci');
   const nazwaRol = () => (S.role.length > 1 ? S.role.filter(r => r !== 'odczyt') : S.role).map(r => ROLE[r] || r).join(' + ') || 'bez roli';
   const DRZWI = ['got', 'kar', 'blikK'];                        // płatności przy odbiorze — tylko między nimi wolno zmienić
-  const NAZWA_PL = { got: 'Gotówka', kar: 'Karta', blikO: 'BLIK Obsługi', blikK: 'BLIK Kierowcy', rest: 'Restauracja' };
-  const CELE = ['got', 'kar', 'blikO', 'blikK', 'rest'];        // na co można zmienić: G, K, BO (od 5.11, 12:05 — BLIK Obsługi), BK albo Restauracja
+  const NAZWA_PL = { got: 'Gotówka', kar: 'Karta', blikO: 'BLIK Obsługi', blikK: 'BLIK Kierowcy', restK: 'Restauracja Karta', restG: 'Restauracja Gotówka', rest: 'Restauracja' };
+  const CELE = ['got', 'kar', 'blikO', 'blikK', 'restK', 'restG'];   // na co można zmienić: G, K, BO (od 5.11, 12:05), BK, RK, RG (od 5.11, 17:17 — zamiast R)
+  const RESTAURACJA = ['restK', 'restG', 'rest'];               // poza rozliczeniem kierowcy i transportu; rest = R sprzed RK i RG
 
   // ───────── dane dnia z bazy ─────────
   const nowyForm = () => ({ stawki: { h: '0', adres: '0', dniowka: '0' }, przydzial: {}, zew: [] });   // nowy dzień: stawki od 0
@@ -1522,7 +1523,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       el('div', { class: 'chm-l' }, 'Klient płaci:'),
       el('div', { class: 'chm-opcje' }, opcje),
       el('div', { class: 'chm-m' }, 'BLIK Obsługi (BO) — klient zapłacił BLIK-iem Obsłudze Zamówień; kierowca nic nie pobiera.'),
-      el('div', { class: 'chm-m' }, 'Restauracja — płatność obsługuje i raportuje restauracja (Rejestr Restauracji); kwota nie wlicza się do rozliczenia kierowcy ani transportu.'),
+      el('div', { class: 'chm-m' }, 'Restauracja Karta (RK) albo Gotówka (RG) — klient zapłacił w restauracji kartą albo gotówką; płatność obsługuje i raportuje restauracja (Rejestr Restauracji); kwota nie wlicza się do rozliczenia kierowcy ani transportu.'),
       el('div', { class: 'chm-m' }, p.zmiana
         ? `Zmienione ${p.zmiana.czas} · ${p.zmiana.kto}. Powrót — wybierz „${NAZWA_PL[bylo]}”.`
         : 'Kwota zostaje ta sama — zmienia się tylko sposób płatności.')]);
@@ -1777,7 +1778,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     const k = S.kierowca;
     const trasy = S.model.poKier[k] || [];
     const wiersze = [];
-    const sumy = { got: 0, kar: 0, blikO: 0, blikK: 0, rest: 0 };   // widoczne wiersze (wybrane godziny)
+    const sumy = { got: 0, kar: 0, blikO: 0, blikK: 0, restK: 0, restG: 0, rest: 0 };   // widoczne wiersze (wybrane godziny)
     let gotowkaDnia = 0;                                             // panel rozliczenia — cały dzień
     const zm = [];
     trasy.forEach(t => {
@@ -1788,7 +1789,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         gotowkaDnia += p.got || 0;
         if (p.zmiana) zm.push(p.zmiana);
         if (!widoczna) return;
-        ['got', 'kar', 'blikO', 'blikK', 'rest'].forEach(r => { sumy[r] += p[r] || 0; });
+        ['got', 'kar', 'blikO', 'blikK', 'restK', 'restG', 'rest'].forEach(r => { sumy[r] += p[r] || 0; });
         wiersze.push(el('tr', { class: i === 0 && wiersze.length ? 'nowy-rzut' : null },
           el('td', { class: 'h' }, String(t.h)),
           el('td', { class: 'id' }, s.id || '—'),
@@ -1951,7 +1952,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
 
   // ── widok PODSUMOWANIE: kierowcy dnia (zamiast pliku T) i statystyka dnia — zawsze cały dzień ──
   function danePodsumowania() {
-    const M = S.model, RODZ = ['got', 'kar', 'blikO', 'blikK', 'rest', 'onl'];
+    const M = S.model, RODZ = ['got', 'kar', 'blikO', 'blikK', 'restK', 'restG', 'rest', 'onl'];
     const pusta = () => { const o = { zmian: 0, bezDanych: 0 }; RODZ.forEach(r => { o[r] = 0; o['n_' + r] = 0; }); return o; };
     const dzien = pusta();
     const kier = listaKierowcow().map(k => {
@@ -2024,7 +2025,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     const plE = r => { const x = PLATNOSCI.find(y => y[0] === r); return [el('abbr', { class: 'pl pl-' + x[3], title: x[2] }, x[1]), x[2].split(' — ')[0].toUpperCase()]; };
     const zam = n => `${n} ${odm(n, ['zamówienie', 'zamówienia', 'zamówień'])}`;
     const grupa = (tytul, kafle) => el('div', { class: 'st-gr' }, el('h3', null, tytul), el('div', { class: 'st-siatka' }, kafle));
-    const wartosc = d.got + d.kar + d.blikO + d.blikK + d.onl + d.rest;
+    const wartosc = d.got + d.kar + d.blikO + d.blikK + d.onl + d.restK + d.restG + d.rest;
     const statystyka = el('section', { class: 'panel', 'aria-labelledby': 'pods-s-t' },
       el('div', { class: 'karta-n' }, el('b', { id: 'pods-s-t' }, 'Statystyka dnia'), el('small', null, 'z eksportów DYSZY i Routific oraz wpisów dyspozytora')),
       grupa('Dostawy', [
@@ -2040,7 +2041,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         kafel(plE('blikO'), zl(d.blikO) + ' zł', zam(d.n_blikO)),
         kafel(plE('blikK'), zl(d.blikK) + ' zł', zam(d.n_blikK)),
         kafel([el('span', { class: 'znacz sz' }, 'online'), 'ZAPŁACONE'], zl(d.onl) + ' zł', zam(d.n_onl)),
-        d.n_rest ? kafel(plE('rest'), zl(d.rest) + ' zł', zam(d.n_rest) + ' — rozlicza restauracja') : null,
+        ...RESTAURACJA.map(r => (d['n_' + r] ? kafel(plE(r), zl(d[r]) + ' zł', zam(d['n_' + r]) + ' — rozlicza restauracja') : null)),
         kafel('WARTOŚĆ ZAMÓWIEŃ', zl(wartosc) + ' zł', `zamówienia u kierowców${d.zmian ? ` · zmiany płatności: ${d.zmian}` : ''}`)]),
       grupa('Rozliczenie', [
         kafel('ROZLICZENI', `${D.rozl} z ${D.kier.length}`, D.doRozl.length ? `do rozliczenia: ${D.doRozl.length}` : 'wszyscy — dzień zamknięty', D.doRozl.length ? null : 'wyr'),
@@ -2073,12 +2074,12 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     const bezNapis = bezGodz.length && bezGodz.every(h => M.godzinyR[h])
       ? `BEZ KIEROWCY — nie ma ich w eksporcie z Routific ${wiele ? 'tych godzin' : 'tej godziny'}` : 'BEZ KIEROWCY — czeka na eksport z Routific';
     const kol = wiele ? 8 : 7;                                  // przy kilku godzinach pierwsza kolumna — godzina
-    const sumy = { got: 0, kar: 0, blikO: 0, blikK: 0, rest: 0 };
+    const sumy = { got: 0, kar: 0, blikO: 0, blikK: 0, restK: 0, restG: 0, rest: 0 };
     const tr = [];
     let poprzedni = null;
     wiersze.forEach(w => {
       const p = platnosc(w.z, w.s);
-      ['got', 'kar', 'blikO', 'blikK', 'rest'].forEach(k => { sumy[k] += p[k] || 0; });
+      ['got', 'kar', 'blikO', 'blikK', 'restK', 'restG', 'rest'].forEach(k => { sumy[k] += p[k] || 0; });
       const kier = w.t ? w.t.kier : '', grupa = w.t ? `${kier}|${w.t.rzut}` : '';
       if (S.sortL !== 'adresy' && grupa !== poprzedni) {
         tr.push(el('tr', { class: 'grupa' }, el('td', { colspan: String(kol) }, w.t ? `${kier} · rzut ${w.t.rzut}${wiele ? ' · ' + w.t.przedzial.replace('-', '–') : ''}` : bezNapis)));
@@ -2112,7 +2113,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   }
   // oznaczenie płatności w kolorowej ramce + kwota bez ramki
   const PLATNOSCI = [['got', 'G', 'Gotówka', 'g'], ['kar', 'K', 'Karta', 'k'], ['blikO', 'BO', 'BLIK Obsługi', 'bo'], ['blikK', 'BK', 'BLIK Kierowcy', 'bk'],
-    ['rest', 'R', 'Restauracja — poza rozliczeniem kierowcy i transportu', 'r']];
+    ['restK', 'RK', 'Restauracja Karta — poza rozliczeniem kierowcy i transportu', 'r'], ['restG', 'RG', 'Restauracja Gotówka — poza rozliczeniem kierowcy i transportu', 'r'],
+    ['rest', 'R', 'Restauracja bez rodzaju — R sprzed RK i RG; poza rozliczeniem kierowcy i transportu', 'r']];
   function kwotaZ(rodzaj, kwota, dodatkowa, bylo) {
     const d = PLATNOSCI.find(x => x[0] === rodzaj), db = bylo ? PLATNOSCI.find(x => x[0] === bylo) : null;
     return el('span', { class: 'kw-p' + (dodatkowa ? ' ' + dodatkowa : '') },
@@ -2126,13 +2128,13 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     if (p.kar) pary.push(kwotaZ('kar', p.kar, '', bylo('kar')));
     if (p.blikO !== null) pary.push(kwotaZ('blikO', p.blikO, '', bylo('blikO')));   // po ZMIANIE na BO: „G → BO”
     if (p.blikK) pary.push(kwotaZ('blikK', p.blikK, '', bylo('blikK')));
-    if (p.rest) pary.push(kwotaZ('rest', p.rest, 'poza', bylo('rest')));
+    RESTAURACJA.forEach(r => { if (p[r]) pary.push(kwotaZ(r, p[r], 'poza', bylo(r))); });   // RK, RG (R sprzed 17:17)
     if (!pary.length && z) pary.push(el('span', { class: 'znacz sz' }, p.onl ? 'online' : 'bez kwoty'));
     return el('div', { class: 'kwoty' }, pary);
   }
-  function kwotySumy(sumy) {                                // podsumowanie: G, K, BO, BK zawsze w tej kolejności; R (Restauracja) tylko dla informacji
-    return el('div', { class: 'kwoty' }, PLATNOSCI.filter(d => d[0] !== 'rest').map(d => kwotaZ(d[0], sumy[d[0]], sumy[d[0]] ? '' : 'zero')),
-      sumy.rest ? kwotaZ('rest', sumy.rest, 'poza') : null);
+  function kwotySumy(sumy) {                                // podsumowanie: G, K, BO, BK zawsze w tej kolejności; RK, RG (Restauracja) tylko dla informacji
+    return el('div', { class: 'kwoty' }, PLATNOSCI.filter(d => RESTAURACJA.indexOf(d[0]) < 0).map(d => kwotaZ(d[0], sumy[d[0]], sumy[d[0]] ? '' : 'zero')),
+      RESTAURACJA.map(r => (sumy[r] ? kwotaZ(r, sumy[r], 'poza') : null)));
   }
 
   // ───────── LISTY STARTOWE dla Routific (rola Transport Dyspozytor) ─────────
