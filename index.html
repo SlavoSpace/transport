@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 08:51 · 53eb8fc"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 09:44 · f8a4101"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>transport.dysza.app</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -72,6 +72,22 @@ button { cursor: pointer; }
 .motyw-b svg { width: 20px; height: 20px; }
 .prawa { margin-left: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px 12px; }
 .teraz { display: flex; align-items: baseline; gap: 10px; font-variant-numeric: tabular-nums; }
+.znak .tyt { margin: 0; font-family: "Bebas Neue", "Avenir Next Condensed", "Roboto Condensed", "Arial Narrow", sans-serif; font-weight: 400;
+  font-size: 32px; line-height: 1; letter-spacing: .05em; padding-top: 3px; color: var(--tusz); white-space: nowrap; }
+.menu-btn { font-family: inherit; height: 44px; max-width: 210px; min-width: 0; padding: 0 12px 0 6px; border-radius: 11px; border: 1px solid var(--linia);
+  background: var(--karta); color: var(--tusz); display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.menu-btn[aria-expanded="true"] { border-color: var(--akcent); }
+.menu-btn:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
+.awatar { width: 30px; height: 30px; flex: 0 0 30px; border-radius: 50%; border: 1.5px solid var(--akcent); background: var(--akcent-tlo); color: var(--akcent);
+  display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
+.menu-imie { font-size: 14px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.motyw-seg { margin: 2px 0 4px; }
+@media (max-width: 480px) { .menu-imie { display: none; } .menu-btn { padding: 0 6px; } .znak .tyt { font-size: 28px; } }
+@media (max-width: 600px) {                                   /* telefon: TRANSPORT i konto w pierwszym rzędzie, godzina pod nimi */
+  .gora { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "znak konto" "teraz teraz" "widoki widoki"; align-items: center; }
+  .gora > .prawa { display: contents; }
+  .gora .znak { grid-area: znak; } .gora #rola { grid-area: konto; } .gora .teraz { grid-area: teraz; } .gora .widoki { grid-area: widoki; }
+}
 .teraz-g { font-size: 26px; font-weight: 700; letter-spacing: .01em; }
 .teraz-d { font-size: 20px; font-weight: 700; letter-spacing: .03em; color: var(--szary); white-space: nowrap; }
 .widoki { display: flex; gap: 4px; background: var(--karta); border: 1px solid var(--linia);
@@ -518,17 +534,15 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
 <div class="app" id="aplikacja" hidden>
   <header class="gora">
     <div class="znak">
-      <h1>transport<span>.dysza.app</span></h1>
-      <span class="wersja">V1.2</span>
-      <button type="button" class="pokaz-zn rola-b konto-b" id="rola" aria-haspopup="dialog" aria-expanded="false"
-        title="Konto i role Transportu — dotknij"></button>
+      <h1 class="tyt">TRANSPORT</h1>
     </div>
     <div class="prawa">
       <div class="teraz">
         <b class="teraz-g" id="czas" title="Godzina ostatniego pliku dnia"></b>
         <span class="teraz-d" id="dzien"></span>
       </div>
-      <button type="button" class="motyw-b" id="motyw"></button>
+      <button type="button" class="menu-btn" id="rola" aria-haspopup="dialog" aria-expanded="false"
+        title="Konto — role, widok jasny / ciemny, wylogowanie"><span class="awatar" id="rola-a" aria-hidden="true">?</span><span class="menu-imie" id="rola-i"></span></button>
     </div>
     <div class="widoki" role="tablist" aria-label="Widok">
       <button type="button" role="tab" id="w-kierowcy" aria-selected="true">KIEROWCY</button>
@@ -1079,6 +1093,10 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       el('div', { class: 'chm-l' }, el('b', null, kto(ja) || '—'), ja.login ? el('small', null, ` · login ${ja.login}`) : null),
       el('div', { class: 'chm-l' }, 'Role Transportu: ', el('b', null, nazwaRol())),
       el('div', { class: 'chm-m' }, 'Role nadaje kierownik w manager.dysza.app: Odczyt — podgląd; Płatności — ZMIANA rodzaju płatności; Dyspozytor — listy startowe, START, STOP, EXTRA, BONUS, KONIEC.'),
+      el('div', { class: 'chm-l' }, 'Widok:'),
+      el('div', { class: 'seg seg2 motyw-seg', role: 'group', 'aria-label': 'Widok jasny albo ciemny' }, ['light', 'dark'].map(m =>
+        el('button', { type: 'button', class: 'x', 'data-motyw': m, 'aria-pressed': String(motywTeraz() === m), onclick: () => { ustawMotyw(m); zamknijChmurke(); } },
+          m === 'light' ? 'JASNY' : 'CIEMNY'))),
       el('div', { class: 'chm-opcje' },
         el('button', { type: 'button', class: 'mb', onclick: () => { zamknijChmurke(); odswiezTeraz(false); } }, 'ODŚWIEŻ'),
         el('button', { type: 'button', class: 'mb', id: 'wyloguj', onclick: wyloguj }, 'WYLOGUJ')),
@@ -1107,7 +1125,10 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     $('dzien').textContent = dzienNapis(S.dzien);
     const ost = S.pliki.reduce((m, p) => Math.max(m, p.czas), -1);
     $('czas').textContent = ost < 0 ? '—' : godzMin(ost);
-    $('rola').textContent = `${kto(S.ja) || '…'} · ${nazwaRol()} ▾`;
+    const kt = kto(S.ja) || '…';
+    $('rola-a').textContent = (kt.trim().charAt(0) || '?').toUpperCase();
+    $('rola-i').textContent = kt;
+    $('rola').title = `${kt} · ${nazwaRol()} — konto, widok, wylogowanie`;
     $('rola').setAttribute('aria-label', `Zalogowany: ${kto(S.ja)}, role Transportu: ${nazwaRol()} — konto`);
     rysujStan();
     rysujMotyw();
@@ -2095,17 +2116,17 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   }
   function rysujMotyw() {
     const b = $('motyw'), ciemny = motywTeraz() === 'dark';
+    if (!b) return;                                             // (5.11) przycisku motywu nie ma w nagłówku — przełącznik w menu konta
     b.innerHTML = ciemny ? SLONCE : KSIEZYC;
     b.setAttribute('aria-label', ciemny ? 'Jasny widok' : 'Ciemny widok');
     b.title = ciemny ? 'Jasny widok' : 'Ciemny widok';
   }
   try { const m = localStorage.getItem('transport-motyw'); if (m === 'dark' || m === 'light') document.documentElement.setAttribute('data-theme', m); } catch (e) { /* bez pamięci — widok jak w systemie */ }
-  $('motyw').addEventListener('click', () => {
-    const m = motywTeraz() === 'dark' ? 'light' : 'dark';
+  function ustawMotyw(m) {                                      // (5.11) widok jasny / ciemny — w menu konta, jak w managerze
     document.documentElement.setAttribute('data-theme', m);
     try { localStorage.setItem('transport-motyw', m); } catch (e) { /* bez pamięci */ }
     rysujMotyw();
-  });
+  }
   $('rola').addEventListener('click', e => pokazKonto(e.currentTarget));
 
   $('w-kierowcy').addEventListener('click', () => { S.widok = 'kierowcy'; rysuj(); });
