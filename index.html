@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 05:00 · fc62f14"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 08:23 · 4df9b0f"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>transport.dysza.app</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -358,10 +358,10 @@ table.pods-t th { white-space: normal; letter-spacing: .05em; vertical-align: bo
 .zn.n { color: var(--gn); background: var(--gn-tlo); border-color: var(--gn-ramka); }
 .zn.r { color: var(--res); background: var(--res-tlo); border-color: var(--res-ramka); }
 .zn.zew { color: var(--szary); background: var(--karta2); border-color: var(--linia2); }
-.przydz { display: grid; }
-.przydz-w { display: grid; grid-template-columns: minmax(80px, 108px) minmax(0, 1fr); align-items: center; gap: 6px 12px; padding: 6px 0; border-top: 1px solid var(--linia); }
+.przydz { display: grid; grid-template-columns: fit-content(180px) minmax(0, 1fr); column-gap: 12px; }
+.przydz-w { display: grid; grid-column: 1 / -1; grid-template-columns: minmax(80px, 108px) minmax(0, 1fr); grid-template-columns: subgrid; align-items: center; gap: 6px 12px; padding: 6px 0; border-top: 1px solid var(--linia); }
 .przydz-w:first-child { border-top: 0; }
-.przydz-w .nick { font-weight: 700; font-size: 18px; letter-spacing: .03em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.przydz-w .nick { min-width: 80px; font-weight: 700; font-size: 18px; letter-spacing: .03em; line-height: 1.2; overflow-wrap: anywhere; }
 .przydz-w.bez .nick { color: var(--uw); }
 .seg { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3px; background: var(--karta2); border: 1px solid var(--linia); border-radius: 10px; padding: 3px; min-width: 0; }
 .seg.seg2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -444,8 +444,11 @@ table.pods-t th { white-space: normal; letter-spacing: .05em; vertical-align: bo
 }
 @media (max-width: 359px) { .gora > .widoki button { font-size: 12px; letter-spacing: 0; padding: 6px 0; } }
 @media (max-width: 767px) { .widoki { display: grid; grid-template-columns: 1fr 1fr; } }   /* cztery widoki: dwa na dwa */
-@media (max-width: 560px) {
+@media (max-width: 700px) {
+  .przydz { grid-template-columns: minmax(0, 1fr); }
   .przydz-w { grid-template-columns: 1fr; gap: 4px; padding: 8px 0; }
+}
+@media (max-width: 560px) {
   .seg:not(.seg2) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .zew-g { flex-wrap: wrap; }
   .zew-g .seg { flex-basis: 100%; order: 3; }
