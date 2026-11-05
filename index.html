@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 14:08 · 4ddbea2"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 15:19 · f413158"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -602,7 +602,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       <li>Pliki dnia: eksport z DYSZY <b>FABRYKA-RRRR-MM-DD-GG.csv</b> przychodzi sam; eksport tras z Routific <b>Routific solution - GG-GG - RRRR-MM-DD.csv</b> dyspozytor wgrywa tutaj (pasek ROUTIFIC → WGRAJ EKSPORT TRASY) — automat kładzie go na Dysku. Tu też są pliki dla Routific (ROUTIFIC-DD.MM.RRRR-GG.xlsx) do pobrania. Załoga nie zagląda na Dysk. Automat sprawdza wszystko co minutę, strona odświeża się sama co 20 sekund.</li>
       <li>START, STOP, EXTRA, BONUS, KONIEC i zmiany płatności zapisują się w bazie od razu (napis nad plikami dnia: „zapisane gg:mm”). Wszyscy zalogowani widzą to samo — iPad dyspozytora, telefon obsługi, komputer w biurze.</li>
       <li>LISTY STARTOWE: szkic zapisuje się na bieżąco. „UTWÓRZ I WYŚLIJ LISTY” — w ciągu minuty automat Transport Listy robi 11 plików GHH-LS-RRRR-MM-DD.xlsx (katalog dnia › LISTY STARTOWE), kartę STAWKI w pliku T i mail do załogi. Formularz list startowych jest zablokowany — listy układa się tylko tutaj.</li>
-      <li>Role nadaje manager.dysza.app: <b>Odczyt</b> — podgląd; <b>Płatności</b> — ZMIANA rodzaju płatności; <b>Dyspozytor</b> — listy startowe, START, STOP, EXTRA, BONUS i KONIEC. Można mieć kilka ról.</li>
+      <li>Role nadaje manager.dysza.app: <b>Odczyt</b> — podgląd; <b>Płatności</b> — ZMIANA rodzaju płatności; <b>Dyspozytor</b> — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS i KONIEC. Można mieć kilka ról.</li>
       <li>Rozliczenie jak w pliku T: CZASÓWKA = (STOP − START) × zł/h; KILOMETRY = (km z Routific + EXTRA) × zł/km; ADRESY = adresy × zł/adres + BONUS; WYPŁATA = suma; ODDAJE = gotówka − wypłata, DOSTAJE = wypłata − gotówka. ZEW — bez wypłaty, oddaje gotówkę; RES — dniówka z list startowych.</li>
     </ul>
   </details>
@@ -1134,7 +1134,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     otworzChmurke(btn, 'Konto', '', [
       el('div', { class: 'chm-l' }, el('b', null, kto(ja) || '—'), ja.login ? el('small', null, ` · login ${ja.login}`) : null),
       el('div', { class: 'chm-l' }, 'Role Transportu: ', el('b', null, nazwaRol())),
-      el('div', { class: 'chm-m' }, 'Role nadaje kierownik w manager.dysza.app: Odczyt — podgląd; Płatności — ZMIANA rodzaju płatności; Dyspozytor — listy startowe, START, STOP, EXTRA, BONUS, KONIEC.'),
+      el('div', { class: 'chm-m' }, 'Role nadaje kierownik w manager.dysza.app: Odczyt — podgląd; Płatności — ZMIANA rodzaju płatności; Dyspozytor — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS, KONIEC.'),
       el('div', { class: 'chm-l' }, 'Widok:'),
       el('div', { class: 'seg seg2 motyw-seg', role: 'group', 'aria-label': 'Widok jasny albo ciemny' }, ['light', 'dark'].map(m =>
         el('button', { type: 'button', class: 'x', 'data-motyw': m, 'aria-pressed': String(motywTeraz() === m), onclick: () => { ustawMotyw(m); zamknijChmurke(); } },
@@ -1638,7 +1638,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         kafel('KOSZT DOSTAWY', D.adresyWl ? zl(Math.round(D.wyplWl / D.adresyWl)) + ' zł' : '—',
           `na adres · ${D.wartoscWl ? (D.wyplWl * 100 / D.wartoscWl).toFixed(1).replace('.', ',') + ' %' : '—'} wartości zamówień (wypłaty bez ZEW)`)]));
     return el('div', { class: 'pods' }, tabela, statystyka,
-      el('div', { class: 'notka' }, 'PODSUMOWANIE zastępuje plik T — liczy się samo z eksportów i wpisów dyspozytora, zawsze za cały dzień. Pokaz: dane zmyślone, stan tylko w tej przeglądarce.'));
+      el('div', { class: 'notka' }, 'PODSUMOWANIE zastępuje plik T — liczy się samo z eksportów i wpisów dyspozytora, zawsze za cały dzień. Wszyscy zalogowani widzą to samo.'));
   }
 
   // ── widok LISTY PRZEWOZOWE ──
