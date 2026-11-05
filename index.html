@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 19:30 · 4feef3b"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 20:20 · 9ca7103"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -97,6 +97,15 @@ button { cursor: pointer; }
 .godziny-pl .rtf-s { min-width: 0; display: flex; justify-content: center; align-items: baseline; gap: 5px; padding: 5px 4px; font-size: 13px;
   font-weight: 700; white-space: nowrap; letter-spacing: .03em; }
 .godziny-pl .rtf-s b { font-size: 14px; letter-spacing: 0; }
+.godziny-pl .rtf-pusty { opacity: .55; border: 1px solid var(--linia); background: var(--karta2); color: var(--tekst); cursor: default; }   /* (19:53) jak .gp.pusta */
+.godziny-pl .rtf-pusty span { color: var(--szary2); font-weight: 400; }
+.godziny-pl .rtf-k, .godziny-pl .rtf-s { justify-content: space-between; gap: 3px; padding-left: 6px; padding-right: 6px; letter-spacing: 0; }   /* (20:06) jak kafel godziny */
+.godziny-pl .rtf-k > span, .godziny-pl .rtf-s > span { white-space: nowrap; }
+.godziny-pl .rtf-k span.bl { font-size: 12px; }
+.godziny-pl .tr { display: inline-block; width: 0; height: 0; font-size: 0; line-height: 0; overflow: hidden; vertical-align: 1px;
+  border-left: 4px solid transparent; border-right: 4px solid transparent; }   /* (20:15) trójkąt 8 × 7 px — ten sam w każdym kroju */
+.godziny-pl .tr.d { border-top: 7px solid currentColor; }   /* ▼ plik dla Routific */
+.godziny-pl .tr.g { border-bottom: 7px solid currentColor; }   /* ▲ trasa zapisana */
 .godziny-pl .rtf-wgraj { margin: 0; width: 100%; min-width: 0; min-height: 0; padding: 6px 4px; justify-content: center; text-align: center;
   white-space: normal; line-height: 1.25; font-size: 15px; letter-spacing: .04em; align-self: stretch; }
 .rtf-w { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; min-width: 0; }
@@ -1680,6 +1689,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     box.hidden = !maRole('dyspozytor');
     if (box.hidden) return;
     const kol = h => h - 10;                                    // kolumna siatki: 1 — „Cały dzień”, 2 — 12 … 13 — 23
+    const TR = z => el('i', { class: 'tr ' + (z === '▼' ? 'd' : 'g') }, z);   // (20:15) trójkąt ▼ / ▲ zamiast strzałki (rysowany ramką)
     const wGodz = n => { const m = /- (\d{1,2})-(\d{1,2}) -/.exec(String(n || '')); return m ? Number(m[1]) : -1; };
     const pliki = {};                                           // najnowszy plik dla Routific każdej godziny
     S.dlaRoutific.forEach(f => { const g = godzRtf(f.nazwa), c = String(f.zmieniono || f.wgrano || '');
@@ -1698,19 +1708,25 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       if (f) {
         const k = f.id + '|' + f.wgrano, url = RTF.url[k], kiedy = godzinaZ(f.zmieniono || f.wgrano);
         kom.push(url ? el('a', { class: 'rtf-k rtf-c', 'data-h': g, style: miejsce(3), href: url, download: f.nazwa, title: `${f.nazwa} — zapisz i wczytaj w Routific` },
-            el('b', null, g), el('span', null, '↓ ' + kiedy))
+            el('b', null, g), el('span', null, TR('▼'), ' ' + kiedy))
           : RTF.zly[k] ? el('button', { type: 'button', class: 'rtf-k rtf-c', 'data-h': g, style: miejsce(3),
             title: `${f.nazwa} — nie pobrał się; dotknij, żeby spróbować jeszcze raz`, onclick: () => { delete RTF.zly[k]; rtfPrzygotuj(); rysujRoutific(); } },
             el('b', null, g), el('span', { class: 'bl' }, '↻ ponów'))
           : el('button', { type: 'button', class: 'rtf-k rtf-c', 'data-h': g, style: miejsce(3), disabled: true, title: `${f.nazwa} — pobieram` },
             el('b', null, g), el('span', null, '…')));
-      }
+      } else kom.push(el('span', { class: 'rtf-k rtf-c rtf-pusty', 'data-pusty': g, style: miejsce(3), title: `${h}–${h + 1}: pliku dla Routific jeszcze nie ma` },
+        el('b', null, g), el('span', null, TR('▼'), ' —')));                  // (19:53) blade pole — jak kafel godziny bez plików
       const w = wgr[h], r = R[h], przedz = `${h}–${h + 1}`;
-      const st = w ? (w.status === 'zapisane' ? ['ok', 'OK', `trasa ${przedz}: wgrana ${godzinaZ(w.kiedy)}, na Dysku ${godzinaZ(w.zapisano)}`]
+      const naDysku = w && w.status === 'zapisane' ? godzinaZ(w.zapisano || w.kiedy) : '', zR = r !== undefined ? godzMin(r) : '';
+      const zdep = naDysku > zR ? naDysku : zR;                 // (19:53) „▲ gg:mm” (do 20:15 strzałka) — kiedy eksport trasy trafił do plików dnia (najnowszy)
+      const st = w ? (w.status === 'zapisane' ? ['ok', [TR('▲'), ' ' + zdep], `trasa ${przedz}: wgrana ${godzinaZ(w.kiedy)}, na Dysku ${naDysku}`
+            + (zR > naDysku ? `; w plikach dnia R → ${zR}` : '')]
           : w.status === 'blad' ? ['bl', 'BŁĄD', `trasa ${przedz}: ${w.wynik || 'nie zapisała się'} — wgraj jeszcze raz`]
           : ['uw', 'czeka', `trasa ${przedz}: wgrana ${godzinaZ(w.kiedy)} — automat zapisze ją na Dysku w ciągu minuty`])
-        : r !== undefined ? ['ok', 'OK', `trasa ${przedz} w plikach dnia (R → ${godzMin(r)})`] : null;
-      if (st) kom.push(el('span', { class: 'rtf-s rtf-c ' + st[0], 'data-st': g, style: miejsce(4), title: st[2] }, el('b', null, g), st[1]));
+        : r !== undefined ? ['ok', [TR('▲'), ' ' + zR], `trasa ${przedz} w plikach dnia (R → ${zR})`] : null;
+      kom.push(st ? el('span', { class: 'rtf-s rtf-c ' + st[0], 'data-st': g, style: miejsce(4), title: st[2] }, el('b', null, g), el('span', null, st[1]))
+        : el('span', { class: 'rtf-s rtf-c rtf-pusty', 'data-pusty': g, style: miejsce(4), title: `trasa ${przedz}: eksportu jeszcze nie ma` },
+          el('b', null, g), el('span', null, TR('▲'), ' —')));
     }
     const wg = poza.slice(-6).reverse().map(w => {
       const m = /- (\d{1,2})-(\d{1,2}) -/.exec(w.nazwa || ''), przedz = m ? `${m[1]}–${m[2]}` : (w.nazwa || 'eksport');
@@ -1722,8 +1738,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     box.replaceChildren(...[                                    // (12:20) bez pustych — replaceChildren(null) pisało „null”
       Object.keys(pliki).length ? null : el('div', { class: 'rtf-m' }, 'Pliki dla Routific pojawią się pod godzinami ok. :20 — po eksporcie z DYSZY.'),
       wg.length ? el('div', { class: 'rtf-wg', 'aria-label': 'Eksporty tras spoza godzin 12–23' }, wg) : null,
-      el('div', { class: 'rtf-m' }, 'Plik dla Routific: dotknij „↓” pod godziną — zapisze się (iPad: Pliki › Pobrane), potem wczytaj go w Routific. ' +
-        'Eksport trasy: w Routific „Export” (plik „Routific solution … .csv”) → tu WGRAJ TRASĘ; pod godziną pojawi się „OK”.')].filter(Boolean));
+      el('div', { class: 'rtf-m' }, 'Plik dla Routific: dotknij „▼” pod godziną — zapisze się (iPad: Pliki › Pobrane), potem wczytaj go w Routific. ' +
+        'Eksport trasy: w Routific „Export” (plik „Routific solution … .csv”) → tu WGRAJ TRASĘ; pod godziną pojawi się zielone „▲” z godziną zapisu.')].filter(Boolean));
     przypomnienieRtf();
     rtfPrzygotuj();
   }
