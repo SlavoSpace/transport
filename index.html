@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-06 10:23 · 1c8f46a"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-06 12:18 · a65cb93"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,6 +78,11 @@ button { cursor: pointer; }
   background: var(--karta); color: var(--tusz); display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .menu-btn[aria-expanded="true"] { border-color: var(--akcent); }
 .menu-btn:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
+.konto-rz { display: flex; align-items: center; gap: 8px; min-width: 0; }      /* (6.11) ikona „i” (instrukcja) + kafelek konta */
+.info-i { flex: 0 0 auto; width: 44px; height: 44px; box-sizing: border-box; border-radius: 50%; border: 1.5px solid var(--nieb);
+  background: var(--nieb-tlo); color: var(--nieb); display: inline-flex; align-items: center; justify-content: center; padding-bottom: 1px;
+  font: 800 21px/1 -apple-system, "Helvetica Neue", Arial, sans-serif; text-decoration: none; }   /* wersja C (Sławek 6.11, 12:18) */
+.info-i:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
 .awatar { width: 30px; height: 30px; flex: 0 0 30px; border-radius: 50%; border: 1.5px solid var(--akcent); background: var(--akcent-tlo); color: var(--akcent);
   display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
 .menu-imie { font-size: 14px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -134,7 +139,7 @@ a.rtf-k:hover { border-color: var(--akcent); background: var(--akcent-tlo); }
 @media (max-width: 600px) {                                   /* telefon: TRANSPORT i konto w pierwszym rzędzie, godzina pod nimi */
   .gora { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "znak konto" "teraz teraz" "widoki widoki"; align-items: center; }
   .gora > .prawa { display: contents; }
-  .gora .znak { grid-area: znak; } .gora #rola { grid-area: konto; } .gora .teraz { grid-area: teraz; } .gora .widoki { grid-area: widoki; }
+  .gora .znak { grid-area: znak; } .gora .konto-rz { grid-area: konto; } .gora .teraz { grid-area: teraz; } .gora .widoki { grid-area: widoki; }
 }
 .teraz-g { font-size: 26px; font-weight: 700; letter-spacing: .01em; }
 .teraz-d { font-size: 20px; font-weight: 700; letter-spacing: .03em; color: var(--szary); white-space: nowrap; }
@@ -576,8 +581,12 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         <b class="teraz-g" id="czas" title="Teraz"></b>
         <span class="teraz-d" id="dzien"></span>
       </div>
+      <div class="konto-rz">
+      <a class="info-i" id="instrukcja" href="https://drive.google.com/uc?export=download&id=1nGaKq4QqDli-ygz2vL0oQ3nPmWolNweh" target="_blank" rel="noopener"
+        aria-label="Instrukcja transport.dysza.app (PDF)" title="Instrukcja — aktualny PDF z Dysku Google (Wyświetl albo Pobierz)">i</a>
       <button type="button" class="menu-btn" id="rola" aria-haspopup="dialog" aria-expanded="false"
         title="Konto — role, widok jasny / ciemny, wylogowanie"><span class="awatar" id="rola-a" aria-hidden="true">?</span><span class="menu-imie" id="rola-i"></span></button>
+      </div>
     </div>
     <div class="widoki" role="tablist" aria-label="Widok">
       <button type="button" role="tab" id="w-kierowcy" aria-selected="true">KIEROWCY</button>
