@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-05 20:20 · 9ca7103"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-06 10:23 · 1c8f46a"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -295,6 +295,9 @@ table.lista td.przyc:last-child { padding-right: 10px; }
 .zmiany li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 15px; font-variant-numeric: tabular-nums; }
 .zmiany li .id { font-family: var(--mono); font-size: 14px; }
 .zmiany li small { color: var(--szary); font-size: 13px; }
+.zmiany.rej-uw { border-color: var(--czer); }       /* (6.11) Rejestr Fabryki — do sprawdzenia */
+.zmiany.rej-uw > b { color: var(--czer); }
+.zmiany.rej-uw li { font-size: 14px; }
 .pole:disabled { opacity: .7; }
 
 /* ── panel rozliczenia (prawa strona szkicu) ── */
@@ -601,6 +604,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     <ul>
       <li>Pliki dnia: eksport z DYSZY <b>FABRYKA-RRRR-MM-DD-GG.csv</b> przychodzi sam; eksport tras z Routific <b>Routific solution - GG-GG - RRRR-MM-DD.csv</b> dyspozytor wgrywa tutaj (pod godzinami „Pliki dnia” → WGRAJ TRASĘ) — automat kładzie go na Dysku. Tu też są pliki dla Routific (ROUTIFIC-DD.MM.RRRR-GG.xlsx) do pobrania. Załoga nie zagląda na Dysk. Automat sprawdza wszystko co minutę, strona odświeża się sama co 20 sekund.</li>
       <li>START, STOP, EXTRA, BONUS, KONIEC i zmiany płatności zapisują się w bazie od razu (napis nad plikami dnia: „zapisane gg:mm”). Wszyscy zalogowani widzą to samo — iPad dyspozytora, telefon obsługi, komputer w biurze.</li>
+      <li>Zestaw z Fabryki sprzedany w Restauracji — „R” w Rejestrze Fabryki (tablica.dysza.app): płatność zamówienia zmienia się tu sama na RK albo RG (jak płatność w Restauracji; w „Zmianach płatności” — „Rejestr Fabryki”). Cofnięte „R” — wraca pierwotna. Po KONIEC kierowcy, przy innej kwocie albo kodzie pasującym do kilku zamówień — uwaga na karcie kierowcy.</li>
       <li>LISTY STARTOWE: szkic zapisuje się na bieżąco. „UTWÓRZ I WYŚLIJ LISTY” — w ciągu minuty automat Transport Listy robi 11 plików GHH-LS-RRRR-MM-DD.xlsx (katalog dnia › LISTY STARTOWE), kartę STAWKI w pliku T i mail do załogi. Formularz list startowych jest zablokowany — listy układa się tylko tutaj.</li>
       <li>Role nadaje manager.dysza.app: <b>Odczyt</b> — podgląd; <b>Płatności</b> — ZMIANA rodzaju płatności; <b>Dyspozytor</b> — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS i KONIEC. Można mieć kilka ról.</li>
       <li>Rozliczenie jak w pliku T: CZASÓWKA = (STOP − START) × zł/h; KILOMETRY = (km z Routific + EXTRA) × zł/km; ADRESY = adresy × zł/adres + BONUS; WYPŁATA = suma; ODDAJE = gotówka − wypłata, DOSTAJE = wypłata − gotówka. ZEW — bez wypłaty, oddaje gotówkę; RES — dniówka z list startowych.</li>
@@ -1239,7 +1243,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   }
 
   // płatność zamówienia po BLIK z Routific (wiersz z „B-…”: kwota przechodzi do kolumny BLIK)
-  function platnosc(z, s) {
+  function platnosc(z, s, bez) {                            // (6.11) bez — płatność z plików, bez ZMIANY
     const p = { got: z ? z.got : null, kar: z ? z.kar : null, onl: z ? z.onl : null, blikO: null, blikK: null };
     if (s && s.kod === 'B') {
       const suma = (p.got || 0) + (p.kar || 0) + (p.onl || 0);
@@ -1248,7 +1252,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     }
     const przyDrzwiach = DRZWI.filter(r => p[r]);
     p.drzwi = przyDrzwiach.length === 1 && p.blikO === null && !p.onl ? przyDrzwiach[0] : null;   // jedna płatność przy odbiorze → można ją zmienić
-    const zm = S.zmiany[klucz(z ? z.id : s ? s.id : '')];
+    const zm = bez ? null : S.zmiany[klucz(z ? z.id : s ? s.id : '')];
     if (zm && p.drzwi === zm.z) {
       const kw = p[zm.z];
       p[zm.z] = null;
@@ -1379,6 +1383,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     rozl: {}, model: null, pliki: [],
     role: [], ja: null,                                         // role Transportu z manager.dysza.app — 'odczyt', 'platnosci', 'dyspozytor' (kilka naraz)
     zmiany: {},                                                 // zmiany płatności: ID → { z, na, kwota, czas, kto }
+    rejestr: [],                                                // (6.11) „R” w Rejestrze Fabryki: [{ id, kod, dysza, przeniesiono, rodzaj, kwota, kto }]
     koniec: {}, koniecInfo: null,                               // KONIEC: kierowca → { czas, kto }
     sortL: 'kierowcy',
     ls: { dzien: '', plik: null, potw: false, dni: {} },        // listy startowe: { RRRR-MM-DD: { form, wysylki, edycja } } — dziś i jutro
@@ -1428,8 +1433,14 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       (rozl[k] = rozl[k] || { start: '', stop: '', extra: '', bonus: '', wyplata: '' })[pole] = ZAPISY[kp].v;
     });
     S.rozl = rozl; S.koniec = koniec;
+    S.rejestr = (Array.isArray(d.rejestr) ? d.rejestr : []).map(w => ({ id: w.id, kod: w.kod || '', dysza: w.dysza || '',
+      przeniesiono: w.przeniesiono || null, rodzaj: w.rodzaj || 'rest', kwota: Math.round(Number(w.kwota) || 0), kto: w.kto || '' }));   // (6.11)
     const zm = {};
-    (d.zmiany || []).forEach(z => { zm[klucz(z.zamowienie)] = { id: z.zamowienie, z: z.z, na: z.na, kwota: z.kwota, czas: godzinaZ(z.kiedy), kto: z.kto || '' }; });
+    (d.zmiany || []).forEach(z => {
+      const rej = z.zrodlo === 'rejestr' ? (S.rejestr.find(w => w.id === z.rejestr) || {}) : null;   // (6.11) zmiana z „R” w Rejestrze Fabryki
+      zm[klucz(z.zamowienie)] = { id: z.zamowienie, z: z.z, na: z.na, kwota: z.kwota, czas: godzinaZ(z.kiedy), kiedy: z.kiedy || '',
+        kto: rej ? 'Rejestr Fabryki' + (rej.kto ? ' · ' + rej.kto : '') : z.kto || '', zr: rej ? 'rejestr' : '', rej: rej ? z.rejestr : null };
+    });
     S.zmiany = zm;
     S.baza = (d.kierowcy || []).map(k => k.nick);
     S.bazaTel = {}; S.telNr = {};
@@ -1452,7 +1463,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     S.wczytano = true;
   }
   function odcisk() {                                           // czy coś się zmieniło (żeby nie przerysowywać bez potrzeby)
-    return JSON.stringify([S.wszystkie.map(p => p.md5 + p.czas), S.rozl, S.koniec, S.zmiany, S.role, S.baza, S.bazaTel, S.stawkiDni,
+    return JSON.stringify([S.wszystkie.map(p => p.md5 + p.czas), S.rozl, S.koniec, S.zmiany, S.rejestr, S.role, S.baza, S.bazaTel, S.stawkiDni,
       S.dlaRoutific.map(f => f.id + '|' + f.wgrano), S.wgrane.map(w => [w.id, w.status, w.zapisano]),
       Object.keys(S.ls.dni).map(iso => [iso, S.ls.dni[iso].form, S.ls.dni[iso].wysylki.map(w => [w.id, w.status, w.wersja, w.wynik])])]);
   }
@@ -1541,6 +1552,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       el('div', { class: 'chm-opcje' }, opcje),
       el('div', { class: 'chm-m' }, 'BLIK Obsługi (BO) — klient zapłacił BLIK-iem Obsłudze Zamówień; kierowca nic nie pobiera.'),
       el('div', { class: 'chm-m' }, 'Restauracja Karta (RK) albo Gotówka (RG) — klient zapłacił w restauracji kartą albo gotówką; płatność obsługuje i raportuje restauracja (Rejestr Restauracji); kwota nie wlicza się do rozliczenia kierowcy ani transportu.'),
+      p.zmiana && p.zmiana.zr === 'rejestr' ? el('div', { class: 'chm-m' }, 'Z Rejestru Fabryki (tablica.dysza.app): zestaw z Fabryki sprzedany w Restauracji („R”). Ręczna ZMIANA ją zastąpi.') : null,
       el('div', { class: 'chm-m' }, p.zmiana
         ? `Zmienione ${p.zmiana.czas} · ${p.zmiana.kto}. Powrót — wybierz „${NAZWA_PL[bylo]}”.`
         : 'Kwota zostaje ta sama — zmienia się tylko sposób płatności.')]);
@@ -1554,7 +1566,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     stanZapisu('zapisuję…');
     try {
       const r = await baza.rpc('transport_zmiana', { p_dzien: S.dzien, p_zamowienie: id, p_kierowca: prz ? prz.t.kier : '', p_z: z, p_na: na, p_kwota: Math.round(kwota || 0) });
-      if (r.aktywna) S.zmiany[k] = { id: id, z: r.z, na: r.na, kwota: Math.round(kwota || 0), czas: godzinaZ(r.kiedy), kto: kto(S.ja) };
+      if (r.aktywna) S.zmiany[k] = { id: id, z: r.z, na: r.na, kwota: Math.round(kwota || 0), czas: godzinaZ(r.kiedy), kiedy: r.kiedy, kto: kto(S.ja), zr: '', rej: null };
       else delete S.zmiany[k];
       stanZapisu('zapisane ' + godzinaZ(r.kiedy));
     } catch (e) { blad(e); }
@@ -1859,7 +1871,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     const listaZmian = zm.length ? el('section', { class: 'zmiany', 'aria-label': 'Zmiany płatności' },
       el('b', null, `Zmiany płatności (${zm.length})`),
       el('ul', null, zm.map(x => el('li', null, el('span', null, x.czas), el('span', { class: 'id' }, x.id), kwotaZ(x.na, x.kwota, '', x.z), el('small', null, x.kto))))) : null;
-    return el('div', { class: 'widok-k' }, zakl, el('div', { class: 'uklad' }, el('div', { class: 'lewa' }, tabela, listaZmian), panelRozliczenia(k, trasy, gotowkaDnia)));
+    return el('div', { class: 'widok-k' }, zakl, el('div', { class: 'uklad' }, el('div', { class: 'lewa' }, tabela, listaZmian, uwagiRejestru(k)), panelRozliczenia(k, trasy, gotowkaDnia)));
   }
 
   function rozliczenie(k, trasy, gotowka) {
@@ -2174,7 +2186,12 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     if (p.kar) pary.push(kwotaZ('kar', p.kar, '', bylo('kar')));
     if (p.blikO !== null) pary.push(kwotaZ('blikO', p.blikO, '', bylo('blikO')));   // po ZMIANIE na BO: „G → BO”
     if (p.blikK) pary.push(kwotaZ('blikK', p.blikK, '', bylo('blikK')));
-    RESTAURACJA.forEach(r => { if (p[r]) pary.push(kwotaZ(r, p[r], 'poza', bylo(r))); });   // RK, RG (R sprzed 17:17)
+    RESTAURACJA.forEach(r => {                                  // RK, RG (R sprzed 17:17)
+      if (!p[r]) return;
+      const e = kwotaZ(r, p[r], 'poza', bylo(r));
+      if (p.zmiana && p.zmiana.zr === 'rejestr' && p.zmiana.na === r) { e.classList.add('rej'); e.title = `z Rejestru Fabryki („R”) · ${p.zmiana.czas}`; }   // (6.11)
+      pary.push(e);
+    });
     if (!pary.length && z) pary.push(el('span', { class: 'znacz sz' }, p.onl ? 'online' : 'bez kwoty'));
     return el('div', { class: 'kwoty' }, pary);
   }
@@ -2593,6 +2610,85 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     if (z) { clearTimeout(z.t); await wyslijSzkic(iso); }
   }
 
+  // ───────── (6.11) „R” w Rejestrze Fabryki (tablica.dysza.app) — zestaw z Fabryki sprzedany w Restauracji ─────────
+  // Każda otwarta strona przenosi „R” do bazy (transport_zmiana_rejestr); baza sama sprawdza wpis Rejestru, kwotę, KONIEC i nowszą
+  // ręczną ZMIANĘ, rodzaj (RK / RG) bierze z Rejestru. Zamówienie: po numerze z DYSZY, a gdy go nie ma — po kodzie (4 znaki).
+  const REJ = { trwa: false, proby: {} };                     // proby: klucz próby → odpowiedź bazy (tej samej próby nie ponawiam)
+  const normId = s => String(s || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  const koncowka = id => '…' + normId(id).slice(-4);
+  function rejestrPlan() {                                      // { zadania: [...], uwagi: { kierowca: [tekst] } }
+    const zadania = [], uwagi = {};
+    if (!S.model || !S.rejestr || !S.rejestr.length) return { zadania: zadania, uwagi: uwagi };
+    const uwaga = (k, t) => { (uwagi[k || ''] = uwagi[k || ''] || []).push(t); };
+    const idy = new Map();
+    S.model.zam.forEach(z => { const n = normId(z.id); if (n) idy.set(n, z); });
+    S.rejestr.forEach(w => {
+      let z = w.dysza ? idy.get(normId(w.dysza)) || null : null;   // po numerze z DYSZY, a gdy go nie ma — po kodzie (4 znaki)
+      if (!z) {
+        const kod = normId(w.kod), kand = kod ? [...idy.keys()].filter(n => n.startsWith(kod)) : [];
+        if (kand.length > 1) {
+          if (w.przeniesiono) kand.forEach(n => {
+            const pr = S.model.przyp.get(klucz(idy.get(n).id));
+            uwaga(pr ? pr.t.kier : '', `kod ${w.kod} z Rejestru Fabryki („R”) pasuje do ${kand.length} zamówień: ${kand.map(koncowka).join(', ')} — zrób ZMIANĘ ręcznie`);
+          });
+          return;
+        }
+        z = kand.length === 1 ? idy.get(kand[0]) : null;
+      }
+      if (!z) return;                                           // np. odbiór w Fabryce — nie jedzie z transportem
+      const prz = S.model.przyp.get(klucz(z.id)), kier = prz ? prz.t.kier : '';
+      const zm = S.zmiany[klucz(z.id)] || null, zRej = !!(zm && zm.zr === 'rejestr' && zm.rej === w.id);
+      const p0 = platnosc(z, prz ? prz.s : null, true);
+      let akcja = null;
+      if (w.przeniesiono) {
+        if (zRej && zm.na === w.rodzaj) return;                 // już jest
+        if (zm && !zRej && msZ(zm.kiedy) >= msZ(w.przeniesiono)) return;   // ręczna ZMIANA nowsza niż „R” — zostaje ręczna
+        if (!p0.drzwi) return;                                  // online, BO, płatność dzielona — kierowca nic nie pobiera
+        const kw = p0[p0.drzwi];
+        if (kw !== w.kwota) {
+          uwaga(kier, `${koncowka(z.id)} — „R” w Rejestrze Fabryki, ale kwota inna (Rejestr ${zl(w.kwota)} zł, tu ${zl(kw)} zł) — zrób ZMIANĘ ręcznie`);
+          return;
+        }
+        akcja = 'R';
+      } else if (zRej) akcja = 'cofnij';
+      if (!akcja) return;
+      if (S.koniec[kier]) {
+        uwaga(kier, `${koncowka(z.id)} — ${akcja === 'R' ? `„R” w Rejestrze Fabryki (${NAZWA_PL[w.rodzaj] || 'Restauracja'})` : '„R” cofnięte w Rejestrze Fabryki'}`
+          + ' po KONIEC — „odblokuj”, poczekaj chwilę na zmianę i znów KONIEC');
+        return;
+      }
+      zadania.push({ w: w, z: z, kier: kier, p0: p0, akcja: akcja,
+        klucz: [w.id, w.przeniesiono || '', akcja, w.rodzaj, p0.drzwi || '', p0.drzwi ? p0[p0.drzwi] : 0, kier, zm ? zm.kiedy : ''].join('|') });
+    });
+    return { zadania: zadania, uwagi: uwagi };
+  }
+  async function rejestrSync() {                                // po każdym pobraniu dnia: „R” z Rejestru → zmiana płatności w bazie
+    if (REJ.trwa || !S.wczytano || !S.model || !baza.sesja()) return;
+    const zadania = rejestrPlan().zadania.filter(x => !REJ.proby[x.klucz]);
+    if (!zadania.length) return;
+    REJ.trwa = true;
+    let nowe = false;
+    try {
+      for (const x of zadania.slice(0, 20)) {
+        try {
+          const r = await baza.rpc('transport_zmiana_rejestr', { p_dzien: S.dzien, p_zamowienie: x.z.id, p_kierowca: x.kier,
+            p_z: x.p0.drzwi || '', p_kwota: x.p0.drzwi ? x.p0[x.p0.drzwi] : 0, p_wpis: x.w.id });
+          REJ.proby[x.klucz] = r && r.ok && !r.bez_zmian ? 'zrobione' : (r && r.powod) || 'bez zmian';   // każdą próbę raz (bez pętli)
+          nowe = true;                                          // pobiorę dzień od nowa (także gdy zrobiła to inna strona)
+        } catch (e) {
+          if (e && (e.siec || e.sesja)) break;                  // bez sieci albo sesja wygasła — spróbuję przy następnym pobraniu
+          REJ.proby[x.klucz] = String((e && e.message) || 'błąd');
+        }
+      }
+    } finally { REJ.trwa = false; }
+    if (nowe) odswiezTeraz(true);
+  }
+  function uwagiRejestru(k) {                                   // karta kierowcy: co z „R” trzeba zrobić ręcznie
+    const lista = rejestrPlan().uwagi[k] || [];
+    return lista.length ? el('section', { class: 'zmiany rej-uw', 'aria-label': 'Rejestr Fabryki — do sprawdzenia' },
+      el('b', null, `Rejestr Fabryki — do sprawdzenia (${lista.length})`), el('ul', null, lista.map(t => el('li', null, t)))) : null;
+  }
+
   // ───────── odświeżanie, logowanie ─────────
   let CYKL = null, SZYBKO_DO = 0, POBIERA = false;
   function zaplanuj(ms) { clearTimeout(CYKL); CYKL = setTimeout(odswiezCyklicznie, ms); }
@@ -2629,6 +2725,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       else if (String(e && e.message) === 'BRAK_DOSTEPU') { await baza.wyloguj(); pokazLogowanie(BLEDY.BRAK_DOSTEPU); }
       else { S.offline = !!(e && e.siec); S.blad = tekstBledu(e); rysujStan(); }
     } finally { POBIERA = false; }
+    if (S.wczytano) setTimeout(rejestrSync, 0);                 // (6.11) „R” z Rejestru Fabryki — po każdym pobraniu dnia
   }
   function rysujStan() {                                        // napis nad plikami dnia: zapis, połączenie, automat
     const e = $('stan');
