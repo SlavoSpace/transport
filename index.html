@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-06 21:51 · aa1c0ce"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-07 00:36 · 033fc87"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -283,6 +283,8 @@ table.lista td.przyc:last-child { padding-right: 10px; }
 .chm-l { font-size: 15px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .chm-m { font-size: 13px; color: var(--szary); max-width: 300px; }
 .chm-opcje { display: flex; flex-wrap: wrap; gap: 6px; }
+.chm-wyl { display: grid; }                                    /* (7.11) WYLOGUJ na całą szerokość okienka konta */
+.chmurka .chm-wyl .mb { justify-self: stretch; justify-content: center; text-align: center; font-weight: 700; letter-spacing: .06em; min-height: 44px; }
 .podz { display: grid; gap: 8px; border-top: 1px solid var(--linia); padding-top: 10px; }   /* (6.11) PODZIEL w okienku ZMIANA */
 .podz-w { gap: 6px; }
 .podz-w > span:first-child { min-width: 50px; color: var(--szary); font-size: 14px; }
@@ -1650,7 +1652,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     } catch (e) { blad(e); }
     rysuj();
   }
-  function pokazKonto(btn) {                                    // konto: kto zalogowany, role z manager.dysza.app, odśwież, wyloguj
+  function pokazKonto(btn) {                                    // konto: kto zalogowany, role z manager.dysza.app, widok, wyloguj
     const ja = S.ja || {};
     const a = S.automat.zasilanie;
     otworzChmurke(btn, 'Konto', '', [
@@ -1661,9 +1663,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       el('div', { class: 'seg seg2 motyw-seg', role: 'group', 'aria-label': 'Widok jasny albo ciemny' }, ['light', 'dark'].map(m =>
         el('button', { type: 'button', class: 'x', 'data-motyw': m, 'aria-pressed': String(motywTeraz() === m), onclick: () => { ustawMotyw(m); zamknijChmurke(); } },
           m === 'light' ? 'JASNY' : 'CIEMNY'))),
-      el('div', { class: 'chm-opcje' },
-        el('button', { type: 'button', class: 'mb', onclick: () => { zamknijChmurke(); odswiezTeraz(false); } }, 'ODŚWIEŻ'),
-        el('button', { type: 'button', class: 'mb', id: 'wyloguj', onclick: wyloguj }, 'WYLOGUJ')),
+      el('div', { class: 'chm-wyl' },
+        el('button', { type: 'button', class: 'mb', id: 'wyloguj', onclick: wyloguj }, 'WYLOGUJ')),   // (7.11) bez ODŚWIEŻ — strona odświeża się sama
       el('div', { class: 'chm-m' }, `Strona ${WERSJA || '—'} · automat plików: ${a ? 'ostatnio ' + godzinaZ(a.kiedy) : 'jeszcze się nie odezwał'}.`)]);
   }
   function ustawChmurke() {                                    // przy przycisku; idzie za nim, gdy lista przesuwa się w bok
