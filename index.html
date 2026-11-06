@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-06 12:18 · a65cb93"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-06 12:56 · 9dd8db0"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -8,7 +8,7 @@
 :root {
   --tlo: #eef2f0; --karta: #ffffff; --karta2: #f7f9f8; --tusz: #1d2830; --szary: #5a6772; --szary2: #84909a;
   --linia: #dbe2de; --linia2: #c3cdc7; --akcent: #2d6b57; --akcent-tlo: #e2efe8; --na-akcencie: #ffffff;
-  --uw: #8a5a1c; --uw-tlo: #fbf1df; --uw-ramka: #ecd3a6; --nieb: #2b5d86; --nieb-tlo: #e5eef7;
+  --uw: #8a5a1c; --uw-tlo: #fbf1df; --uw-ramka: #ecd3a6; --nieb: #2b5d86; --nieb-tlo: #e5eef7; --info: #2f74c0; --na-info: #ffffff;
   --ok: #2c6b4b; --ok-tlo: #e3f2e9; --czer: #a33b2b; --czer-tlo: #fbe9e5; --zaznacz: #fff3c4;
   --koniec: #c62828; --koniec-zam: #000000; --koniec-zam-tekst: #ffd400; --koniec-zam-ramka: #000000; --odblokuj: #2e7d32;
   --pl-g: #1f6b3a; --pl-g-tlo: #dcf1e2; --pl-g-ramka: #86c69b; --pl-k: #1f4f8f; --pl-k-tlo: #dde9fa; --pl-k-ramka: #8fb2e3;
@@ -79,9 +79,9 @@ button { cursor: pointer; }
 .menu-btn[aria-expanded="true"] { border-color: var(--akcent); }
 .menu-btn:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
 .konto-rz { display: flex; align-items: center; gap: 8px; min-width: 0; }      /* (6.11) ikona „i” (instrukcja) + kafelek konta */
-.info-i { flex: 0 0 auto; width: 44px; height: 44px; box-sizing: border-box; border-radius: 50%; border: 1.5px solid var(--nieb);
-  background: var(--nieb-tlo); color: var(--nieb); display: inline-flex; align-items: center; justify-content: center; padding-bottom: 1px;
-  font: 800 21px/1 -apple-system, "Helvetica Neue", Arial, sans-serif; text-decoration: none; }   /* wersja C (Sławek 6.11, 12:18) */
+.info-i { flex: 0 0 auto; width: 44px; height: 44px; box-sizing: border-box; border-radius: 50%; border: 0;
+  background: var(--info); color: var(--na-info); display: inline-flex; align-items: center; justify-content: center; padding-bottom: 1px;
+  font: italic 700 26px/1 Georgia, "Times New Roman", serif; text-decoration: none; }   /* wersja D (Sławek 6.11, 12:52; wcześniej C) */
 .info-i:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
 .awatar { width: 30px; height: 30px; flex: 0 0 30px; border-radius: 50%; border: 1.5px solid var(--akcent); background: var(--akcent-tlo); color: var(--akcent);
   display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
