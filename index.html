@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-06 12:56 · 9dd8db0"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-06 21:51 · aa1c0ce"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -283,6 +283,18 @@ table.lista td.przyc:last-child { padding-right: 10px; }
 .chm-l { font-size: 15px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .chm-m { font-size: 13px; color: var(--szary); max-width: 300px; }
 .chm-opcje { display: flex; flex-wrap: wrap; gap: 6px; }
+.podz { display: grid; gap: 8px; border-top: 1px solid var(--linia); padding-top: 10px; }   /* (6.11) PODZIEL w okienku ZMIANA */
+.podz-w { gap: 6px; }
+.podz-w > span:first-child { min-width: 50px; color: var(--szary); font-size: 14px; }
+.podz-r { font: inherit; font-size: 16px; min-height: 40px; border: 1px solid var(--linia2); border-radius: 9px; background: var(--karta2);
+  color: var(--tusz); padding: 0 6px; width: 140px; max-width: 100%; }
+.podz-kw { font: inherit; font-size: 16px; width: 96px; min-height: 40px; border: 1px solid var(--linia2); border-radius: 9px;
+  background: var(--karta); color: var(--tusz); padding: 0 10px; text-align: right; }
+.podz-kw:focus-visible, .podz-r:focus-visible { outline: 3px solid var(--akcent); outline-offset: 1px; }
+.podz-reszta { font-size: 16px; }
+.podz .chm-m.uw { color: var(--czer); }
+.podz-przyc { display: flex; }
+.podz-przyc .mb { font-weight: 700; letter-spacing: .04em; padding: 0 14px; }
 .chm-opcje .mb { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
 .chm-opcje .mb[aria-pressed="true"] { border-color: var(--akcent); background: var(--akcent-tlo); color: var(--akcent); opacity: 1; }
 .chm-role { display: grid; gap: 6px; }
@@ -1261,11 +1273,13 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     }
     const przyDrzwiach = DRZWI.filter(r => p[r]);
     p.drzwi = przyDrzwiach.length === 1 && p.blikO === null && !p.onl ? przyDrzwiach[0] : null;   // jedna płatność przy odbiorze → można ją zmienić
+    p.calosc = p.drzwi ? p[p.drzwi] : null;                     // (6.11) cała kwota przy drzwiach — przed ZMIANĄ i podziałem
     const zm = bez ? null : S.zmiany[klucz(z ? z.id : s ? s.id : '')];
-    if (zm && p.drzwi === zm.z) {
+    if (zm && p.drzwi === zm.z && (zm.na !== 'podz' || zm.podzial)) {
       const kw = p[zm.z];
       p[zm.z] = null;
-      p[zm.na] = (p[zm.na] || 0) + kw;
+      if (zm.na === 'podz') Object.keys(zm.podzial).forEach(r => { p[r] = (p[r] || 0) + zm.podzial[r]; });   // (6.11) płatność dzielona — dwie części
+      else p[zm.na] = (p[zm.na] || 0) + kw;
       p.zmiana = zm;
     }
     return p;
@@ -1282,6 +1296,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     BRAK_DOSTEPU: 'Brak dostępu do Transportu — poproś kierownika o rolę w manager.dysza.app.',
     'ROLA:dyspozytor': 'To robi Transport Dyspozytor — Twoja rola na to nie pozwala.',
     'ROLA:platnosci': 'Zmianę płatności robi Transport Płatności.',
+    'ZLA_WARTOSC:podzial': 'Podział: dwie części, każda większa niż 0, razem cała kwota.',   // (6.11)
     ZAMKNIETE: 'Rozliczenie kierowcy zamknięte (KONIEC) — najpierw „odblokuj”.',
     ZLY_DZIEN: 'Ten dzień jest poza zakresem (listy startowe: dziś albo jutro).',
     'ZLA_WARTOSC:res': 'Wybierz jednego RES.',
@@ -1447,7 +1462,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     const zm = {};
     (d.zmiany || []).forEach(z => {
       const rej = z.zrodlo === 'rejestr' ? (S.rejestr.find(w => w.id === z.rejestr) || {}) : null;   // (6.11) zmiana z „R” w Rejestrze Fabryki
-      zm[klucz(z.zamowienie)] = { id: z.zamowienie, z: z.z, na: z.na, kwota: z.kwota, czas: godzinaZ(z.kiedy), kiedy: z.kiedy || '',
+      zm[klucz(z.zamowienie)] = { id: z.zamowienie, z: z.z, na: z.na, kwota: z.kwota, podzial: z.podzial || null, czas: godzinaZ(z.kiedy), kiedy: z.kiedy || '',
         kto: rej ? 'Rejestr Fabryki' + (rej.kto ? ' · ' + rej.kto : '') : z.kto || '', zr: rej ? 'rejestr' : '', rej: rej ? z.rejestr : null };
     });
     S.zmiany = zm;
@@ -1549,7 +1564,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       zKopiuj ? el('button', { type: 'button', class: 'mb', onclick: e => kopiuj(tresc, tekst, e.currentTarget) }, 'kopiuj') : null]);
   }
   function pokazZmiane(btn, id, p) {                          // ZMIANA: klient przy odbiorze płaci inaczej
-    const teraz = p.zmiana ? p.zmiana.na : p.drzwi, bylo = p.zmiana ? p.zmiana.z : p.drzwi, kw = p[teraz];
+    const teraz = p.zmiana ? p.zmiana.na : p.drzwi, bylo = p.zmiana ? p.zmiana.z : p.drzwi, kw = p.calosc;   // (6.11) cała kwota — także po podziale
     const opcje = CELE.map(r => {
       const d = PLATNOSCI.find(x => x[0] === r);
       return el('button', { type: 'button', class: 'mb', 'aria-pressed': String(r === teraz), disabled: r === teraz,
@@ -1559,12 +1574,66 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       el('div', { class: 'chm-l' }, 'Kierowca wyjechał z:', kwotaZ(bylo, kw)),
       el('div', { class: 'chm-l' }, 'Klient płaci:'),
       el('div', { class: 'chm-opcje' }, opcje),
+      podzialZmiany(id, p, bylo, kw),                         // (6.11) płatność dzielona
       el('div', { class: 'chm-m' }, 'BLIK Obsługi (BO) — klient zapłacił BLIK-iem Obsłudze Zamówień; kierowca nic nie pobiera.'),
       el('div', { class: 'chm-m' }, 'Restauracja Karta (RK) albo Gotówka (RG) — klient zapłacił w restauracji kartą albo gotówką; płatność obsługuje i raportuje restauracja (Rejestr Restauracji); kwota nie wlicza się do rozliczenia kierowcy ani transportu.'),
       p.zmiana && p.zmiana.zr === 'rejestr' ? el('div', { class: 'chm-m' }, 'Z Rejestru Fabryki (tablica.dysza.app): zestaw z Fabryki sprzedany w Restauracji („R”). Ręczna ZMIANA ją zastąpi.') : null,
       el('div', { class: 'chm-m' }, p.zmiana
         ? `Zmienione ${p.zmiana.czas} · ${p.zmiana.kto}. Powrót — wybierz „${NAZWA_PL[bylo]}”.`
         : 'Kwota zostaje ta sama — zmienia się tylko sposób płatności.')]);
+  }
+  const CZESCI = ['got', 'kar', 'blikK', 'blikO'];             // (6.11) płatność dzielona: części z G, K, BK, BO
+  function grZPola(t) {                                         // „23,45” / „23.45” / „23” → grosze; inaczej null
+    const m = /^\s*(\d{1,6})(?:[.,](\d{1,2}))?\s*(?:zł)?\s*$/.exec(String(t === null || t === undefined ? '' : t));
+    return m ? Number(m[1]) * 100 + (m[2] ? Number(m[2].padEnd(2, '0')) : 0) : null;
+  }
+  function podzialZmiany(id, p, bylo, calosc) {                 // (6.11) PODZIEL: część innym sposobem, reszta zostaje płatnością z wyjazdu
+    if (!calosc || calosc < 2 || CZESCI.indexOf(bylo) < 0) return null;
+    const jest = p.zmiana && p.zmiana.na === 'podz' && p.zmiana.podzial ? p.zmiana.podzial : null;
+    const mozliwe = CZESCI.filter(r => r !== bylo);
+    const startR = (jest && Object.keys(jest).find(r => r !== bylo)) || (mozliwe.indexOf('kar') >= 0 ? 'kar' : mozliwe[0]);
+    const skrot = r => PLATNOSCI.find(x => x[0] === r)[1];
+    const wybor = el('select', { class: 'podz-r', id: 'podz-r', 'aria-label': 'Część — sposób płatności' },
+      mozliwe.map(r => el('option', { value: r, selected: r === startR }, `${skrot(r)} · ${NAZWA_PL[r]}`)));
+    const pole = el('input', { class: 'podz-kw', id: 'podz-kw', type: 'text', inputmode: 'decimal', autocomplete: 'off', placeholder: '0,00',
+      'aria-label': 'Kwota części w zł', value: jest && jest[startR] ? (jest[startR] / 100).toFixed(2).replace('.', ',') : '' });
+    const reszta = el('b', { class: 'podz-reszta', id: 'podz-reszta' }, '—');
+    const zapisz = el('button', { type: 'button', class: 'mb', id: 'podz-zapisz', disabled: true }, 'ZAPISZ PODZIAŁ');
+    const opis = () => `Razem ${zl(calosc)} zł. Wpisz kwotę części — reszta zostaje „${NAZWA_PL[bylo]}”.`;
+    const uw = el('div', { class: 'chm-m', id: 'podz-uw' }, opis());
+    const licz = () => {
+      const g = grZPola(pole.value), dobra = g !== null && g >= 1 && g <= calosc - 1, wpisane = pole.value.trim() !== '';
+      reszta.textContent = dobra ? `${skrot(bylo)} ${zl(calosc - g)}` : '—';
+      zapisz.disabled = !dobra;
+      uw.classList.toggle('uw', wpisane && !dobra);
+      uw.textContent = wpisane && !dobra ? `Część: więcej niż 0 i mniej niż ${zl(calosc)} zł (np. 23,45).` : opis();
+      return dobra ? g : null;
+    };
+    pole.addEventListener('input', licz);
+    wybor.addEventListener('change', licz);
+    zapisz.addEventListener('click', () => { const g = licz(); if (g !== null) zmienPodzial(id, bylo, calosc, { [wybor.value]: g, [bylo]: calosc - g }); });
+    licz();
+    return el('div', { class: 'podz', role: 'group', 'aria-label': 'Podział płatności' },
+      el('div', { class: 'chm-l' }, el('b', null, 'PODZIEL'), el('span', { class: 'chm-m' }, 'klient płaci częścią innym sposobem')),
+      el('div', { class: 'chm-l podz-w' }, el('span', null, 'Część:'), wybor, pole),
+      el('div', { class: 'chm-l podz-w' }, el('span', null, 'Reszta:'), reszta, el('small', null, '(liczy się sama)')),
+      el('div', { class: 'podz-przyc' }, zapisz), uw);
+  }
+  async function zmienPodzial(id, z, calosc, podzial) {          // (6.11) płatność dzielona — baza: transport_zmiana_podzial (migracja 010)
+    if (!maRole('platnosci')) return;
+    const prz = S.model && S.model.przyp.get(klucz(id));
+    if (prz && S.koniec[prz.t.kier]) return;                    // rozliczenie kierowcy zamknięte (KONIEC) — najpierw „odblokuj”
+    const k = klucz(id);
+    zamknijChmurke();
+    stanZapisu('zapisuję…');
+    try {
+      const r = await baza.rpc('transport_zmiana_podzial', { p_dzien: S.dzien, p_zamowienie: id, p_kierowca: prz ? prz.t.kier : '', p_z: z,
+        p_kwota: Math.round(calosc), p_podzial: podzial });
+      S.zmiany[k] = { id: id, z: r.z, na: 'podz', kwota: Math.round(calosc), podzial: r.podzial || podzial, czas: godzinaZ(r.kiedy), kiedy: r.kiedy,
+        kto: kto(S.ja), zr: '', rej: null };
+      stanZapisu('zapisane ' + godzinaZ(r.kiedy));
+    } catch (e) { blad(e); }
+    rysuj();
   }
   async function zmienPlatnosc(id, z, na, kwota) {
     if (!maRole('platnosci')) return;                           // rodzaj płatności zmienia tylko Transport Płatności
@@ -1879,7 +1948,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         : 'Wybierz godziny w kafelkach „Pliki dnia” — dotknij godziny albo „Cały dzień”.'));
     const listaZmian = zm.length ? el('section', { class: 'zmiany', 'aria-label': 'Zmiany płatności' },
       el('b', null, `Zmiany płatności (${zm.length})`),
-      el('ul', null, zm.map(x => el('li', null, el('span', null, x.czas), el('span', { class: 'id' }, x.id), kwotaZ(x.na, x.kwota, '', x.z), el('small', null, x.kto))))) : null;
+      el('ul', null, zm.map(x => el('li', null, el('span', null, x.czas), el('span', { class: 'id' }, x.id), kwotyZmiany(x), el('small', null, x.kto))))) : null;
     return el('div', { class: 'widok-k' }, zakl, el('div', { class: 'uklad' }, el('div', { class: 'lewa' }, tabela, listaZmian, uwagiRejestru(k)), panelRozliczenia(k, trasy, gotowkaDnia)));
   }
 
@@ -2190,7 +2259,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   }
   function kwotyKomorka(p, z) {                             // G / K / BO / BK z kwotą; bez kwot — „online” albo „bez kwoty”
     const pary = [];
-    const bylo = r => (p.zmiana && p.zmiana.na === r ? p.zmiana.z : null);
+    const bylo = r => (p.zmiana && (p.zmiana.na === r || (p.zmiana.na === 'podz' && p.zmiana.podzial && p.zmiana.podzial[r] && r !== p.zmiana.z))
+      ? p.zmiana.z : null);                                     // (6.11) przy podziale „było →” przy części innym sposobem
     if (p.got) pary.push(kwotaZ('got', p.got, '', bylo('got')));
     if (p.kar) pary.push(kwotaZ('kar', p.kar, '', bylo('kar')));
     if (p.blikO !== null) pary.push(kwotaZ('blikO', p.blikO, '', bylo('blikO')));   // po ZMIANIE na BO: „G → BO”
@@ -2203,6 +2273,11 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     });
     if (!pary.length && z) pary.push(el('span', { class: 'znacz sz' }, p.onl ? 'online' : 'bez kwoty'));
     return el('div', { class: 'kwoty' }, pary);
+  }
+  function kwotyZmiany(x) {                                     // (6.11) lista zmian: przy podziale obie części (najpierw część innym sposobem)
+    if (x.na !== 'podz') return kwotaZ(x.na, x.kwota, '', x.z);
+    if (!x.podzial) return kwotaZ(x.z, x.kwota);
+    return Object.keys(x.podzial).sort((a, b) => (a === x.z) - (b === x.z)).map(r => kwotaZ(r, x.podzial[r], '', r !== x.z ? x.z : null));
   }
   function kwotySumy(sumy) {                                // podsumowanie: G, K, BO, BK zawsze w tej kolejności; RK, RG (Restauracja) tylko dla informacji
     return el('div', { class: 'kwoty' }, PLATNOSCI.filter(d => RESTAURACJA.indexOf(d[0]) < 0).map(d => kwotaZ(d[0], sumy[d[0]], sumy[d[0]] ? '' : 'zero')),
