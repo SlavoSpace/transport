@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-07 16:25 · 0a94686"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-07 18:08 · 29fe00c"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -402,6 +402,10 @@ table.pods-t th { white-space: normal; letter-spacing: .05em; vertical-align: bo
 .st-t { border: 1px solid var(--linia); border-radius: 12px; padding: 10px 12px; display: grid; gap: 3px; align-content: start; min-width: 0; background: var(--karta); }
 .st-t > span { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--szary); }
 .st-t > span .pl { font-size: 11px; letter-spacing: .02em; }
+.st-t > span { flex-wrap: wrap; row-gap: 0; }                  /* (7.11, 17:57) etykieta, która obok znaczka się nie mieści — pod nim */
+.st-t > span > .st-e { flex: 1 1 0; min-width: min-content; }
+.st-t > span .znacz { font-size: 11px; letter-spacing: .02em; line-height: 1.35; }   /* „online” jak G, K, BO … w kaflach */
+@media (max-width: 340px) { .st-t > span { letter-spacing: .04em; } }   /* (7.11, 17:57) najwęższy telefon: „RESTAURACJA” w kaflu 128 px */
 .st-t > b { font-size: 22px; letter-spacing: .01em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .st-t > small { font-size: 12px; color: var(--szary); }
 .st-t.wyr { border-color: var(--akcent); background: var(--akcent-tlo); }
@@ -2157,7 +2161,9 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       el('div', { class: 'notka' }, D.doRozl.length
         ? `Do rozliczenia: ${D.doRozl.join(', ')}. Dotknij imienia — otworzysz kartę kierowcy; KONIEC na karcie = ROZLICZONY tutaj.`
         : 'Wszyscy kierowcy rozliczeni.'));
-    const kafel = (etk, wart, opis, cls) => el('div', { class: 'st-t' + (cls ? ' ' + cls : '') }, el('span', null, etk), el('b', null, wart), opis ? el('small', null, opis) : null);
+    const kafel = (etk, wart, opis, cls) => el('div', { class: 'st-t' + (cls ? ' ' + cls : '') },
+      el('span', null, Array.isArray(etk) ? [etk[0], el('span', { class: 'st-e' }, etk.slice(1))] : etk),   // (7.11, 17:57) znaczek + etykieta
+      el('b', null, wart), opis ? el('small', null, opis) : null);
     const plE = r => { const x = PLATNOSCI.find(y => y[0] === r); return [el('abbr', { class: 'pl pl-' + x[3], title: x[2] }, x[1]), x[2].split(' — ')[0].toUpperCase()]; };
     const zam = n => `${n} ${odm(n, ['zamówienie', 'zamówienia', 'zamówień'])}`;
     const grupa = (tytul, kafle) => el('div', { class: 'st-gr' }, el('h3', null, tytul), el('div', { class: 'st-siatka' }, kafle));
