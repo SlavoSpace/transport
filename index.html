@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-07 00:36 · 033fc87"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-07 16:25 · 0a94686"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -613,7 +613,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   <div class="info nb stan" id="stan" role="status" hidden></div>
 
   <section class="pliki" id="pliki-dnia" aria-labelledby="pliki-t">
-    <div class="pliki-n"><b id="pliki-t">Pliki dnia</b><small>Dotknij godziny — pokażesz ją albo schowasz. „Cały dzień” — wszystkie albo żadna.</small></div>
+    <div class="pliki-n"><b id="pliki-t">Pliki dnia</b></div>
     <div class="godziny-pl" id="godziny-pl"></div>
     <div class="bledy" id="bledy"></div>
     <div class="rtf" id="rtf" hidden></div>
@@ -1828,9 +1828,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     siatka.append(...kom);
     box.replaceChildren(...[                                    // (12:20) bez pustych — replaceChildren(null) pisało „null”
       Object.keys(pliki).length ? null : el('div', { class: 'rtf-m' }, 'Pliki dla Routific pojawią się pod godzinami ok. :20 — po eksporcie z DYSZY.'),
-      wg.length ? el('div', { class: 'rtf-wg', 'aria-label': 'Eksporty tras spoza godzin 12–23' }, wg) : null,
-      el('div', { class: 'rtf-m' }, 'Plik dla Routific: dotknij „▼” pod godziną — zapisze się (iPad: Pliki › Pobrane), potem wczytaj go w Routific. ' +
-        'Eksport trasy: w Routific „Export” (plik „Routific solution … .csv”) → tu WGRAJ TRASĘ; pod godziną pojawi się zielone „▲” z godziną zapisu.')].filter(Boolean));
+      wg.length ? el('div', { class: 'rtf-wg', 'aria-label': 'Eksporty tras spoza godzin 12–23' }, wg) : null].filter(Boolean));
+    box.hidden = !box.childElementCount;                        // (7.11, 16:22) bez opisu pod siatką — pusty pasek się chowa
     przypomnienieRtf();
     rtfPrzygotuj();
   }
