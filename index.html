@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-08 00:08 · 6ccd6e2"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-08 15:35 · 044ad4e"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -632,8 +632,9 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       <li>Pliki dnia: eksport z DYSZY <b>FABRYKA-RRRR-MM-DD-GG.csv</b> przychodzi sam; eksport tras z Routific <b>Routific solution - GG-GG - RRRR-MM-DD.csv</b> dyspozytor wgrywa tutaj (pod godzinami „Pliki dnia” → WGRAJ TRASĘ) — automat kładzie go na Dysku. Tu też są pliki dla Routific (ROUTIFIC-DD.MM.RRRR-GG.xlsx) do pobrania. Załoga nie zagląda na Dysk. Automat sprawdza wszystko co minutę, strona odświeża się sama co 20 sekund.</li>
       <li>START, STOP, EXTRA, BONUS, KONIEC i zmiany płatności zapisują się w bazie od razu (napis nad plikami dnia: „zapisane gg:mm”). Wszyscy zalogowani widzą to samo — iPad dyspozytora, telefon obsługi, komputer w biurze.</li>
       <li>Zestaw z Fabryki sprzedany w Restauracji — „R” w Rejestrze Fabryki (tablica.dysza.app): płatność zamówienia zmienia się tu sama na RK albo RG (jak płatność w Restauracji; w „Zmianach płatności” — „Rejestr Fabryki”). Cofnięte „R” — wraca pierwotna. Po KONIEC kierowcy, przy innej kwocie albo kodzie pasującym do kilku zamówień — uwaga na karcie kierowcy.</li>
+      <li>Zmiana płatności w Rejestrze Fabryki (tablica.dysza.app: wpis → „Cała kwota jako …” albo „Podziel”) przechodzi tu sama: Gotówka → G, Karta → K, BLIK → BO (BK, gdy kierowca wyjechał z BLIK-iem Kierowcy), dwie płatności → podział; w „Zmianach płatności” — „Rejestr Fabryki”. Online, Voucher, trzy płatności, inna kwota i zmiana po KONIEC — uwaga na karcie kierowcy.</li>
       <li>LISTY STARTOWE: szkic zapisuje się na bieżąco. „UTWÓRZ I WYŚLIJ LISTY” — w ciągu minuty automat Transport Listy robi 11 plików GHH-LS-RRRR-MM-DD.xlsx (katalog dnia › LISTY STARTOWE), kartę STAWKI w pliku T i mail do załogi. Formularz list startowych jest zablokowany — listy układa się tylko tutaj.</li>
-      <li>Role nadaje manager.dysza.app: <b>Odczyt</b> — podgląd; <b>Płatności</b> — ZMIANA rodzaju płatności; <b>Dyspozytor</b> — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS i KONIEC. Można mieć kilka ról.</li>
+      <li>Role nadaje manager.dysza.app: <b>Odczyt</b> — podgląd; <b>Płatności</b> — ręczna ZMIANA płatności (zwykle niepotrzebna — płatność przychodzi z Rejestru Fabryki); <b>Dyspozytor</b> — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS i KONIEC. Można mieć kilka ról.</li>
       <li>Rozliczenie jak w pliku T: CZASÓWKA = (STOP − START) × zł/h; KILOMETRY = (km z Routific + EXTRA) × zł/km; ADRESY = adresy × zł/adres + BONUS; WYPŁATA = suma; ODDAJE = gotówka − wypłata, DOSTAJE = wypłata − gotówka. ZEW — bez wypłaty, oddaje gotówkę; RES — dniówka z list startowych.</li>
     </ul>
   </details>
@@ -1301,7 +1302,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   const BLEDY = {
     BRAK_DOSTEPU: 'Brak dostępu do Transportu — poproś kierownika o rolę w manager.dysza.app.',
     'ROLA:dyspozytor': 'To robi Transport Dyspozytor — Twoja rola na to nie pozwala.',
-    'ROLA:platnosci': 'Zmianę płatności robi Transport Płatności.',
+    'ROLA:platnosci': 'Płatność zmienia się w Rejestrze Fabryki (tablica.dysza.app) — tu przychodzi sama.',   // (8.11)
     'ZLA_WARTOSC:podzial': 'Podział: dwie części, każda większa niż 0, razem cała kwota.',   // (6.11)
     ZAMKNIETE: 'Rozliczenie kierowcy zamknięte (KONIEC) — najpierw „odblokuj”.',
     ZLY_DZIEN: 'Ten dzień jest poza zakresem (listy startowe: dziś albo jutro).',
@@ -1463,11 +1464,17 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       (rozl[k] = rozl[k] || { start: '', stop: '', extra: '', bonus: '', wyplata: '' })[pole] = ZAPISY[kp].v;
     });
     S.rozl = rozl; S.koniec = koniec;
-    S.rejestr = (Array.isArray(d.rejestr) ? d.rejestr : []).map(w => ({ id: w.id, kod: w.kod || '', dysza: w.dysza || '',
-      przeniesiono: w.przeniesiono || null, rodzaj: w.rodzaj || 'rest', kwota: Math.round(Number(w.kwota) || 0), kto: w.kto || '' }));   // (6.11)
+    const fab = Array.isArray(d.fabryka);                       // (8.11) od transport_011: wszystkie wpisy Fabryki dnia z płatnościami
+    S.rejestr = (fab ? d.fabryka : Array.isArray(d.rejestr) ? d.rejestr : []).map(w => {
+      const gr = v => Math.max(0, Math.round(Number(v) || 0));
+      const pl = fab ? { got: gr(w.g), kar: gr(w.k), blik: gr(w.b), onl: gr(w.o), vou: gr(w.v) } : null;
+      return { id: w.id, kod: w.kod || '', dysza: w.dysza || '', przeniesiono: w.przeniesiono || null, rodzaj: w.rodzaj || 'rest',
+        kwota: pl ? pl.got + pl.kar + pl.blik + pl.onl + pl.vou : Math.round(Number(w.kwota) || 0), kto: w.kto || '',
+        pl: pl, czas: w.czas || '', usuniety: !!w.usuniety };   // (6.11) „R”; (8.11) płatność wpisu, chwila zmiany, usunięty
+    });
     const zm = {};
     (d.zmiany || []).forEach(z => {
-      const rej = z.zrodlo === 'rejestr' ? (S.rejestr.find(w => w.id === z.rejestr) || {}) : null;   // (6.11) zmiana z „R” w Rejestrze Fabryki
+      const rej = z.zrodlo === 'rejestr' ? (S.rejestr.find(w => w.id === z.rejestr) || {}) : null;   // (6.11) „R”, (8.11) płatność z Rejestru Fabryki
       zm[klucz(z.zamowienie)] = { id: z.zamowienie, z: z.z, na: z.na, kwota: z.kwota, podzial: z.podzial || null, czas: godzinaZ(z.kiedy), kiedy: z.kiedy || '',
         kto: rej ? 'Rejestr Fabryki' + (rej.kto ? ' · ' + rej.kto : '') : z.kto || '', zr: rej ? 'rejestr' : '', rej: rej ? z.rejestr : null };
     });
@@ -1583,7 +1590,9 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       podzialZmiany(id, p, bylo, kw),                         // (6.11) płatność dzielona
       el('div', { class: 'chm-m' }, 'BLIK Obsługi (BO) — klient zapłacił BLIK-iem Obsłudze Zamówień; kierowca nic nie pobiera.'),
       el('div', { class: 'chm-m' }, 'Restauracja Karta (RK) albo Gotówka (RG) — klient zapłacił w restauracji kartą albo gotówką; płatność obsługuje i raportuje restauracja (Rejestr Restauracji); kwota nie wlicza się do rozliczenia kierowcy ani transportu.'),
-      p.zmiana && p.zmiana.zr === 'rejestr' ? el('div', { class: 'chm-m' }, 'Z Rejestru Fabryki (tablica.dysza.app): zestaw z Fabryki sprzedany w Restauracji („R”). Ręczna ZMIANA ją zastąpi.') : null,
+      p.zmiana && p.zmiana.zr === 'rejestr' ? el('div', { class: 'chm-m' }, RESTAURACJA.indexOf(p.zmiana.na) >= 0
+        ? 'Z Rejestru Fabryki (tablica.dysza.app): zestaw z Fabryki sprzedany w Restauracji („R”). Ręczna ZMIANA ją zastąpi.'
+        : 'Z Rejestru Fabryki (tablica.dysza.app): płatność wpisu w Fabryce. Ręczna ZMIANA ją zastąpi.') : null,   // (8.11)
       el('div', { class: 'chm-m' }, p.zmiana
         ? `Zmienione ${p.zmiana.czas} · ${p.zmiana.kto}. Powrót — wybierz „${NAZWA_PL[bylo]}”.`
         : 'Kwota zostaje ta sama — zmienia się tylko sposób płatności.')]);
@@ -1662,7 +1671,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     otworzChmurke(btn, 'Konto', '', [
       el('div', { class: 'chm-l' }, el('b', null, kto(ja) || '—'), ja.login ? el('small', null, ` · login ${ja.login}`) : null),
       el('div', { class: 'chm-l' }, 'Role Transportu: ', el('b', null, nazwaRol())),
-      el('div', { class: 'chm-m' }, 'Role nadaje kierownik w manager.dysza.app: Odczyt — podgląd; Płatności — ZMIANA rodzaju płatności; Dyspozytor — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS, KONIEC.'),
+      el('div', { class: 'chm-m' }, 'Role nadaje kierownik w manager.dysza.app: Odczyt — podgląd; Płatności — ręczna ZMIANA płatności (zwykle niepotrzebna — płatność przychodzi z Rejestru Fabryki); Dyspozytor — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS, KONIEC.'),
       el('div', { class: 'chm-l' }, 'Widok:'),
       el('div', { class: 'seg seg2 motyw-seg', role: 'group', 'aria-label': 'Widok jasny albo ciemny' }, ['light', 'dark'].map(m =>
         el('button', { type: 'button', class: 'x', 'data-motyw': m, 'aria-pressed': String(motywTeraz() === m), onclick: () => { ustawMotyw(m); zamknijChmurke(); } },
@@ -2267,10 +2276,14 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     const pary = [];
     const bylo = r => (p.zmiana && (p.zmiana.na === r || (p.zmiana.na === 'podz' && p.zmiana.podzial && p.zmiana.podzial[r] && r !== p.zmiana.z))
       ? p.zmiana.z : null);                                     // (6.11) przy podziale „było →” przy części innym sposobem
-    if (p.got) pary.push(kwotaZ('got', p.got, '', bylo('got')));
-    if (p.kar) pary.push(kwotaZ('kar', p.kar, '', bylo('kar')));
-    if (p.blikO !== null) pary.push(kwotaZ('blikO', p.blikO, '', bylo('blikO')));   // po ZMIANIE na BO: „G → BO”
-    if (p.blikK) pary.push(kwotaZ('blikK', p.blikK, '', bylo('blikK')));
+    const zF = e => {                                           // (8.11) część zmieniona z Rejestru Fabryki — podpowiedź skąd
+      if (p.zmiana && p.zmiana.zr === 'rejestr' && e.querySelector('.bylo')) { e.classList.add('rej'); e.title = `z Rejestru Fabryki · ${p.zmiana.czas}`; }
+      return e;
+    };
+    if (p.got) pary.push(zF(kwotaZ('got', p.got, '', bylo('got'))));
+    if (p.kar) pary.push(zF(kwotaZ('kar', p.kar, '', bylo('kar'))));
+    if (p.blikO !== null) pary.push(zF(kwotaZ('blikO', p.blikO, '', bylo('blikO'))));   // po ZMIANIE na BO: „G → BO”
+    if (p.blikK) pary.push(zF(kwotaZ('blikK', p.blikK, '', bylo('blikK'))));
     RESTAURACJA.forEach(r => {                                  // RK, RG (R sprzed 17:17)
       if (!p[r]) return;
       const e = kwotaZ(r, p[r], 'poza', bylo(r));
@@ -2706,6 +2719,29 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   const REJ = { trwa: false, proby: {} };                     // proby: klucz próby → odpowiedź bazy (tej samej próby nie ponawiam)
   const normId = s => String(s || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
   const koncowka = id => '…' + normId(id).slice(-4);
+  // (8.11) płatność wpisu Fabryki → płatność w transporcie — tak samo jak _transport_fabryka_cel w bazie (migracja transport_011)
+  function celFabryki(w, drzwi) {
+    const p = w.pl;
+    if (!p) return null;
+    if (p.onl > 0) return { powod: 'ONLINE' };
+    if (p.vou > 0) return { powod: 'VOUCHER' };
+    const czesci = [['got', p.got], ['kar', p.kar], [drzwi === 'blikK' ? 'blikK' : 'blikO', p.blik]].filter(x => x[1] > 0);
+    if (!czesci.length) return { powod: 'ZERO' };
+    if (czesci.length === 3) return { powod: 'TRZY' };
+    if (czesci.length === 1) return { cel: czesci[0][0] };
+    const podzial = {};
+    czesci.forEach(x => { podzial[x[0]] = x[1]; });
+    return { cel: 'podz', podzial: podzial };
+  }
+  const takiSam = (zm, c) => !!(zm && c && c.cel && zm.na === c.cel && (c.cel !== 'podz' || (zm.podzial
+    && Object.keys(zm.podzial).length === Object.keys(c.podzial).length && Object.keys(c.podzial).every(r => zm.podzial[r] === c.podzial[r]))));
+  const NAZWY_FABRYKI = [['got', 'Gotówka'], ['kar', 'Karta'], ['blik', 'BLIK'], ['onl', 'Online'], ['vou', 'Voucher']];
+  const opisFabryki = w => NAZWY_FABRYKI.filter(x => w.pl[x[0]] > 0).map(x => `${x[1]} ${zl(w.pl[x[0]])} zł`).join(' + ') || '0 zł';
+  function opisTu(p) {                                          // płatność zamówienia w transporcie, np. „online 89,50 zł”
+    const czesci = [['got', 'Gotówka'], ['kar', 'Karta'], ['blikO', 'BLIK Obsługi'], ['blikK', 'BLIK Kierowcy'], ['onl', 'online']]
+      .filter(x => p[x[0]] > 0).map(x => `${x[1]} ${zl(p[x[0]])} zł`);
+    return czesci.join(' + ') || 'bez kwoty';
+  }
   function rejestrPlan() {                                      // { zadania: [...], uwagi: { kierowca: [tekst] } }
     const zadania = [], uwagi = {};
     if (!S.model || !S.rejestr || !S.rejestr.length) return { zadania: zadania, uwagi: uwagi };
@@ -2719,7 +2755,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         if (kand.length > 1) {
           if (w.przeniesiono) kand.forEach(n => {
             const pr = S.model.przyp.get(klucz(idy.get(n).id));
-            uwaga(pr ? pr.t.kier : '', `kod ${w.kod} z Rejestru Fabryki („R”) pasuje do ${kand.length} zamówień: ${kand.map(koncowka).join(', ')} — zrób ZMIANĘ ręcznie`);
+            uwaga(pr ? pr.t.kier : '', `kod ${w.kod} z Rejestru Fabryki („R”) pasuje do ${kand.length} zamówień: ${kand.map(koncowka).join(', ')} — sprawdź wpis w Fabryce (numer z DYSZY)`);
           });
           return;
         }
@@ -2729,30 +2765,52 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       const prz = S.model.przyp.get(klucz(z.id)), kier = prz ? prz.t.kier : '';
       const zm = S.zmiany[klucz(z.id)] || null, zRej = !!(zm && zm.zr === 'rejestr' && zm.rej === w.id);
       const p0 = platnosc(z, prz ? prz.s : null, true);
-      let akcja = null;
+      let akcja = null, cel = null;
       if (w.przeniesiono) {
         if (zRej && zm.na === w.rodzaj) return;                 // już jest
         if (zm && !zRej && msZ(zm.kiedy) >= msZ(w.przeniesiono)) return;   // ręczna ZMIANA nowsza niż „R” — zostaje ręczna
         if (!p0.drzwi) return;                                  // online, BO, płatność dzielona — kierowca nic nie pobiera
         const kw = p0[p0.drzwi];
         if (kw !== w.kwota) {
-          uwaga(kier, `${koncowka(z.id)} — „R” w Rejestrze Fabryki, ale kwota inna (Rejestr ${zl(w.kwota)} zł, tu ${zl(kw)} zł) — zrób ZMIANĘ ręcznie`);
+          uwaga(kier, `${koncowka(z.id)} — „R” w Rejestrze Fabryki, ale kwota inna (Rejestr ${zl(w.kwota)} zł, tu ${zl(kw)} zł) — sprawdź wpis w Fabryce`);
           return;
         }
         akcja = 'R';
-      } else if (zRej) akcja = 'cofnij';
+      } else if (w.pl) {                                        // (8.11) płatność wpisu Fabryki
+        cel = w.usuniety ? null : celFabryki(w, p0.drzwi);
+        const pE = platnosc(z, prz ? prz.s : null);
+        const gotUw = (w.pl.got || 0) !== (pE.got || 0) ? ` — gotówka: w Fabryce ${zl(w.pl.got || 0)} zł, tu ${zl(pE.got || 0)} zł` : '';
+        if (!cel || cel.cel === p0.drzwi) {                     // ta sama płatność co na wyjeździe (albo wpis usunięty) — powrót zmiany z tego wpisu
+          if (zRej) akcja = 'powrot';
+        } else if (!p0.drzwi) {                                 // online, BO z Routific, dwie płatności w DYSZY — tej płatności tu się nie zmienia
+          if ((w.pl.got || 0) !== (pE.got || 0) || (w.pl.kar || 0) !== (pE.kar || 0))
+            uwaga(kier, `${koncowka(z.id)} — w Rejestrze Fabryki ${opisFabryki(w)}, tu ${opisTu(pE)} — tej płatności aplikacja nie zmienia${gotUw}`);
+        } else if (w.kwota !== p0.calosc) {
+          uwaga(kier, `${koncowka(z.id)} — w Rejestrze Fabryki ${opisFabryki(w)}, a zamówienie ${zl(p0.calosc)} zł — kwota inna, płatność bez zmiany; sprawdź wpis w Fabryce`);
+        } else if (cel.powod) {
+          uwaga(kier, `${koncowka(z.id)} — w Rejestrze Fabryki ${opisFabryki(w)} — ${cel.powod === 'TRZY' ? 'tu najwyżej dwie płatności' : 'tej płatności aplikacja nie zapisze'}${gotUw}`);
+        } else if (takiSam(zm, cel)) {
+          return;                                               // już jest
+        } else if (zm && zm.zr !== 'rejestr' && msZ(zm.kiedy) >= msZ(w.czas)) {
+          return;                                               // ręczna ZMIANA nowsza niż wpis w Fabryce — zostaje ręczna (jak w bazie)
+        } else akcja = 'platnosc';
+      } else if (zRej) akcja = 'cofnij';                        // (bez listy „fabryka” — jak 6.11)
       if (!akcja) return;
       if (S.koniec[kier]) {
-        uwaga(kier, `${koncowka(z.id)} — ${akcja === 'R' ? `„R” w Rejestrze Fabryki (${NAZWA_PL[w.rodzaj] || 'Restauracja'})` : '„R” cofnięte w Rejestrze Fabryki'}`
+        const coR = zm && RESTAURACJA.indexOf(zm.na) >= 0;
+        uwaga(kier, `${koncowka(z.id)} — ${akcja === 'R' ? `„R” w Rejestrze Fabryki (${NAZWA_PL[w.rodzaj] || 'Restauracja'})`
+          : akcja === 'platnosc' ? `w Rejestrze Fabryki ${opisFabryki(w)}`
+          : (akcja === 'cofnij' || coR) ? '„R” cofnięte w Rejestrze Fabryki' : `w Rejestrze Fabryki znów ${NAZWA_PL[p0.drzwi] || 'płatność z wyjazdu'}`}`
           + ' po KONIEC — „odblokuj”, poczekaj chwilę na zmianę i znów KONIEC');
         return;
       }
       zadania.push({ w: w, z: z, kier: kier, p0: p0, akcja: akcja,
-        klucz: [w.id, w.przeniesiono || '', akcja, w.rodzaj, p0.drzwi || '', p0.drzwi ? p0[p0.drzwi] : 0, kier, zm ? zm.kiedy : ''].join('|') });
+        klucz: [w.id, w.przeniesiono || '', akcja, w.rodzaj, cel ? JSON.stringify(cel) : '', p0.drzwi || '', p0.drzwi ? p0[p0.drzwi] : 0, kier,
+          zm ? zm.kiedy : '', w.czas || '', w.usuniety ? 'u' : ''].join('|') });
     });
     return { zadania: zadania, uwagi: uwagi };
   }
-  async function rejestrSync() {                                // po każdym pobraniu dnia: „R” z Rejestru → zmiana płatności w bazie
+  async function rejestrSync() {                                // po każdym pobraniu dnia: „R” i (8.11) płatność z Rejestru Fabryki → baza
     if (REJ.trwa || !S.wczytano || !S.model || !baza.sesja()) return;
     const zadania = rejestrPlan().zadania.filter(x => !REJ.proby[x.klucz]);
     if (!zadania.length) return;
