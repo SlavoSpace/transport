@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-08 15:35 · 044ad4e"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-08 16:59 · 1b49cb5"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -630,11 +630,11 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     <summary>Skąd dane i jak zapisują się wpisy</summary>
     <ul>
       <li>Pliki dnia: eksport z DYSZY <b>FABRYKA-RRRR-MM-DD-GG.csv</b> przychodzi sam; eksport tras z Routific <b>Routific solution - GG-GG - RRRR-MM-DD.csv</b> dyspozytor wgrywa tutaj (pod godzinami „Pliki dnia” → WGRAJ TRASĘ) — automat kładzie go na Dysku. Tu też są pliki dla Routific (ROUTIFIC-DD.MM.RRRR-GG.xlsx) do pobrania. Załoga nie zagląda na Dysk. Automat sprawdza wszystko co minutę, strona odświeża się sama co 20 sekund.</li>
-      <li>START, STOP, EXTRA, BONUS, KONIEC i zmiany płatności zapisują się w bazie od razu (napis nad plikami dnia: „zapisane gg:mm”). Wszyscy zalogowani widzą to samo — iPad dyspozytora, telefon obsługi, komputer w biurze.</li>
+      <li>START, STOP, EXTRA, BONUS i KONIEC zapisują się w bazie od razu (napis nad plikami dnia: „zapisane gg:mm”). Wszyscy zalogowani widzą to samo — iPad dyspozytora, telefon obsługi, komputer w biurze.</li>
       <li>Zestaw z Fabryki sprzedany w Restauracji — „R” w Rejestrze Fabryki (tablica.dysza.app): płatność zamówienia zmienia się tu sama na RK albo RG (jak płatność w Restauracji; w „Zmianach płatności” — „Rejestr Fabryki”). Cofnięte „R” — wraca pierwotna. Po KONIEC kierowcy, przy innej kwocie albo kodzie pasującym do kilku zamówień — uwaga na karcie kierowcy.</li>
-      <li>Zmiana płatności w Rejestrze Fabryki (tablica.dysza.app: wpis → „Cała kwota jako …” albo „Podziel”) przechodzi tu sama: Gotówka → G, Karta → K, BLIK → BO (BK, gdy kierowca wyjechał z BLIK-iem Kierowcy), dwie płatności → podział; w „Zmianach płatności” — „Rejestr Fabryki”. Online, Voucher, trzy płatności, inna kwota i zmiana po KONIEC — uwaga na karcie kierowcy.</li>
+      <li>Płatność zmienia się tylko w Rejestrze Fabryki (tablica.dysza.app: płatność wpisu — jeden albo dwa sposoby) i przechodzi tu sama: Gotówka → G, Karta → K, BLIK → BO (BK, gdy kierowca wyjechał z BLIK-iem Kierowcy), Online i Voucher → zapłacone (kierowca nic nie pobiera), dwie płatności → podział; w „Zmianach płatności” — „Rejestr Fabryki”. Trzy płatności, inna kwota i zmiana po KONIEC — uwaga na karcie kierowcy.</li>
       <li>LISTY STARTOWE: szkic zapisuje się na bieżąco. „UTWÓRZ I WYŚLIJ LISTY” — w ciągu minuty automat Transport Listy robi 11 plików GHH-LS-RRRR-MM-DD.xlsx (katalog dnia › LISTY STARTOWE), kartę STAWKI w pliku T i mail do załogi. Formularz list startowych jest zablokowany — listy układa się tylko tutaj.</li>
-      <li>Role nadaje manager.dysza.app: <b>Odczyt</b> — podgląd; <b>Płatności</b> — ręczna ZMIANA płatności (zwykle niepotrzebna — płatność przychodzi z Rejestru Fabryki); <b>Dyspozytor</b> — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS i KONIEC. Można mieć kilka ról.</li>
+      <li>Role nadaje manager.dysza.app: <b>Odczyt</b> — podgląd; <b>Płatności</b> — podgląd z telefonami kierowców (płatność przychodzi z Rejestru Fabryki); <b>Dyspozytor</b> — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS i KONIEC. Można mieć kilka ról.</li>
       <li>Rozliczenie jak w pliku T: CZASÓWKA = (STOP − START) × zł/h; KILOMETRY = (km z Routific + EXTRA) × zł/km; ADRESY = adresy × zł/adres + BONUS; WYPŁATA = suma; ODDAJE = gotówka − wypłata, DOSTAJE = wypłata − gotówka. ZEW — bez wypłaty, oddaje gotówkę; RES — dniówka z list startowych.</li>
     </ul>
   </details>
@@ -1431,6 +1431,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   const NAZWA_PL = { got: 'Gotówka', kar: 'Karta', blikO: 'BLIK Obsługi', blikK: 'BLIK Kierowcy', restK: 'Restauracja Karta', restG: 'Restauracja Gotówka', rest: 'Restauracja' };
   const CELE = ['got', 'kar', 'blikO', 'blikK', 'restK', 'restG'];   // na co można zmienić: G, K, BO (od 5.11, 12:05), BK, RK, RG (od 5.11, 17:17 — zamiast R)
   const RESTAURACJA = ['restK', 'restG', 'rest'];               // poza rozliczeniem kierowcy i transportu; rest = R sprzed RK i RG
+  const ZAPLACONE = ['onl', 'vou'];                             // (8.11, 16:27) Online i Voucher z Rejestru Fabryki — zapłacone, poza gotówką kierowcy
 
   // ───────── dane dnia z bazy ─────────
   const nowyForm = () => ({ stawki: { h: '0', adres: '0', dniowka: '0' }, przydzial: {}, zew: [] });   // nowy dzień: stawki od 0
@@ -1671,7 +1672,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     otworzChmurke(btn, 'Konto', '', [
       el('div', { class: 'chm-l' }, el('b', null, kto(ja) || '—'), ja.login ? el('small', null, ` · login ${ja.login}`) : null),
       el('div', { class: 'chm-l' }, 'Role Transportu: ', el('b', null, nazwaRol())),
-      el('div', { class: 'chm-m' }, 'Role nadaje kierownik w manager.dysza.app: Odczyt — podgląd; Płatności — ręczna ZMIANA płatności (zwykle niepotrzebna — płatność przychodzi z Rejestru Fabryki); Dyspozytor — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS, KONIEC.'),
+      el('div', { class: 'chm-m' }, 'Role nadaje kierownik w manager.dysza.app: Odczyt — podgląd; Płatności — podgląd z telefonami kierowców (płatność przychodzi z Rejestru Fabryki); Dyspozytor — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS, KONIEC.'),
       el('div', { class: 'chm-l' }, 'Widok:'),
       el('div', { class: 'seg seg2 motyw-seg', role: 'group', 'aria-label': 'Widok jasny albo ciemny' }, ['light', 'dark'].map(m =>
         el('button', { type: 'button', class: 'x', 'data-motyw': m, 'aria-pressed': String(motywTeraz() === m), onclick: () => { ustawMotyw(m); zamknijChmurke(); } },
@@ -1943,17 +1944,12 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
           el('td', { class: 'h' }, String(t.h)),
           el('td', { class: 'id' }, s.id || '—'),
           el('td', { class: 'adr' }, z ? z.adres : el('span', { class: 'znacz uw' }, 'brak w eksporcie DYSZY')),
-          el('td', { class: 'przyc' }, maRole('platnosci') && z && p.drzwi
-            ? el('button', { type: 'button', class: 'inf zm-b' + (p.zmiana ? ' jest' : ''), 'aria-expanded': 'false', disabled: !!S.koniec[k],
-              title: S.koniec[k] ? 'Rozliczenie zamknięte (KONIEC) — zmiana po odblokowaniu przez dyspozytora' : null,
-              'aria-label': `Zmiana płatności — ${s.id}`, onclick: e => pokazZmiane(e.currentTarget, z.id, p) }, 'ZMIANA')
-            : null),
           el('td', { class: 'kw' }, kwotyKomorka(p, z))));
       });
     });
     const tabela = wiersze.length
       ? el('div', { class: 'tabela-w', onscroll: ustawChmurke }, el('table', { class: 'lista', 'aria-label': `Zamówienia kierowcy ${k}` },
-        el('tbody', null, wiersze, el('tr', { class: 'suma' }, el('td', { colspan: '4' }, el('span', { class: 'st-kafel lacznie', title: 'łącznie w wybranych godzinach — km z Routific, bez EXTRA' },
+        el('tbody', null, wiersze, el('tr', { class: 'suma' }, el('td', { colspan: '3' }, el('span', { class: 'st-kafel lacznie', title: 'łącznie w wybranych godzinach — km z Routific, bez EXTRA' },
           el('small', null, 'ŁĄCZNIE'), el('b', null, `${wiersze.length} ${odm(wiersze.length, ['adres', 'adresy', 'adresów'])}`),
           el('b', null, `${km(trasy.filter(wGodz).reduce((a, x) => a + x.kmDz, 0))} km`))),
           el('td', { class: 'kw' }, kwotySumy(sumy))))))
@@ -2101,7 +2097,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
 
   // ── widok PODSUMOWANIE: kierowcy dnia (zamiast pliku T) i statystyka dnia — zawsze cały dzień ──
   function danePodsumowania() {
-    const M = S.model, RODZ = ['got', 'kar', 'blikO', 'blikK', 'restK', 'restG', 'rest', 'onl'];
+    const M = S.model, RODZ = ['got', 'kar', 'blikO', 'blikK', 'restK', 'restG', 'rest', 'onl', 'vou'];   // (8.11, 16:27) vou
     const pusta = () => { const o = { zmian: 0, bezDanych: 0 }; RODZ.forEach(r => { o[r] = 0; o['n_' + r] = 0; }); return o; };
     const dzien = pusta();
     const kier = listaKierowcow().map(k => {
@@ -2176,7 +2172,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     const plE = r => { const x = PLATNOSCI.find(y => y[0] === r); return [el('abbr', { class: 'pl pl-' + x[3], title: x[2] }, x[1]), x[2].split(' — ')[0].toUpperCase()]; };
     const zam = n => `${n} ${odm(n, ['zamówienie', 'zamówienia', 'zamówień'])}`;
     const grupa = (tytul, kafle) => el('div', { class: 'st-gr' }, el('h3', null, tytul), el('div', { class: 'st-siatka' }, kafle));
-    const wartosc = d.got + d.kar + d.blikO + d.blikK + d.onl + d.restK + d.restG + d.rest;
+    const wartosc = d.got + d.kar + d.blikO + d.blikK + d.onl + d.vou + d.restK + d.restG + d.rest;   // (8.11, 16:27) z Voucherem
     const statystyka = el('section', { class: 'panel', 'aria-labelledby': 'pods-s-t' },
       el('div', { class: 'karta-n' }, el('b', { id: 'pods-s-t' }, 'Statystyka dnia'), el('small', null, 'z eksportów DYSZY i Routific oraz wpisów dyspozytora')),
       grupa('Dostawy', [
@@ -2192,6 +2188,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         kafel(plE('blikO'), zl(d.blikO) + ' zł', zam(d.n_blikO)),
         kafel(plE('blikK'), zl(d.blikK) + ' zł', zam(d.n_blikK)),
         kafel([el('span', { class: 'znacz sz' }, 'online'), 'ZAPŁACONE'], zl(d.onl) + ' zł', zam(d.n_onl)),
+        d.n_vou ? kafel([el('span', { class: 'znacz sz' }, 'voucher'), 'ZAPŁACONE'], zl(d.vou) + ' zł', zam(d.n_vou)) : null,   // (8.11, 16:27)
         ...RESTAURACJA.map(r => (d['n_' + r] ? kafel(plE(r), zl(d[r]) + ' zł', zam(d['n_' + r]) + ' — rozlicza restauracja') : null)),
         kafel('WARTOŚĆ ZAMÓWIEŃ', zl(wartosc) + ' zł', `zamówienia u kierowców${d.zmian ? ` · zmiany płatności: ${d.zmian}` : ''}`)]),
       grupa('Rozliczenie', [
@@ -2265,7 +2262,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   // oznaczenie płatności w kolorowej ramce + kwota bez ramki
   const PLATNOSCI = [['got', 'G', 'Gotówka', 'g'], ['kar', 'K', 'Karta', 'k'], ['blikO', 'BO', 'BLIK Obsługi', 'bo'], ['blikK', 'BK', 'BLIK Kierowcy', 'bk'],
     ['restK', 'RK', 'Restauracja Karta — poza rozliczeniem kierowcy i transportu', 'r'], ['restG', 'RG', 'Restauracja Gotówka — poza rozliczeniem kierowcy i transportu', 'r'],
-    ['rest', 'R', 'Restauracja bez rodzaju — R sprzed RK i RG; poza rozliczeniem kierowcy i transportu', 'r']];
+    ['rest', 'R', 'Restauracja bez rodzaju — R sprzed RK i RG; poza rozliczeniem kierowcy i transportu', 'r'],
+    ['onl', 'ON', 'Online — zapłacone; kierowca nic nie pobiera', 'r'], ['vou', 'VO', 'Voucher — zapłacone; kierowca nic nie pobiera', 'r']];   // (8.11, 16:27) znaczki dwuliterowe jak BO / RK
   function kwotaZ(rodzaj, kwota, dodatkowa, bylo) {
     const d = PLATNOSCI.find(x => x[0] === rodzaj), db = bylo ? PLATNOSCI.find(x => x[0] === bylo) : null;
     return el('span', { class: 'kw-p' + (dodatkowa ? ' ' + dodatkowa : '') },
@@ -2290,6 +2288,10 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       if (p.zmiana && p.zmiana.zr === 'rejestr' && p.zmiana.na === r) { e.classList.add('rej'); e.title = `z Rejestru Fabryki („R”) · ${p.zmiana.czas}`; }   // (6.11)
       pary.push(e);
     });
+    ZAPLACONE.forEach(r => {                                    // (8.11, 16:27) Online / Voucher z Fabryki — zapłacone, kierowca nic nie pobiera
+      if (!p[r] || !p.zmiana || p.zmiana.na !== 'podz' || !p.zmiana.podzial || !p.zmiana.podzial[r]) return;
+      pary.push(zF(kwotaZ(r, p[r], 'poza', bylo(r))));
+    });
     if (!pary.length && z) pary.push(el('span', { class: 'znacz sz' }, p.onl ? 'online' : 'bez kwoty'));
     return el('div', { class: 'kwoty' }, pary);
   }
@@ -2299,7 +2301,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     return Object.keys(x.podzial).sort((a, b) => (a === x.z) - (b === x.z)).map(r => kwotaZ(r, x.podzial[r], '', r !== x.z ? x.z : null));
   }
   function kwotySumy(sumy) {                                // podsumowanie: G, K, BO, BK zawsze w tej kolejności; RK, RG (Restauracja) tylko dla informacji
-    return el('div', { class: 'kwoty' }, PLATNOSCI.filter(d => RESTAURACJA.indexOf(d[0]) < 0).map(d => kwotaZ(d[0], sumy[d[0]], sumy[d[0]] ? '' : 'zero')),
+    return el('div', { class: 'kwoty' }, PLATNOSCI.filter(d => RESTAURACJA.indexOf(d[0]) < 0 && ZAPLACONE.indexOf(d[0]) < 0).map(d => kwotaZ(d[0], sumy[d[0]], sumy[d[0]] ? '' : 'zero')),
       RESTAURACJA.map(r => (sumy[r] ? kwotaZ(r, sumy[r], 'poza') : null)));
   }
 
@@ -2719,16 +2721,15 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   const REJ = { trwa: false, proby: {} };                     // proby: klucz próby → odpowiedź bazy (tej samej próby nie ponawiam)
   const normId = s => String(s || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
   const koncowka = id => '…' + normId(id).slice(-4);
-  // (8.11) płatność wpisu Fabryki → płatność w transporcie — tak samo jak _transport_fabryka_cel w bazie (migracja transport_011)
+  // (8.11) płatność wpisu Fabryki → płatność w transporcie — tak samo jak _transport_fabryka_cel w bazie (migracja transport_011; od 16:27 — 012)
   function celFabryki(w, drzwi) {
     const p = w.pl;
     if (!p) return null;
-    if (p.onl > 0) return { powod: 'ONLINE' };
-    if (p.vou > 0) return { powod: 'VOUCHER' };
-    const czesci = [['got', p.got], ['kar', p.kar], [drzwi === 'blikK' ? 'blikK' : 'blikO', p.blik]].filter(x => x[1] > 0);
+    const czesci = [['got', p.got], ['kar', p.kar], [drzwi === 'blikK' ? 'blikK' : 'blikO', p.blik], ['onl', p.onl], ['vou', p.vou]]
+      .filter(x => x[1] > 0);                                   // (8.11, 16:27) także Online i Voucher — zapłacone
     if (!czesci.length) return { powod: 'ZERO' };
-    if (czesci.length === 3) return { powod: 'TRZY' };
-    if (czesci.length === 1) return { cel: czesci[0][0] };
+    if (czesci.length >= 3) return { powod: 'TRZY' };
+    if (czesci.length === 1 && ZAPLACONE.indexOf(czesci[0][0]) < 0) return { cel: czesci[0][0] };   // Online / Voucher sam — podział z jedną częścią
     const podzial = {};
     czesci.forEach(x => { podzial[x[0]] = x[1]; });
     return { cel: 'podz', podzial: podzial };
@@ -2738,7 +2739,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   const NAZWY_FABRYKI = [['got', 'Gotówka'], ['kar', 'Karta'], ['blik', 'BLIK'], ['onl', 'Online'], ['vou', 'Voucher']];
   const opisFabryki = w => NAZWY_FABRYKI.filter(x => w.pl[x[0]] > 0).map(x => `${x[1]} ${zl(w.pl[x[0]])} zł`).join(' + ') || '0 zł';
   function opisTu(p) {                                          // płatność zamówienia w transporcie, np. „online 89,50 zł”
-    const czesci = [['got', 'Gotówka'], ['kar', 'Karta'], ['blikO', 'BLIK Obsługi'], ['blikK', 'BLIK Kierowcy'], ['onl', 'online']]
+    const czesci = [['got', 'Gotówka'], ['kar', 'Karta'], ['blikO', 'BLIK Obsługi'], ['blikK', 'BLIK Kierowcy'], ['onl', 'online'], ['vou', 'voucher']]
       .filter(x => p[x[0]] > 0).map(x => `${x[1]} ${zl(p[x[0]])} zł`);
     return czesci.join(' + ') || 'bez kwoty';
   }
