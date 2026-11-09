@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-09 14:41 · 9baae09"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-09 16:29 · 095668a"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -3325,7 +3325,9 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     return naj;
   }
   function archDzien(D) {                                       // dzień z bazy → wiersze po kolei, sumy, stawki dnia
-    const w = (D.wiersze || []).slice().sort((a, b) => (ARCH_TYPY[a.typ] - ARCH_TYPY[b.typ]) ||
+    const sumaInna = x => D.zrodlo === 'plik T' && x.typ === 'kierowca' && [x.czasowka, x.kmZl, x.adresZl, x.wyplata].every(v => typeof v === 'number') &&
+      x.czasowka + x.kmZl + x.adresZl !== x.wyplata;                // (9.11, 16:30) w pliku T wypłata wpisana inaczej niż suma składowych
+    const w = (D.wiersze || []).map(x => Object.assign({}, x, { sumaInna: sumaInna(x) })).sort((a, b) => (ARCH_TYPY[a.typ] - ARCH_TYPY[b.typ]) ||
       String(a.kierowca).localeCompare(String(b.kierowca), 'pl', { sensitivity: 'base' }));
     const s = (f, war) => w.reduce((a, x) => a + ((war ? war(x) : true) && typeof f(x) === 'number' ? f(x) : 0), 0);
     const wl = w.filter(x => x.typ === 'kierowca');
@@ -3345,7 +3347,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       adresy: s(x => x.adresy), bonus: s(x => x.bonus), adresZl: s(x => x.adresZl, x => x.typ === 'kierowca'),
       wyplata: s(x => x.wyplata), gotowka: s(x => x.gotowka), oddaje: s(x => x.oddaje), dostaje: s(x => x.dostaje),
       bezGotowki: w.filter(x => x.gotowka === null || x.gotowka === undefined).length,
-      skladowe: w.filter(x => x.uwaga === 'skladowe').length, uwagi: w.filter(x => x.uwaga && x.uwaga !== 'skladowe')
+      skladowe: w.filter(x => x.uwaga === 'skladowe').length, uwagi: w.filter(x => x.uwaga && x.uwaga !== 'skladowe'),
+      sumaInna: w.filter(x => x.sumaInna).length, zewZWyplata: w.filter(x => x.typ === 'firma' && x.wyplata).length
     };
   }
   function archTytulDnia(iso) {                                 // „Niedziela, 8 listopada 2026”
@@ -3448,7 +3451,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       if (r.bonus) kwota('bo', b, r.bonus, { r: 8 }); else kreska('bo', b);
       if (wl) kwota('adz', b, r.adresZl, { r: 8 }); else kreska('adz', b);
       if (r.wyplata === null || r.wyplata === undefined) kreska('wy', b);
-      else tekstKol('wy', b, archZl(r.wyplata) + (r.uwaga === 'skladowe' ? '*' : ''), { f: 'b', r: 8.4, k: r.typ === 'firma' && !r.wyplata ? K.blady : K.tusz });
+      else tekstKol('wy', b, archZl(r.wyplata) + (r.uwaga === 'skladowe' || r.sumaInna ? '*' : ''), { f: 'b', r: 8.4, k: r.typ === 'firma' && !r.wyplata ? K.blady : K.tusz });
       kwota('po', b, r.gotowka, { r: 8 });
       if (r.gotowka === null || r.gotowka === undefined) kreska('zw', b); else kwota('zw', b, r.oddaje, { r: 8 });
       kwota('do', b, r.dostaje, { r: 8 });
@@ -3500,29 +3503,40 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         [['POBRAŁ OD KLIENTA', ' — gotówka od klientów (karta, BLIK, online i voucher nie przechodzą przez kierowcę). '], ['ZWRÓCIŁ DO FIRMY', ' — gdy gotówki było więcej niż wypłaty; '], ['DOSTAŁ Z KASY', ' — gdy mniej.']],
         [].concat(D.nRes ? [['RES', ' — kierowca restauracji: wypłata = dniówka' + (plik ? ' (w pliku T: ZZZ). ' : '. ')]] : [],
           D.nZew ? [['ZEW', ' — kierowca innej firmy: bez wypłaty, zwraca całą gotówkę' + (plik ? ' (w pliku T: ALL-IN / DELIGO).' : '.')]] : [])].filter(l => l.length);
-      if (plik) {
-        const r = [];
-        if (D.uklad === 'odebrac') r.push('w pliku jedna kolumna ODEBRAĆ — tu rozdzielona na ZWRÓCIŁ i DOSTAŁ');
-        if (D.uklad !== 'extra') r.push('km EXTRA w pliku T od 22.10');
-        if (D.bezGotowki) r.push('ZZZ do 22.10 — gotówka tylko w TRD, w pliku T jej nie ma');
-        linie.push([['Dane wsteczne', ` — z pliku ${D.plik} tak, jak je wpisano${r.length ? '; ' + r.join('; ') : ''}.`]]);
+      if (plik) {                                               // (9.11, 16:30) każda uwaga w swojej linii — zgodnie z wgranymi plikami T
+        linie.push([['Dane wsteczne', ` — z pliku ${D.plik}, tak jak je wpisano.`]]);
+        if (D.uklad === 'odebrac') linie.push([['ODEBRAĆ', ' — w pliku jedna kolumna; tu rozdzielona na ZWRÓCIŁ DO FIRMY (dodatnie) i DOSTAŁ Z KASY (ujemne).']]);
+        if (D.uklad !== 'extra') linie.push([['km EXTRA', ' — w tym pliku jeszcze bez tej kolumny.']]);
+        if (D.bezGotowki) linie.push([['ZZZ', ' — bez ZAMÓWIEŃ w pliku T: jego gotówka była tylko w TRD.']]);
+        if (D.zewZWyplata) linie.push([['ZEW z wypłatą', ' — pliki T do 18.10 liczyły wypłatę także firmom zewnętrznym.']]);
         if (D.inneStawki.length) linie.push([['Inna stawka w wierszu', ': ' + D.inneStawki.map(x => `${x.kierowca} (${[x.h !== D.stawki.h ? archZl(x.h) + ' zł / h' : '', x.km !== D.stawki.km ? archZl(x.km) + ' zł / km' : '', x.adres !== D.stawki.adres ? archZl(x.adres) + ' zł / adres' : ''].filter(Boolean).join(', ')})`).join(', ') + '.']]);
         if (D.uwagi.length) linie.push([['Uwagi z pliku', ': ' + D.uwagi.map(x => `${x.kierowca} — ${x.uwaga}`).join('; ') + '.']]);
       }
       if (D.skladowe) linie.push([['*', ' Składowe nie zgadzają się ze stawkami dnia — wypłata i gotówka z rozliczenia KONIEC.']]);
+      if (D.sumaInna) linie.push([['*', ' W pliku T wypłata inna niż suma składowych — pokazana tak, jak ją wpisano.']]);
       if (D.otwarci.length) linie.push([['Bez KONIEC (poza raportem)', ': ' + D.otwarci.join(', ') + '.']]);
       if (dzis) linie.push([['Raport wstępny', ' — dzień trwa; pełny po KONIEC wszystkich kierowców.']]);
       return linie;
     };
-    const rysujUwagi = (y, linie) => {
-      linie.forEach((l, i) => {
-        let xl = L;
-        l.forEach(([b, t]) => { xl += doc.tekst(xl, y + i * 11, b, { f: 'b', r: 7.2, k: K.tusz }); xl += doc.tekst(xl, y + i * 11, t, { r: 7.2, k: K.szary }); });
+    const zawin = linie => {                                    // długa uwaga (np. wiele ksywek) — dalej w następnej linii, z wcięciem
+      const out = [];
+      linie.forEach(l => {
+        let wiersz = [], x = 0;
+        l.forEach(([b, t]) => [['b', b], ['r', t]].forEach(([f, tekst]) => (String(tekst || '').match(/\s*\S+\s*/g) || []).forEach(sl => {
+          if (x + pdfSzer(f, sl.trimEnd(), 7.2) > szer && wiersz.length) { out.push(wiersz); wiersz = []; x = 12; sl = sl.trimStart(); }
+          wiersz.push([f, sl, x]);
+          x += pdfSzer(f, sl, 7.2);
+        })));
+        out.push(wiersz);
       });
+      return out;
+    };
+    const rysujUwagi = (y, linie) => {
+      linie.forEach((l, i) => l.forEach(([f, t, x]) => doc.tekst(L + x, y + i * 11, t, { f: f, r: 7.2, k: f === 'b' ? K.tusz : K.szary })));
       return y + linie.length * 11;
     };
     // strony: nagłówek, sumy (pierwsza), tabela; RAZEM i uwagi na ostatniej
-    const linie = uwagiDnia(), dolStrony = WY - 40, miejsceKonca = RW + 2 + 14 + linie.length * 11;
+    const linie = zawin(uwagiDnia()), dolStrony = WY - 40, miejsceKonca = RW + 2 + 14 + linie.length * 11;
     let i = 0, y;
     naglowekStrony(true);
     y = sumy(98) + 14;
