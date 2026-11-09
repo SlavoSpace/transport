@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-09 16:38 · dcac9c3"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-09 18:37 · 755a65e"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -632,6 +632,9 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
 .ar-dz.brak .ar-dz-n, .ar-dz.przysz .ar-dz-n { color: var(--szary2); }
 .ar-dz.brak .ar-dz-l { color: var(--szary2); font-size: 13px; }
 .ar-dz.pusty { visibility: hidden; }
+.ar-blok { min-height: clamp(240px, 50vh, 520px); place-content: center; }                               /* (9.11) bez roli Archiwum — pusta karta */
+.panel.ar-blok h2 { margin: 0; justify-content: center; text-align: center; font-size: 15px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--szary); }
 .ar-dz-l .kr, .ar-dz-dt { display: none; }
 @container (max-width: 112px) { .ar-dz-zr { display: none; } .ar-dz-n { font-size: 21px; } .ar-dz-l .dl { display: none; } .ar-dz-l .kr { display: inline; } }
 @media (max-width: 900px) {
@@ -684,12 +687,12 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         title="Konto — role, widok jasny / ciemny, wylogowanie"><span class="awatar" id="rola-a" aria-hidden="true">?</span><span class="menu-imie" id="rola-i"></span></button>
       </div>
     </div>
-    <div class="widoki" role="tablist" aria-label="Widok">
+    <div class="widoki z-archiwum" role="tablist" aria-label="Widok">
       <button type="button" role="tab" id="w-kierowcy" aria-selected="true">KIEROWCY</button>
       <button type="button" role="tab" id="w-listy" aria-selected="false">LISTY PRZEWOZOWE</button>
       <button type="button" role="tab" id="w-startowe" aria-selected="false">LISTY STARTOWE</button>
       <button type="button" role="tab" id="w-podsumowanie" aria-selected="false">PODSUMOWANIE</button>
-      <button type="button" role="tab" id="w-archiwum" aria-selected="false" hidden>ARCHIWUM</button>
+      <button type="button" role="tab" id="w-archiwum" aria-selected="false">ARCHIWUM</button>
     </div>
   </header>
 
@@ -713,9 +716,9 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       <li>Zestaw z Fabryki sprzedany w Restauracji — „R” w Rejestrze Fabryki (tablica.dysza.app): płatność zamówienia zmienia się tu sama na RK albo RG (jak płatność w Restauracji; w „Zmianach płatności” — „Rejestr Fabryki”). Cofnięte „R” — wraca pierwotna. Po KONIEC kierowcy, przy innej kwocie albo kodzie pasującym do kilku zamówień — uwaga na karcie kierowcy.</li>
       <li>Płatność zmienia się tylko w Rejestrze Fabryki (tablica.dysza.app: płatność wpisu — jeden albo dwa sposoby) i przechodzi tu sama: Gotówka → G, Karta → K, BLIK → BO (BK, gdy kierowca wyjechał z BLIK-iem Kierowcy), Online i Voucher → zapłacone (kierowca nic nie pobiera), dwie płatności → podział; w „Zmianach płatności” — „Rejestr Fabryki”. Trzy płatności, inna kwota i zmiana po KONIEC — uwaga na karcie kierowcy.</li>
       <li>LISTY STARTOWE: szkic zapisuje się na bieżąco. „UTWÓRZ I WYŚLIJ LISTY” — w ciągu minuty automat Transport Listy robi 11 plików GHH-LS-RRRR-MM-DD.xlsx (katalog dnia › LISTY STARTOWE), kartę STAWKI w pliku T i mail do załogi. Formularz list startowych jest zablokowany — listy układa się tylko tutaj.</li>
-      <li>Role nadaje manager.dysza.app: <b>Odczyt</b> — podgląd; <b>Płatności</b> — podgląd z telefonami kierowców (płatność przychodzi z Rejestru Fabryki); <b>Dyspozytor</b> — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS, KONIEC i ARCHIWUM. Można mieć kilka ról.</li>
+      <li>Role nadaje manager.dysza.app: <b>Dyspozytor</b> — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS i KONIEC; <b>Archiwum</b> — ARCHIWUM (raport dnia) i podgląd z telefonami kierowców. Można mieć obie role.</li>
       <li>Rozliczenie jak w pliku T: CZASÓWKA = (STOP − START) × zł/h; KILOMETRY = (km z Routific + EXTRA) × zł/km; ADRESY = adresy × zł/adres + BONUS; WYPŁATA = suma; ODDAJE = gotówka − wypłata, DOSTAJE = wypłata − gotówka. ZEW — bez wypłaty, oddaje gotówkę; RES — dniówka z list startowych.</li>
-      <li>ARCHIWUM (rola Dyspozytor): miesiąc w siatce — dni od 5.11 z rozliczeń KONIEC, dni 20.09–4.11 z plików T (przepisane raz do bazy). RAPORT na kafelku dnia pobiera plik PDF (A4 poziomo): kierowcy, składowe wypłaty, pobrał od klienta (gotówka), zwrócił do firmy, dostał z kasy.</li>
+      <li>ARCHIWUM (rola Archiwum; bez niej — pusta karta „Dostęp zablokowany”): miesiąc w siatce — dni od 5.11 z rozliczeń KONIEC, dni 20.09–4.11 z plików T (przepisane raz do bazy). RAPORT na kafelku dnia pobiera plik PDF (A4 poziomo): kierowcy, składowe wypłaty, pobrał od klienta (gotówka), zwrócił do firmy, dostał z kasy.</li>
     </ul>
   </details>
 </div>
@@ -1381,6 +1384,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   function pisz(k, v) { try { if (v === null || v === undefined) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* bez pamięci przeglądarki — sesja tylko w tej karcie */ } }
   const BLEDY = {
     BRAK_DOSTEPU: 'Brak dostępu do Transportu — poproś kierownika o rolę w manager.dysza.app.',
+    'BRAK_DOSTEPU:archiwum': 'Dostęp zablokowany.',                // (9.11) ARCHIWUM bez roli Archiwum (baza 016–017)
     'ROLA:dyspozytor': 'To robi Transport Dyspozytor — Twoja rola na to nie pozwala.',
     'ROLA:platnosci': 'Płatność zmienia się w Rejestrze Fabryki (tablica.dysza.app) — tu przychodzi sama.',   // (8.11)
     'ZLA_WARTOSC:podzial': 'Podział: dwie części, każda większa niż 0, razem cała kwota.',   // (6.11)
@@ -1492,7 +1496,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     godz: null,                                                 // kafle godzin: null — cały dzień (także godziny, które dopiero przyjdą), [] — żadna, [12, 14] — te
     stawki: null,                                               // grosze — z ostatnio wysłanych list startowych (KILOMETRÓWKA z ceny ON)
     rozl: {}, model: null, pliki: [],
-    role: [], ja: null,                                         // role Transportu z manager.dysza.app — 'odczyt', 'platnosci', 'dyspozytor' (kilka naraz)
+    role: [], ja: null,                                         // role Transportu z manager.dysza.app — 'dyspozytor', 'archiwum' (obie naraz; od 9.11, 18:24)
     zmiany: {},                                                 // zmiany płatności: ID → { z, na, kwota, czas, kto }
     rejestr: [],                                                // (6.11) „R” w Rejestrze Fabryki: [{ id, kod, dysza, przeniesiono, rodzaj, kwota, kto }]
     koniec: {}, koniecInfo: null,                               // KONIEC: kierowca → { czas, kto }
@@ -1503,10 +1507,10 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     pamiec: {},                                                 // md5 pliku → tabela (treść przychodzi raz)
     wczytano: false, blad: '', offline: false, zapis: '', zapisZly: false, czekaRysuj: false
   };
-  const ROLE = { odczyt: 'Odczyt', platnosci: 'Płatności', dyspozytor: 'Dyspozytor' };
+  const ROLE = { dyspozytor: 'Dyspozytor', archiwum: 'Archiwum' };   // (9.11, 18:24) bez Odczytu; Płatności → Archiwum
   const maRole = r => S.role.indexOf(r) >= 0;
-  const tylkoOdczyt = () => !maRole('dyspozytor') && !maRole('platnosci');
-  const nazwaRol = () => (S.role.length > 1 ? S.role.filter(r => r !== 'odczyt') : S.role).map(r => ROLE[r] || r).join(' + ') || 'bez roli';
+  const tylkoOdczyt = () => !maRole('dyspozytor');               // (9.11, 18:24) bez Dyspozytora — podgląd (rola Archiwum)
+  const nazwaRol = () => S.role.map(r => ROLE[r] || r).join(' + ') || 'bez roli';
   const DRZWI = ['got', 'kar', 'blikK'];                        // płatności przy odbiorze — tylko między nimi wolno zmienić
   const NAZWA_PL = { got: 'Gotówka', kar: 'Karta', blikO: 'BLIK Obsługi', blikK: 'BLIK Kierowcy', restK: 'Restauracja Karta', restG: 'Restauracja Gotówka', rest: 'Restauracja' };
   const CELE = ['got', 'kar', 'blikO', 'blikK', 'restK', 'restG'];   // na co można zmienić: G, K, BO (od 5.11, 12:05), BK, RK, RG (od 5.11, 17:17 — zamiast R)
@@ -1752,7 +1756,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     otworzChmurke(btn, 'Konto', '', [
       el('div', { class: 'chm-l' }, el('b', null, kto(ja) || '—'), ja.login ? el('small', null, ` · login ${ja.login}`) : null),
       el('div', { class: 'chm-l' }, 'Role Transportu: ', el('b', null, nazwaRol())),
-      el('div', { class: 'chm-m' }, 'Role nadaje kierownik w manager.dysza.app: Odczyt — podgląd; Płatności — podgląd z telefonami kierowców (płatność przychodzi z Rejestru Fabryki); Dyspozytor — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS, KONIEC.'),
+      el('div', { class: 'chm-m' }, 'Role nadaje kierownik w manager.dysza.app: Dyspozytor — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS, KONIEC; Archiwum — ARCHIWUM (raport dnia) i podgląd z telefonami kierowców.'),
       el('div', { class: 'chm-l' }, 'Widok:'),
       el('div', { class: 'seg seg2 motyw-seg', role: 'group', 'aria-label': 'Widok jasny albo ciemny' }, ['light', 'dark'].map(m =>
         el('button', { type: 'button', class: 'x', 'data-motyw': m, 'aria-pressed': String(motywTeraz() === m), onclick: () => { ustawMotyw(m); zamknijChmurke(); } },
@@ -1791,10 +1795,6 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     $('rola').setAttribute('aria-label', `Zalogowany: ${kto(S.ja)}, role Transportu: ${nazwaRol()} — konto`);
     rysujStan();
     rysujMotyw();
-    const zArch = maRole('dyspozytor');                         // (9.11) ARCHIWUM — tylko rola Dyspozytor
-    if (S.widok === 'archiwum' && !zArch) S.widok = 'kierowcy';
-    $('w-archiwum').hidden = !zArch;
-    $('w-archiwum').parentNode.classList.toggle('z-archiwum', zArch);
     [['w-kierowcy', 'kierowcy'], ['w-listy', 'listy'], ['w-startowe', 'startowe'], ['w-podsumowanie', 'podsumowanie'], ['w-archiwum', 'archiwum']].forEach(([id, v]) => $(id).setAttribute('aria-selected', String(S.widok === v)));
     $('pliki-dnia').hidden = S.widok === 'startowe' || S.widok === 'podsumowanie' || S.widok === 'archiwum';   // listy startowe, podsumowanie i archiwum nie potrzebują plików dnia
     rysujPliki();
@@ -2176,7 +2176,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       koniec,
       el('div', { class: 'notka', id: 'o-blad', role: 'status' }));
     const panel = el('section', { class: 'panel', 'aria-label': `Rozliczenie ${k}` }, naglowek, gora, tab, wynik,
-      el('div', { class: 'notka' }, (tylkoOdczyt() ? 'Rola Transport Odczyt — tylko podgląd. ' : !maRole('dyspozytor') ? 'Rola Transport Płatności — START, STOP, EXTRA i BONUS wpisuje dyspozytor. ' + (zamk ? 'Rozliczenie zamknięte (KONIEC) — zmiana płatności po odblokowaniu przez dyspozytora. ' : '') : '') + (typ === 'kierowca' ? (S.stawki ? '' : 'Stawki przyjdą z list startowych — do tego czasu kwoty to „—”. ') + 'EXTRA — km ponad trasę z Routific; BONUS — zł.'
+      el('div', { class: 'notka' }, (tylkoOdczyt() ? 'Rola Transport Archiwum — podgląd; START, STOP, EXTRA i BONUS wpisuje dyspozytor. ' : '') + (typ === 'kierowca' ? (S.stawki ? '' : 'Stawki przyjdą z list startowych — do tego czasu kwoty to „—”. ') + 'EXTRA — km ponad trasę z Routific; BONUS — zł.'
         : typ === 'res' ? 'Dniówkę RES ustala dyspozytor w LISTACH STARTOWYCH (stawki dnia).' : '')
         + (trasy.some(t => wybrane.indexOf(t.h) < 0) ? ' Rozliczenie liczy cały dzień — przygaszone rzuty są poza wybranymi godzinami.' : '')));
     setTimeout(odswiez, 0);
@@ -3046,7 +3046,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     clearTimeout(CYKL);
     try { await zapiszWpisyTeraz(); await zapiszLSTeraz(); } catch (e) { /* bez sieci — trudno */ }
     await baza.wyloguj();
-    S.ja = null; S.role = []; S.pamiec = {}; S.wszystkie = []; S.wczytano = false; S.ls.dni = {}; S.dlaRoutific = []; S.wgrane = []; rtfWyczysc();
+    S.ja = null; S.role = []; S.pamiec = {}; S.wszystkie = []; S.wczytano = false; S.ls.dni = {}; S.dlaRoutific = []; S.wgrane = []; rtfWyczysc(); arWyczysc();
     pokazLogowanie('Wylogowano.');
   }
   async function start() {
@@ -3057,7 +3057,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       S.role = Array.isArray(ja.role) ? ja.role : [];
       if (!ja.id || !S.role.length) {
         await baza.wyloguj();
-        pokazLogowanie(`${kto(ja) ? kto(ja) + ': b' : 'B'}rak roli Transport — poproś kierownika o rolę w manager.dysza.app (Odczyt, Płatności albo Dyspozytor).`);
+        pokazLogowanie(`${kto(ja) ? kto(ja) + ': b' : 'B'}rak roli Transport — poproś kierownika o rolę w manager.dysza.app (Dyspozytor albo Archiwum).`);
         return;
       }
       if (S.dzien !== ja.dzis) { S.dzien = ja.dzis; S.ls.dzien = ja.dzis; S.pamiec = {}; S.godz = null; }
@@ -3130,7 +3130,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     const c = el('div', { class: 'chmurka tel-chm', role: 'tooltip' },
       el('div', { class: 'chm-t' }, el('span', null, 'Telefon'), ' · ', el('span', { class: 'id' }, nick)), num,
       n ? el('button', { type: 'button', class: 'mb', onclick: e => kopiuj(n.kopia, num, e.currentTarget) }, 'kopiuj')
-        : el('div', { class: 'chm-m' }, !(maRole('dyspozytor') || maRole('platnosci')) ? 'Numery widzą role Dyspozytor i Płatności.'
+        : el('div', { class: 'chm-m' }, !(maRole('dyspozytor') || maRole('archiwum')) ? 'Numery widzą role Dyspozytor i Archiwum.'
           : /^ZEW-/i.test(nick) ? 'ZEW — numer wpisuje dyspozytor w LISTACH STARTOWYCH, gdy kierowca się stawi.' : 'Brak numeru w KIEROWCY-PODSTAWOWI.'));
     c.addEventListener('pointerenter', () => clearTimeout(tchT));
     c.addEventListener('pointerleave', () => { clearTimeout(tchT); tchT = setTimeout(zamknijTel, 250); });
@@ -3559,13 +3559,15 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       data: `D:${t.getFullYear()}${dd2(t.getMonth() + 1)}${dd2(t.getDate())}${dd2(t.getHours())}${dd2(t.getMinutes())}${dd2(t.getSeconds())}` });
   }
 
-  // ───────── (9.11) ARCHIWUM — miesiąc w siatce, na kafelku dnia RAPORT (PDF A4 poziomo); rola Dyspozytor ─────────
+  // ───────── (9.11) ARCHIWUM — miesiąc w siatce, na kafelku dnia RAPORT (PDF A4 poziomo) ─────────
   // Dane: transport_archiwum_miesiac (baza 015) — dni od 5.11 z rozliczeń KONIEC, dni 20.09–4.11 z plików T (przepisane raz).
+  // (9.11, 18:11 i 18:24 — Sławek) tylko rola Archiwum (baza 016–017; Architekt ma obie role); inni — pusta karta „Dostęp zablokowany”, strona nie pyta bazy.
   const AR_MIES = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
   const AR_MIES_D = ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sierpnia', 'września', 'października', 'listopada', 'grudnia'];
   const AR_TYG = ['PN', 'WT', 'ŚR', 'CZ', 'PT', 'SO', 'ND'];
   const AR_DNI = ['niedziela', 'poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota'];
-  const AR = { mies: '', dane: {}, laduje: '', blad: '', info: '', pierwszy: '' };
+  const AR = { mies: '', dane: {}, laduje: '', blad: '', info: '', pierwszy: '', gen: 0 };
+  function arWyczysc() { Object.assign(AR, { mies: '', dane: {}, laduje: '', blad: '', info: '', pierwszy: '', gen: AR.gen + 1 }); }   // wylogowanie: nic nie zostaje na wspólnym iPadzie
   const arMiesDzis = () => String(S.dzien || '').slice(0, 7);
   function arZakres(m) {                                        // '2026-11' → ['2026-11-01', '2026-11-30']
     const [r, mm] = m.split('-').map(Number);
@@ -3573,20 +3575,24 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   }
   function arPrzesun(m, o) { const [r, mm] = m.split('-').map(Number), d = new Date(r, mm - 1 + o, 1); return `${d.getFullYear()}-${dd(d.getMonth() + 1)}`; }
   async function arWczytaj(wymus) {                             // miesiąc z bazy; bieżący odświeżany co minutę, wcześniejsze co 10 minut
-    if (!maRole('dyspozytor') || !baza.sesja()) return;
-    const m = AR.mies || (AR.mies = arMiesDzis());
+    if (!maRole('archiwum') || !baza.sesja()) return;
+    const m = AR.mies || (AR.mies = arMiesDzis()), g = AR.gen;
     const c = AR.dane[m];
     if (AR.laduje === m || (!wymus && c && Date.now() - c.kiedy < (m === arMiesDzis() ? 60000 : 600000))) return;
     AR.laduje = m;
     try {
       const [od, d0] = arZakres(m);
       const d = await baza.rpc('transport_archiwum_miesiac', { p_od: od, p_do: d0 });
+      if (g !== AR.gen) return;                                 // w międzyczasie wylogowanie — wynik do kosza
       AR.dane[m] = { kiedy: Date.now(), d: d, dni: new Map((d.dni || []).map(x => [x.dzien, x])) };
       if (d.pierwszy) AR.pierwszy = d.pierwszy;
       AR.blad = '';
     } catch (e) {
       if (e && e.sesja) { AR.laduje = ''; pokazLogowanie('Sesja wygasła — zaloguj się ponownie.'); return; }
-      AR.blad = String((e && e.message) || '') === 'ARCHIWUM_WYLACZONE' ? 'Archiwum jest wyłączone.' : tekstBledu(e);
+      if (g !== AR.gen) return;
+      const kod = String((e && e.message) || '');
+      if (kod === 'BRAK_DOSTEPU:archiwum') { S.role = S.role.filter(r => r !== 'archiwum'); AR.dane = {}; AR.blad = ''; }   // baza: rola zdjęta — pusta karta
+      else AR.blad = kod === 'ARCHIWUM_WYLACZONE' ? 'Archiwum jest wyłączone.' : tekstBledu(e);
     } finally { if (AR.laduje === m) AR.laduje = ''; }
     if (S.widok === 'archiwum' && AR.mies === m) arRysuj();
   }
@@ -3620,7 +3626,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     arRysuj(`[data-raport="${iso}"]`);
   }
   function widokArchiwum() {
-    if (!maRole('dyspozytor')) return el('div', { class: 'tabela-w' }, el('div', { class: 'puste' }, 'ARCHIWUM widzi rola Transport Dyspozytor.'));
+    if (!maRole('archiwum')) return el('section', { class: 'panel ar-blok', 'aria-labelledby': 'ar-blok-t' }, el('h2', { id: 'ar-blok-t' }, 'Dostęp zablokowany'));
     const m = AR.mies || (AR.mies = arMiesDzis()), c = AR.dane[m];
     if (!c && !AR.laduje && !AR.blad) setTimeout(() => arWczytaj(), 0);
     const [r, mm] = m.split('-').map(Number), dzis = S.dzien;
