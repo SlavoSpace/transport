@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-09 16:29 · 095668a"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-09 16:38 · dcac9c3"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -3672,9 +3672,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     return el('section', { class: 'panel ar', 'aria-labelledby': 'ar-t' }, gora, staty, stan,
       el('div', { class: 'ar-kal' },
         el('div', { class: 'ar-tyg', 'aria-hidden': 'true' }, AR_TYG.map((x, i) => el('span', { class: i >= 5 ? 'wk' : null }, x))),
-        el('div', { class: 'ar-siatka' }, kafle)),
-      el('div', { class: 'notka' }, 'RAPORT pobiera plik PDF (A4 poziomo): kierowcy dnia, składowe wypłaty, pobrał od klienta (gotówka), zwrócił do firmy, dostał z kasy. ' +
-        'Dni od 5.11 — z rozliczeń KONIEC; wcześniejsze — z plików T (przepisane raz do bazy).'));
+        el('div', { class: 'ar-siatka' }, kafle)));                // bez opisu pod siatką — jak działa, mówi instrukcja (Sławek 7.11, 16:22)
   }
 
   $('w-kierowcy').addEventListener('click', () => { S.widok = 'kierowcy'; rysuj(); });
