@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-09 18:37 · 755a65e"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-11 12:59 · e32fc51"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -584,6 +584,16 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
 .stan { margin: 0; font-size: 14px; }
 .ls-stan.bl { color: var(--czer); background: var(--czer-tlo); border-color: var(--czer); }
 .wysylka-bl { color: var(--czer); }
+.mb.zatw { flex: 0 0 auto; }                                  /* (11.11) ZATWIERDŹ obok USUŃ */
+.mb.zatw:not(:disabled) { background: var(--akcent); border-color: var(--akcent); color: var(--na-akcencie); }
+.zew-g .nick small.dozatw { color: var(--uw); }
+@keyframes potrz { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+.pole.potrz { animation: potrz .18s ease-in-out 2; }
+@media (prefers-reduced-motion: reduce) { .pole.potrz { animation: none; } }
+@media (max-width: 560px) {                                    /* telefon: nazwa się skraca, ZATWIERDŹ i USUŃ w jednej linii z nią */
+  .zew-g .nick { flex: 1 1 0; min-width: 0; max-width: none; margin-right: 0; }
+  .zew-g .mb { padding-inline: 10px; }
+}
 /* ── (9.11) ARCHIWUM: miesiąc w siatce, kafel dnia z RAPORT (PDF), telefon — lista dni (makieta zatwierdzona 9.11, 13:50) ── */
 .widoki.z-archiwum button { padding-inline: 10px; }
 @media (max-width: 900px) { .widoki.z-archiwum button { padding: 8px 4px; font-size: 14px; letter-spacing: .02em; } }   /* PODSUMOWANIE mieści się w przycisku */
@@ -1501,7 +1511,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     rejestr: [],                                                // (6.11) „R” w Rejestrze Fabryki: [{ id, kod, dysza, przeniesiono, rodzaj, kwota, kto }]
     koniec: {}, koniecInfo: null,                               // KONIEC: kierowca → { czas, kto }
     sortL: 'kierowcy',
-    ls: { dzien: '', plik: null, potw: false, dni: {} },        // listy startowe: { RRRR-MM-DD: { form, wysylki, edycja } } — dziś i jutro
+    ls: { dzien: '', plik: null, potw: false, dni: {}, szkic: {} },   // listy startowe: { RRRR-MM-DD: { form, wysylki, edycja } } — dziś i jutro; szkic (11.11): { RRRR-MM-DD: { id ZEW: { imie, tel } } } — do ZATWIERDŹ, tylko na ekranie
     dniowka: null, resDnia: null,                               // z ostatnio wysłanych list dnia: dniówka RES (gr) i kto jest RES
     baza: [], bazaTel: {}, telNr: {}, stawkiDni: {}, automat: {}, dlaRoutific: [], wgrane: [],          // kierowcy z KIEROWCY-PODSTAWOWI (ksywki), stawki dnia, znak życia automatu
     pamiec: {},                                                 // md5 pliku → tabela (treść przychodzi raz)
@@ -1576,7 +1586,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       const x = d.ls[iso] || {}, byl = S.ls.dni[iso];
       const wysylki = (x.wysylki || []).map(w => ({ id: w.id, nr: w.nr, czas: godzinaZ(w.wyslano || w.kiedy), kiedy: godzinaZ(w.kiedy), kto: w.kto || '',
         opis: w.opis || '', form: uzupelnijForm(w.dane), status: w.status, wynik: w.wynik || '', wersja: w.wersja || null }));
-      const lokalny = byl && (byl.edycja || LS_ZAPIS[iso]);    // szkic w trakcie zapisu — zostaje ten z ekranu
+      const lokalny = byl && (byl.edycja || LS_ZAPIS[iso] || (S.widok === 'startowe' && iso === S.ls.dzien && wPolu()));   // szkic w trakcie zapisu albo kursor w polu — zostaje ten z ekranu (11.11)
       dni[iso] = { form: lokalny ? byl.form : uzupelnijForm(x.dane), wysylki: wysylki, edycja: lokalny ? byl.edycja : 0, kto: x.kto || '' };
     });
     S.ls.dni = dni;
@@ -2530,6 +2540,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   function statusLS() {
     const D = dzienLS(), o = ostatnieLS(D), zm = o ? zmianyLS(o.form, D.form) : [], p = oczekujaceLS(D);
     const [kl, t] = p ? (p.status === 'blad' ? ['bl', 'BŁĄD WYSYŁKI'] : ['uw', 'WYSYŁAM… (automat co minutę)'])
+      : szkiceDnia(S.ls.dzien, D.form).length ? ['uw', `ZEW DO ZATWIERDZENIA · ${szkiceDnia(S.ls.dzien, D.form).length}`]
       : !o ? ['uw', 'NIE WYSŁANE'] : zm.length ? ['uw', `ZMIANY DO WYSŁANIA · ${zm.length}`] : ['ok', `WYSŁANE ${o.czas}${numerLS(o)}`];
     return el('span', { class: 'ls-stan ' + kl, id: 'ls-stan', role: 'status' }, t);
   }
@@ -2543,7 +2554,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       el('span', { class: 'wpis' }, el('input', { class: 'pole' + (stawkaLS(f.stawki[k]).zla ? ' zle' : ''), id: 'ls-' + k, inputmode: 'decimal', autocomplete: 'off',
         value: f.stawki[k] || '', placeholder: '0', disabled: !mozna, 'aria-label': `${nazwa} — ${jedn}`,
         onfocus: e => { const p = e.target; if (stawkaLS(p.value).gr === 0) setTimeout(() => { try { p.select(); } catch (er) { /* bez zaznaczenia */ } }, 0); },   // „0” od razu do zastąpienia
-        oninput: e => { f.stawki[k] = e.target.value; e.target.classList.toggle('zle', !!stawkaLS(e.target.value).zla); S.ls.potw = false; zapiszLS(); odswiezLS(); } }),
+        oninput: e => { dzienLS().form.stawki[k] = e.target.value; e.target.classList.toggle('zle', !!stawkaLS(e.target.value).zla); S.ls.potw = false; zapiszLS(); odswiezLS(); } }),
         el('span', { class: 'jedn' }, jedn)),
       el('small', null, opis));
     return el('section', { class: 'karta', 'aria-labelledby': 'ls-st-t' },
@@ -2590,29 +2601,33 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     return f.zew.length ? `na listach: PARZYSTE\u00a0${zewNaLiscie(s, 'P').length} · NIEPARZYSTE\u00a0${zewNaLiscie(s, 'N').length}` + (bez ? ` · bez imienia\u00a0${bez}` : '')
       : 'kierowcy innych firm';
   }
-  function kartaZew(f, mozna) {
-    const s = sklad(f);
+  function kartaZew(f, mozna) {                                 // (11.11) ZATWIERDŹ obok USUŃ — imię i telefon do zatwierdzenia tylko na ekranie
+    const iso = S.ls.dzien, s = sklad(formZeSzkicami(iso, f));
     const wiersz = (z, i) => {
-      const n = s.nicki[z.id];
-      const imie = el('input', { class: 'pole' + (imieZew(z.imie).ok ? '' : ' zle'), autocomplete: 'off', autocapitalize: 'words', spellcheck: 'false', value: z.imie || '',
+      const id = z.id, n = s.nicki[id], szk = maSzkicZew(iso, z), vi = wartZew(iso, z, 'imie'), vt = wartZew(iso, z, 'tel');
+      const imie = el('input', { class: 'pole' + (imieZew(vi).ok ? '' : ' zle'), autocomplete: 'off', autocapitalize: 'words', spellcheck: 'false', value: vi,
         maxlength: '24', placeholder: 'gdy się stawi', disabled: !mozna, 'aria-label': `ZEW ${i + 1} — imię (w Routific: ZEW-Imię)`,
-        oninput: e => { z.imie = e.target.value; e.target.classList.toggle('zle', !imieZew(z.imie).ok); S.ls.potw = false; zapiszLS(); odswiezLS(); } });
-      const tel = el('input', { class: 'pole' + (telefonZew(z.tel).ok ? '' : ' zle'), type: 'tel', inputmode: 'tel', autocomplete: 'off', value: z.tel || '',
+        oninput: e => wpisZew(id, 'imie', e.target.value, e.target) });
+      const tel = el('input', { class: 'pole' + (telefonZew(vt).ok ? '' : ' zle'), type: 'tel', inputmode: 'tel', autocomplete: 'off', value: vt,
         placeholder: 'gdy się stawi', disabled: !mozna, 'aria-label': `ZEW ${i + 1} — telefon`,
-        oninput: e => { z.tel = e.target.value; e.target.classList.toggle('zle', !telefonZew(z.tel).ok); S.ls.potw = false; zapiszLS(); odswiezLS(); } });
-      return el('div', { class: 'zew-w', 'data-id': String(z.id) },
+        oninput: e => wpisZew(id, 'tel', e.target.value, e.target) });
+      return el('div', { class: 'zew-w', 'data-id': String(id) },
         el('div', { class: 'zew-g' },
-          el('span', { class: 'nick' + (n ? '' : ' czeka') }, el('span', { class: 'zew-nick' }, n || 'ZEW-…'), ' ', el('small', null, n ? 'w Routific' : 'czeka na imię')),
+          el('span', { class: 'nick' + (n ? '' : ' czeka') }, el('span', { class: 'zew-nick' }, n || 'ZEW-…'), ' ',
+            el('small', { class: szk ? 'dozatw' : null }, szk ? 'do zatwierdzenia' : n ? 'w Routific' : 'czeka na imię')),
           el('div', { class: 'seg seg2', role: 'group', 'aria-label': `ZEW ${i + 1} — grupa` }, ['P', 'N'].map(g =>
             el('button', { type: 'button', class: g.toLowerCase(), 'aria-pressed': String(z.grupa === g), disabled: !mozna,
-              onclick: () => { z.grupa = g; S.ls.potw = false; zapiszLS(); rysuj(); } }, GR[g]))),
-          mozna ? el('button', { type: 'button', class: 'mb usun', 'aria-label': `Usuń ZEW ${i + 1}`, onclick: () => { f.zew.splice(i, 1); S.ls.potw = false; zapiszLS(); rysuj(); } }, 'USUŃ') : null),
+              onclick: () => { const x = zewWg(dzienLS().form, id); if (!x || !maRole('dyspozytor')) return; x.grupa = g; S.ls.potw = false; zapiszLS(); rysuj(); } }, GR[g]))),
+          mozna ? el('button', { type: 'button', class: 'mb zatw', disabled: !szk, 'aria-label': `Zatwierdź ZEW ${i + 1} — imię i telefon`, onclick: () => zatwierdzZew(id) }, 'ZATWIERDŹ') : null,
+          mozna ? el('button', { type: 'button', class: 'mb usun', 'aria-label': `Usuń ZEW ${i + 1}`, onclick: () => usunZew(id) }, 'USUŃ') : null),
         el('label', { class: 'zew-pole' }, 'IMIĘ', imie),
         el('label', { class: 'zew-pole' }, 'TELEFON', tel));
     };
     const dodaj = el('button', { type: 'button', class: 'mb', disabled: f.zew.length >= 20,
       onclick: () => {
-        f.zew.push({ id: f.zew.reduce((m, x) => Math.max(m, Number(x.id) || 0), 0) + 1, imie: '', tel: '', grupa: '' });
+        const ff = dzienLS().form;                              // bieżąca lista (nie ta sprzed odświeżenia)
+        if (!maRole('dyspozytor') || ff.zew.length >= 20) return;
+        ff.zew.push({ id: ff.zew.reduce((m, x) => Math.max(m, Number(x.id) || 0), 0) + 1, imie: '', tel: '', grupa: '' });
         S.ls.potw = false; zapiszLS(); rysuj();
         const p = document.querySelector('.zew-w:last-child input'); if (p) p.focus();   // od razu do imienia
       } }, '+ DODAJ ZEW');
@@ -2620,11 +2635,69 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       el('div', { class: 'karta-n' }, el('b', { id: 'ls-z-t' }, el('span', { class: 'nr' }, '3'), 'Zewnętrzni (ZEW)'), el('small', { id: 'ls-zlicz' }, licznikZew(f))),
       f.zew.length ? el('div', { class: 'zew' }, f.zew.map(wiersz)) : el('div', { class: 'puste-m' }, 'Bez kierowców innych firm.'),
       mozna ? el('div', { class: 'zew-dodaj' }, dodaj) : null,
-      el('div', { class: 'notka' }, 'W Routific ZEW jest jako ZEW-Imię (np. ZEW-Adam; to samo imię drugi raz — ZEW-Adam-2). Rano imienia i telefonu jeszcze nie znasz — dodaj ZEW bez nich: na listy trafi, gdy wpiszesz imię. Imię i telefon dopisz, gdy kierowca się stawi, i wyślij poprawkę. ZEW — bez wypłaty, oddaje gotówkę.'));
+      el('div', { class: 'notka' }, 'W Routific ZEW jest jako ZEW-Imię (np. ZEW-Adam; to samo imię drugi raz — ZEW-Adam-2). Rano imienia i telefonu jeszcze nie znasz — dodaj ZEW bez nich: na listy trafi, gdy wpiszesz imię. Imię i telefon dopisz, gdy kierowca się stawi, dotknij ZATWIERDŹ i wyślij poprawkę. ZEW — bez wypłaty, oddaje gotówkę.'));
+  }
+  // ───────── (11.11, 12:50) ZEW — ZATWIERDŹ: imię i telefon do zatwierdzenia są tylko na ekranie (S.ls.szkic) ─────────
+  const szkiceZew = iso => S.ls.szkic[iso] || (S.ls.szkic[iso] = {});
+  const zewWg = (f, id) => ((f && f.zew) || []).find(x => String(x.id) === String(id));
+  function wartZew(iso, z, k) { const x = (S.ls.szkic[iso] || {})[z.id]; return x && k in x ? x[k] : String(z[k] || ''); }
+  function maSzkicZew(iso, z) {
+    const x = (S.ls.szkic[iso] || {})[z.id];
+    return !!x && (wartZew(iso, z, 'imie') !== String(z.imie || '') || wartZew(iso, z, 'tel') !== String(z.tel || ''));
+  }
+  function szkicZewOk(iso, z) { const im = imieZew(wartZew(iso, z, 'imie')), t = telefonZew(wartZew(iso, z, 'tel')); return im.ok && t.ok && !(im.pusty && !t.pusty); }
+  function szkiceDnia(iso, f) {                                 // wiersze z niezatwierdzonym imieniem albo telefonem; szkice usuniętych wierszy — precz
+    const x = S.ls.szkic[iso] || {};
+    Object.keys(x).forEach(id => { const z = zewWg(f, id); if (!z || !maSzkicZew(iso, z)) delete x[id]; });
+    return ((f && f.zew) || []).filter(z => maSzkicZew(iso, z));
+  }
+  const formZeSzkicami = (iso, f) => Object.assign({}, f, { zew: (f.zew || []).map(z => Object.assign({}, z, { imie: wartZew(iso, z, 'imie'), tel: wartZew(iso, z, 'tel') })) });
+  function blokadySzkicow(iso, f) {                             // „Do uzupełnienia”: wysyłka czeka na ZATWIERDŹ (złe imię / telefon pokazuje sprawdzLS)
+    const n = sklad(formZeSzkicami(iso, f)).nicki;
+    return szkiceDnia(iso, f).map(z => {
+      const nn = n[z.id] || `ZEW ${f.zew.indexOf(z) + 1}`, im = imieZew(wartZew(iso, z, 'imie')), t = telefonZew(wartZew(iso, z, 'tel'));
+      if (!im.ok || !t.ok) return '';
+      return im.pusty && !t.pusty ? `${nn} — telefon bez imienia: wpisz imię.` : `${nn} — imię i telefon czekają na ZATWIERDŹ.`;
+    }).filter(Boolean);
+  }
+  function wpisZew(id, k, v, pole) {                            // litera po literze: tylko szkic na ekranie — bez zapisu do bazy
+    const iso = S.ls.dzien, z = zewWg(dzienLS().form, id);
+    if (!z || !maRole('dyspozytor')) return;
+    const x = szkiceZew(iso);
+    x[id] = Object.assign({}, x[id] || {}, { [k]: v });
+    if (!maSzkicZew(iso, z)) delete x[id];
+    pole.classList.toggle('zle', !(k === 'imie' ? imieZew(v) : telefonZew(v)).ok);
+    pole.classList.remove('potrz');
+    S.ls.potw = false;
+    odswiezLS();
+  }
+  function zatwierdzZew(id) {
+    const iso = S.ls.dzien, f = dzienLS().form, z = zewWg(f, id);
+    if (!z || !maRole('dyspozytor') || !maSzkicZew(iso, z)) return;
+    if (!szkicZewOk(iso, z)) {                                  // niepełny numer albo telefon bez imienia — nie zapisuję; kursor do pola do poprawy
+      const w = document.querySelector(`.zew-w[data-id="${id}"]`), im = imieZew(wartZew(iso, z, 'imie'));
+      const p = w && w.querySelector(im.ok && !im.pusty ? 'input[type="tel"]' : 'input:not([type="tel"])');
+      if (p) { p.classList.add('zle'); p.classList.remove('potrz'); void p.offsetWidth; p.classList.add('potrz'); p.focus(); }
+      return;
+    }
+    z.imie = wartZew(iso, z, 'imie').replace(/\s+/g, ' ').trim();
+    z.tel = wartZew(iso, z, 'tel').trim();
+    delete szkiceZew(iso)[id];
+    S.ls.potw = false;
+    zapiszLS(); zapiszLSTeraz();                                // do bazy od razu
+    rysuj();
+  }
+  function usunZew(id) {
+    const iso = S.ls.dzien, f = dzienLS().form, k = f.zew.findIndex(x => String(x.id) === String(id));
+    if (k < 0 || !maRole('dyspozytor')) return;
+    f.zew.splice(k, 1);
+    delete szkiceZew(iso)[id];
+    S.ls.potw = false; zapiszLS(); rysuj();
   }
   function panelLS() {
     const d = S.ls.dzien, D = dzienLS(), f = D.form, o = ostatnieLS(D), p = oczekujaceLS(D);
-    const spr = sprawdzLS(f), zm = o ? zmianyLS(o.form, f) : [], s = sklad(f), mozna = maRole('dyspozytor');
+    const spr = sprawdzLS(formZeSzkicami(d, f)), zm = o ? zmianyLS(o.form, f) : [], s = sklad(f), mozna = maRole('dyspozytor');
+    spr.blokuje = blokadySzkicow(d, f).concat(spr.blokuje);     // (11.11) ZEW do zatwierdzenia — wysyłka czeka
     const grupa = g => {
       const w = wierszeListy(f, g);
       return el('div', { class: 'grupa-l ' + g.toLowerCase() },
@@ -2648,7 +2721,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       el('div', { class: 'potw-b' }, el('button', { type: 'button', class: 'mb glowny', id: 'ls-tak', onclick: wyslijLS }, 'TAK — WYŚLIJ'),
         el('button', { type: 'button', class: 'mb', onclick: () => { S.ls.potw = false; odswiezLS(); } }, 'WRÓĆ')));
     else {
-      const bezZmian = !!o && !zm.length && !p;
+      const bezZmian = !!o && !zm.length && !p && !szkiceDnia(d, f).length;
       akcja = el('button', { type: 'button', class: 'mb glowny wyslij', id: 'ls-wyslij', disabled: spr.blokuje.length > 0 || bezZmian,
         onclick: () => { S.ls.potw = true; odswiezLS(); const b = $('ls-tak'); if (b) b.focus(); } },
         bezZmian ? `WYSŁANE ${o.czas} — BEZ ZMIAN` : o ? `WYŚLIJ POPRAWKĘ nr ${nastepnyNr(o)}` : 'UTWÓRZ I WYŚLIJ LISTY');
@@ -2683,20 +2756,24 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   function odswiezLS() {                                        // bez przerysowania całej strony — pole z kursorem zostaje
     const p = $('ls-panel'); if (p) p.replaceWith(panelLS());
     const s = $('ls-stan'); if (s) s.replaceWith(statusLS());
-    const f = dzienLS().form, sk = sklad(f);
+    const f = dzienLS().form;
     const l = $('ls-licz'); if (l) l.textContent = licznikLS(f);
     const zc = $('ls-zlicz'); if (zc) zc.textContent = licznikZew(f);
-    document.querySelectorAll('.zew-w[data-id]').forEach(w => {   // ZEW-Imię na bieżąco, kursor zostaje w polu
-      const n = sk.nicki[w.getAttribute('data-id')] || '';
+    const iso = S.ls.dzien, nz = sklad(formZeSzkicami(iso, f)).nicki;
+    document.querySelectorAll('.zew-w[data-id]').forEach(w => {   // ZEW-Imię na bieżąco (też z niezatwierdzonego imienia), kursor zostaje w polu
+      const id = w.getAttribute('data-id'), z = zewWg(f, id), n = nz[id] || '', szk = !!z && maSzkicZew(iso, z);
       w.querySelector('.zew-nick').textContent = n || 'ZEW-…';
       w.querySelector('.zew-g .nick').classList.toggle('czeka', !n);
-      w.querySelector('.zew-g .nick small').textContent = n ? 'w Routific' : 'czeka na imię';
+      const m = w.querySelector('.zew-g .nick small');
+      m.textContent = szk ? 'do zatwierdzenia' : n ? 'w Routific' : 'czeka na imię';
+      m.classList.toggle('dozatw', szk);
+      const b = w.querySelector('.zatw'); if (b) b.disabled = !szk;
     });
   }
   async function wyslijLS() {
     if (!maRole('dyspozytor')) return;
     const iso = S.ls.dzien, D = dzienLS();
-    if (sprawdzLS(D.form).blokuje.length || oczekujaceLS(D) && oczekujaceLS(D).status !== 'blad') return;
+    if (sprawdzLS(D.form).blokuje.length || szkiceDnia(iso, D.form).length || oczekujaceLS(D) && oczekujaceLS(D).status !== 'blad') return;
     const o = ostatnieLS(D);
     S.ls.potw = false;
     try {
@@ -3046,7 +3123,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     clearTimeout(CYKL);
     try { await zapiszWpisyTeraz(); await zapiszLSTeraz(); } catch (e) { /* bez sieci — trudno */ }
     await baza.wyloguj();
-    S.ja = null; S.role = []; S.pamiec = {}; S.wszystkie = []; S.wczytano = false; S.ls.dni = {}; S.dlaRoutific = []; S.wgrane = []; rtfWyczysc(); arWyczysc();
+    S.ja = null; S.role = []; S.pamiec = {}; S.wszystkie = []; S.wczytano = false; S.ls.dni = {}; S.ls.szkic = {}; S.dlaRoutific = []; S.wgrane = []; rtfWyczysc(); arWyczysc();
     pokazLogowanie('Wylogowano.');
   }
   async function start() {
