@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-11 12:59 · e32fc51"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-18 09:11 · 84076f3"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -675,6 +675,174 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   .ar-dz-kw { grid-area: k; grid-auto-flow: column; justify-content: start; gap: 8px; align-items: baseline; margin: 0; }
   .ar-rap { grid-area: b; width: auto; padding: 0 14px; margin: 0; }
 }
+/* ── (16.11) MAPA — dostawy dnia na mapie Warszawy (makieta „Mapa dostaw dnia”) ── */
+.widoki.z-mapa button { padding-inline: 8px; }
+@media (max-width: 900px) { .widoki.z-mapa button { padding: 8px 4px; font-size: 14px; letter-spacing: .02em; } }
+@media (min-width: 768px) and (max-width: 819px) { .widoki.z-mapa button { padding-inline: 2px; font-size: 13px; letter-spacing: 0; } }   /* sześć w rzędzie: PODSUMOWANIE się mieści */
+@media (max-width: 767px) { .widoki.z-mapa { grid-template-columns: repeat(3, minmax(0, 1fr)); } .widoki.z-mapa button:last-child { grid-column: auto; } }   /* sześć widoków: trzy na dwa */
+@media (max-width: 480px) { .widoki.z-mapa { grid-template-columns: repeat(2, minmax(0, 1fr)); } }                                                   /* telefon: dwa na trzy */
+:root { --mp-tlo: #e3e9e6; --mp-a: #fbfcfb; --mp-b: #eef2f0; --mp-gran: #b7c3bd; --mp-rzeka: #a6c4df; --mp-etyk: #8e9a94;
+  --mp-dow: #8d9893; --mp-dow-t: #ffffff; --mp-dow-s: #7b8781; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --mp-tlo: #0d1210; --mp-a: #1c2522; --mp-b: #161e1b; --mp-gran: #34433c;
+  --mp-rzeka: #2c4a63; --mp-etyk: #6c7a73; --mp-dow: #55625c; --mp-dow-t: #e2eae5; --mp-dow-s: #94a39b; } }
+:root[data-theme="dark"] { --mp-tlo: #0d1210; --mp-a: #1c2522; --mp-b: #161e1b; --mp-gran: #34433c;
+  --mp-rzeka: #2c4a63; --mp-etyk: #6c7a73; --mp-dow: #55625c; --mp-dow-t: #e2eae5; --mp-dow-s: #94a39b; }
+.mp { display: grid; gap: 14px; min-width: 0; }
+.mp-kafle > .kafel { grid-row: 2; }                           /* nad kaflami — fazy dnia: DOWIEZIONE · W DOWOZIE · PLAN */
+.mp-faza { grid-row: 1; align-self: end; min-width: 0; border-bottom: 3px solid currentColor; padding: 0 2px 4px; font-size: 11px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; line-height: 1.2; text-wrap: balance; }
+.mp-faza.przer { border-bottom-style: dashed; }
+.mp-faza > span { display: inline-block; position: sticky; left: 0; }   /* rząd kafli przesunięty (telefon) — nazwa fazy zostaje na widoku */
+.mp-kafle .z { font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--tusz); }
+.st-dow { color: var(--mp-dow-s); } .st-wd { color: var(--akcent); } .st-pl { color: var(--nieb); }
+.mp-uklad { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 14px; align-items: stretch; }
+.mp-lista { contain: size; grid-template-rows: auto minmax(0, 1fr); }
+.mp-adresy { list-style: none; margin: 0 -6px; padding: 0; overflow: auto; overscroll-behavior: contain; display: grid; align-content: start; gap: 2px; min-height: 0; }
+.mp-adr { width: 100%; display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; align-items: center; gap: 10px; min-height: 44px; padding: 4px 8px;
+  border: 0; border-radius: 9px; background: transparent; text-align: left; color: var(--tusz); }
+.mp-adr:hover, .mp-adr.akt { background: var(--zaznacz); }
+.mp-adr:focus-visible { outline: 3px solid var(--akcent); outline-offset: -3px; }
+.mp-ul { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mp-dz { color: var(--szary); font-size: 13px; white-space: nowrap; }
+.mp-nr { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; }
+.mp-nr.dow, .mp-pkt.dow { background: var(--mp-dow); color: var(--mp-dow-t); }
+.mp-nr.wd, .mp-pkt.wd { background: var(--akcent); color: var(--na-akcencie); }
+.mp-nr.pl, .mp-pkt.pl { background: var(--karta); color: var(--nieb); box-shadow: inset 0 0 0 2px var(--nieb); }
+.mp-nr.bez { opacity: .4; }                                     /* bez punktu na mapie — trasy z Routific jeszcze nie ma */
+.mp-sub { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--szary); padding: 10px 8px 2px;
+  display: flex; justify-content: space-between; gap: 8px; }
+.mp-sub:first-child { padding-top: 2px; }
+.mp-lista .puste-m { padding: 4px 2px; }
+.mp-plotno { position: relative; width: 100%; aspect-ratio: 1000 / 966.1; border-radius: 9px; overflow: hidden; background: var(--mp-tlo); }
+.mp-tlo, .mp-nakl, .mp-pkty { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mp-tlo .a { fill: var(--mp-a); } .mp-tlo .b { fill: var(--mp-b); }
+.mp-tlo .a, .mp-tlo .b { stroke: var(--mp-gran); stroke-width: 1.2px; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.mp-tlo .w { fill: none; stroke: var(--mp-rzeka); stroke-width: 6px; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
+.mp-nakl text { font-family: var(--font); font-size: 11px; font-weight: 700; letter-spacing: .09em; fill: var(--mp-etyk); }
+.mp-nakl .fab rect { fill: var(--tusz); stroke: var(--karta); stroke-width: 2px; }
+.mp-nakl .fab text { fill: var(--tusz); letter-spacing: .08em; paint-order: stroke; stroke: var(--mp-a); stroke-width: 3px; }
+.mp-nakl .prow { stroke: var(--szary2); stroke-width: 1px; }
+.mp-nakl .kotw { fill: var(--szary); }
+.mp-pkty { pointer-events: none; }
+.mp-pkt { pointer-events: auto; position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; border: 0; padding: 0;
+  display: grid; place-items: center; font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; cursor: pointer;
+  box-shadow: 0 0 0 1.5px var(--karta); transition: transform .12s ease; }
+.mp-pkt.pl { box-shadow: inset 0 0 0 2px var(--nieb), 0 0 0 1.5px var(--karta); }
+.mp-pkt.kr { width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; font-size: 0; }
+.mp-pkt.akt { transform: scale(1.35); z-index: 5; box-shadow: 0 0 0 2px var(--karta), 0 0 0 4px var(--tusz); }
+.mp-pkt.pl.akt { box-shadow: inset 0 0 0 2px var(--nieb), 0 0 0 2px var(--karta), 0 0 0 4px var(--tusz); }
+.mp-pkt.kr.akt { width: 22px; height: 22px; margin: -11px 0 0 -11px; font-size: 11px; transform: none; }
+.mp-leg { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
+.mp-leg > span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.mp-leg i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; flex: 0 0 auto; }
+.mp-leg i.dow { background: var(--mp-dow); } .mp-leg i.wd { background: var(--akcent); } .mp-leg i.pl { box-shadow: inset 0 0 0 2px var(--nieb); }
+.mp-leg i.fab { border-radius: 2px; background: var(--tusz); width: 10px; height: 10px; }
+@media (prefers-reduced-motion: reduce) { .mp-pkt { transition: none; } }
+@media (max-width: 700px) {                                    /* telefon: mapa nad listą, lista w całości */
+  .mp-uklad { grid-template-columns: minmax(0, 1fr); }
+  .mp-lista { contain: none; order: 2; } .mp-mapa { order: 1; }
+  .mp-adresy { overflow: visible; }
+}
+/* ── (17.11) pole informacyjne LIST STARTOWYCH: żółta kartka obok STAWEK DNIA; wpis — rola Archiwum, okienko Konto ── */
+:root { --pi-tlo: #f8dc8e; --pi-ramka: #e3c060; --pi-tusz: #2a2007; --pi-szary: #6a5822; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --pi-ramka: #f8dc8e; } }
+:root[data-theme="dark"] { --pi-ramka: #f8dc8e; }
+.uklad.z-pi { grid-template-areas: "st pi" "re pa"; }
+.uklad.z-pi > .karta-st { grid-area: st; align-self: stretch; align-content: start; }   /* STAWKI DNIA i kartka — równe */
+.uklad.z-pi > .pinf { grid-area: pi; align-self: stretch; }
+.uklad.z-pi > .lewa { grid-area: re; }
+.uklad.z-pi > .lsp { grid-area: pa; }
+@media (max-width: 1080px) { .uklad.z-pi { grid-template-areas: "pi" "st" "re" "pa"; } .uklad.z-pi > .karta-st, .uklad.z-pi > .pinf { align-self: start; } }
+.pinf { background: var(--pi-tlo); color: var(--pi-tusz); border: 1px solid var(--pi-ramka); border-radius: 12px; padding: 14px 18px 12px; min-width: 0; min-height: 96px;
+  display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 8px; }
+.pi-t { margin: 0; align-self: center; font-size: 26px; font-weight: 700; line-height: 1.25; white-space: pre-line; overflow-wrap: anywhere; text-wrap: pretty; }
+.pi-t.sr { font-size: 22px; }
+.pi-t.dl { font-size: 18px; line-height: 1.3; }
+.pi-k { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--pi-szary); font-variant-numeric: tabular-nums; }
+@media (max-width: 480px) { .pi-t { font-size: 22px; } .pi-t.sr { font-size: 19px; } .pi-t.dl { font-size: 17px; } }
+.chm-pi { display: grid; gap: 6px; margin-block: 4px; }                  /* odstęp od JASNY / CIEMNY i od WYLOGUJ — osobna grupa */
+.chm-pi textarea { width: 100%; box-sizing: border-box; min-height: 104px; resize: vertical; font-family: inherit; font-size: 16px; line-height: 1.35;
+  color: var(--tusz); background: var(--karta); border: 1px solid var(--linia2); border-radius: 9px; padding: 8px 10px; }
+.chm-pi textarea:focus-visible { outline: 3px solid var(--akcent); outline-offset: 1px; }
+.pi-przyc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.chmurka .pi-przyc .mb { justify-self: stretch; justify-content: center; text-align: center; letter-spacing: .06em; min-height: 44px; }
+.chm-pi .pi-blad { color: var(--czer); }
+/* ── (17.11) RUCH: komunikat o utrudnieniach w strefach dostaw; nowy komunikat — przycisk RUCH pulsuje na żółto ── */
+:root { --ru-puls: #f8dc8e; --ru-puls-tusz: #2a2007; }
+@keyframes ru-puls { 0%, 100% { background-color: transparent; color: var(--szary); } 50% { background-color: var(--ru-puls); color: var(--ru-puls-tusz); } }
+.widoki button.ru-nowy:not([aria-selected="true"]) { animation: ru-puls 1.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .widoki button.ru-nowy:not([aria-selected="true"]) { animation: none; background-color: var(--ru-puls); color: var(--ru-puls-tusz); } }
+.widoki.z-ruch button { padding-inline: 6px; }
+@media (max-width: 1100px) { .widoki.z-ruch button { padding: 8px 2px; font-size: 13px; letter-spacing: 0; } }   /* od 900 px siedem w rzędzie */
+@media (min-width: 600px) and (max-width: 899px) {                     /* dwa rzędy na całą szerokość: cztery i trzy (iPad w pionie) */
+  .widoki.z-ruch { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .widoki.z-ruch button { grid-column: span 3; padding: 8px 4px; font-size: 14px; letter-spacing: .02em; }
+  .widoki.z-ruch button:nth-child(n+5) { grid-column: span 4; }
+}
+@media (max-width: 599px) { .widoki.z-ruch { grid-template-columns: repeat(3, minmax(0, 1fr)); } .widoki.z-ruch button:last-child { grid-column: 1 / -1; } }   /* trzy, trzy, ARCHIWUM */
+@media (max-width: 480px) { .widoki.z-ruch { grid-template-columns: repeat(2, minmax(0, 1fr)); } }                                                      /* telefon: dwie w rzędzie */
+.ru { display: grid; gap: 14px; min-width: 0; }
+.ru-stan { gap: 8px; border-width: 1px 1px 1px 6px; }
+.ru-stan.ru-bl { border-color: var(--czer); background: var(--czer-tlo); }
+.ru-stan.ru-ut { border-color: var(--uw-ramka); border-left-color: var(--uw); background: var(--uw-tlo); }
+.ru-stan.ru-sp { border-color: var(--linia); border-left-color: var(--ok); background: var(--ok-tlo); }
+.ru-stan.ru-br { border-color: var(--linia2); border-left-color: var(--szary2); background: var(--karta2); }
+.ru-stan-g { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.ru-stan-l { display: grid; gap: 2px; min-width: 0; }
+.ru-et { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--szary); }
+.ru-slowo { font-size: 28px; font-weight: 700; line-height: 1.15; overflow-wrap: anywhere; }
+.ru-bl .ru-slowo { color: var(--czer); } .ru-ut .ru-slowo { color: var(--uw); } .ru-sp .ru-slowo { color: var(--ok); } .ru-br .ru-slowo { color: var(--szary); }
+.ru-czas { display: grid; justify-items: end; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ru-czas b { font-size: 26px; line-height: 1.1; }
+.ru-czas small { font-size: 13px; color: var(--szary); letter-spacing: .04em; }
+.ru-zdanie { margin: 0; font-size: 17px; line-height: 1.4; }
+.ru-pig { display: flex; flex-wrap: wrap; gap: 6px; }
+.ru-pig span { border: 1px solid var(--linia2); background: var(--karta); border-radius: 999px; padding: 3px 10px; font-size: 13px; font-weight: 700; }
+.ru-notka { margin: 0; font-size: 13px; color: var(--szary); }
+.ru-spozn, .ru-blad { margin: 0; font-size: 14px; font-weight: 700; color: var(--uw); }
+.ru-blad { color: var(--czer); }
+.ru-kol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: start; }
+.ru-kol.jedna { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 1080px) { .ru-kol { grid-template-columns: minmax(0, 1fr); } }
+.ru-k { display: grid; gap: 14px; min-width: 0; }
+.ru-sek { border-top-width: 4px; }
+.ru-sek-teraz { border-top-color: var(--uw); } .ru.ru-p-bl .ru-sek-teraz { border-top-color: var(--czer); }
+.ru-sek-zakonczone { border-top-color: var(--szary2); } .ru-sek-dzis { border-top-color: var(--ok); } .ru-sek-najblizsze { border-top-color: var(--nieb); }
+.ru-lista { list-style: none; margin: 0; padding: 0; display: grid; }
+.ru-poz { display: grid; gap: 4px; padding: 10px 0; border-top: 1px solid var(--linia); min-width: 0; }
+.ru-poz:first-child { border-top: 0; padding-top: 2px; }
+.ru-poz:last-child { padding-bottom: 0; }
+.ru-poz-g { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+.ru-m { font-size: 16px; line-height: 1.3; overflow-wrap: anywhere; }
+.ru-o { margin: 0; font-size: 15px; line-height: 1.45; overflow-wrap: anywhere; }
+.ru-meta { font-size: 13px; color: var(--szary); font-variant-numeric: tabular-nums; }
+.ru-meta b { color: var(--tusz); }
+.ru-co { font-size: 14px; color: var(--ok); line-height: 1.4; }
+.ru-zn, .ru-nowe { display: inline-block; padding: 1px 7px; border-radius: 6px; font-size: 12px; font-weight: 700; line-height: 18px; text-align: center; }
+.ru-zn { min-width: 22px; }
+.ru-zn-A { background: var(--nieb-tlo); color: var(--nieb); } .ru-zn-B { background: var(--ok-tlo); color: var(--ok); } .ru-zn-d { background: var(--uw-tlo); color: var(--uw); }
+.ru-nowe { background: var(--uw); color: var(--karta); font-size: 11px; letter-spacing: .05em; }
+.ru-poz-d { grid-template-columns: 56px minmax(0, 1fr); gap: 4px 10px; align-items: start; }
+.ru-data { display: grid; font-variant-numeric: tabular-nums; }
+.ru-data small { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--nieb); }
+.ru-data b { font-size: 17px; line-height: 1.2; }
+.ru-poz-t { display: grid; gap: 4px; min-width: 0; }
+.ru-ramka { border: 1px solid var(--linia2); border-radius: 12px; padding: 10px 14px; display: grid; gap: 4px; background: var(--karta2); min-width: 0; }
+.ru-ramka b { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--szary); }
+.ru-ramka p { margin: 0; font-size: 15px; line-height: 1.45; overflow-wrap: anywhere; }
+.ru-r-ni { background: var(--nieb-tlo); border-color: transparent; } .ru-r-ni b { color: var(--nieb); }
+.ru-r-bu { background: var(--uw-tlo); border-color: var(--uw-ramka); } .ru-r-bu b { color: var(--uw); }
+.ru-dol { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 14px; }
+.ru-stopka { display: grid; gap: 4px; font-size: 13px; color: var(--szary); line-height: 1.5; }
+.ru-stopka p { margin: 0; }
+.ru-stopka a { color: var(--nieb); text-decoration: none; }
+.ru-stopka a:hover, .ru-stopka a:focus-visible { text-decoration: underline; }
+.ru-pusto p { margin: 0; font-size: 16px; }
+.ru-pusto.uw { background: var(--uw-tlo); border-color: var(--uw-ramka); color: var(--uw); font-weight: 700; }
+@media (max-width: 480px) { .ru-slowo { font-size: 24px; } .ru-czas b { font-size: 22px; } .ru-zdanie { font-size: 16px; } }
+/* ── (18.11) MAPA: dowozy PLANU bez adresu z DYSZY — wiersz pod adresami godziny ── */
+.mp-bez { display: grid; grid-template-columns: 24px minmax(0, 1fr); align-items: center; gap: 10px; min-height: 36px; padding: 4px 8px; color: var(--szary); font-size: 13px; }
+.mp-bez i { width: 24px; height: 24px; border-radius: 50%; box-shadow: inset 0 0 0 2px var(--nieb); opacity: .4; }
 </style>
 
 <div id="logowanie" hidden></div>
@@ -697,9 +865,11 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         title="Konto — role, widok jasny / ciemny, wylogowanie"><span class="awatar" id="rola-a" aria-hidden="true">?</span><span class="menu-imie" id="rola-i"></span></button>
       </div>
     </div>
-    <div class="widoki z-archiwum" role="tablist" aria-label="Widok">
+    <div class="widoki z-archiwum z-mapa z-ruch" role="tablist" aria-label="Widok">
       <button type="button" role="tab" id="w-kierowcy" aria-selected="true">KIEROWCY</button>
       <button type="button" role="tab" id="w-listy" aria-selected="false">LISTY PRZEWOZOWE</button>
+      <button type="button" role="tab" id="w-mapa" aria-selected="false">MAPA</button>
+      <button type="button" role="tab" id="w-ruch" aria-selected="false">RUCH</button>
       <button type="button" role="tab" id="w-startowe" aria-selected="false">LISTY STARTOWE</button>
       <button type="button" role="tab" id="w-podsumowanie" aria-selected="false">PODSUMOWANIE</button>
       <button type="button" role="tab" id="w-archiwum" aria-selected="false">ARCHIWUM</button>
@@ -724,11 +894,14 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       <li>Pliki dnia: eksport z DYSZY <b>FABRYKA-RRRR-MM-DD-GG.csv</b> przychodzi sam; eksport tras z Routific <b>Routific solution - GG-GG - RRRR-MM-DD.csv</b> dyspozytor wgrywa tutaj (pod godzinami „Pliki dnia” → WGRAJ TRASĘ) — automat kładzie go na Dysku. Tu też są pliki dla Routific (ROUTIFIC-DD.MM.RRRR-GG.xlsx) do pobrania. Załoga nie zagląda na Dysk. Automat sprawdza wszystko co minutę, strona odświeża się sama co 20 sekund.</li>
       <li>START, STOP, EXTRA, BONUS i KONIEC zapisują się w bazie od razu (napis nad plikami dnia: „zapisane gg:mm”). Wszyscy zalogowani widzą to samo — iPad dyspozytora, telefon obsługi, komputer w biurze.</li>
       <li>Zestaw z Fabryki sprzedany w Restauracji — „R” w Rejestrze Fabryki (tablica.dysza.app): płatność zamówienia zmienia się tu sama na RK albo RG (jak płatność w Restauracji; w „Zmianach płatności” — „Rejestr Fabryki”). Cofnięte „R” — wraca pierwotna. Po KONIEC kierowcy, przy innej kwocie albo kodzie pasującym do kilku zamówień — uwaga na karcie kierowcy.</li>
-      <li>Płatność zmienia się tylko w Rejestrze Fabryki (tablica.dysza.app: płatność wpisu — jeden albo dwa sposoby) i przechodzi tu sama: Gotówka → G, Karta → K, BLIK → BO (BK, gdy kierowca wyjechał z BLIK-iem Kierowcy), Online i Voucher → zapłacone (kierowca nic nie pobiera), dwie płatności → podział; w „Zmianach płatności” — „Rejestr Fabryki”. Trzy płatności, inna kwota i zmiana po KONIEC — uwaga na karcie kierowcy.</li>
+      <li>Płatność zmienia się tylko w Rejestrze Fabryki (tablica.dysza.app: płatność wpisu — jeden albo dwa sposoby) i przechodzi tu sama: Gotówka → G, Karta → K, BLIK → BO (BK, gdy kierowca wyjechał z BLIK-iem Kierowcy), Online i Voucher → zapłacone (kierowca nic nie pobiera), dwie płatności → podział; w „Zmianach płatności” — „Rejestr Fabryki”. Trzy płatności, inna kwota i zmiana po KONIEC — uwaga na karcie kierowcy. BLIK wybrany w DYSZY (plik FABRYKA z kolumnami Blik_S albo Blik_T i Blik_D): Blik_S / Blik_T — BLIK z góry (obsługa, telefon) → BO, Blik_D — BLIK przy odbiorze → BK.</li>
+      <li>Pole informacyjne (LISTY STARTOWE, obok STAWEK DNIA): tekst wpisuje rola Archiwum w okienku konta (przycisk z imieniem, między JASNY / CIEMNY a WYLOGUJ) — ZAPISZ pokazuje go wszystkim, WYCZYŚĆ zdejmuje; najwyżej 300 znaków.</li>
       <li>LISTY STARTOWE: szkic zapisuje się na bieżąco. „UTWÓRZ I WYŚLIJ LISTY” — w ciągu minuty automat Transport Listy robi 11 plików GHH-LS-RRRR-MM-DD.xlsx (katalog dnia › LISTY STARTOWE), kartę STAWKI w pliku T i mail do załogi. Formularz list startowych jest zablokowany — listy układa się tylko tutaj.</li>
-      <li>Role nadaje manager.dysza.app: <b>Dyspozytor</b> — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS i KONIEC; <b>Archiwum</b> — ARCHIWUM (raport dnia) i podgląd z telefonami kierowców. Można mieć obie role.</li>
+      <li>Role nadaje manager.dysza.app: <b>Dyspozytor</b> — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS i KONIEC; <b>Archiwum</b> — ARCHIWUM (raport dnia), podgląd z telefonami kierowców i pole informacyjne; <b>Mapa</b> — MAPA. Można mieć kilka ról.</li>
       <li>Rozliczenie jak w pliku T: CZASÓWKA = (STOP − START) × zł/h; KILOMETRY = (km z Routific + EXTRA) × zł/km; ADRESY = adresy × zł/adres + BONUS; WYPŁATA = suma; ODDAJE = gotówka − wypłata, DOSTAJE = wypłata − gotówka. ZEW — bez wypłaty, oddaje gotówkę; RES — dniówka z list startowych.</li>
       <li>ARCHIWUM (rola Archiwum; bez niej — pusta karta „Dostęp zablokowany”): miesiąc w siatce — dni od 5.11 z rozliczeń KONIEC, dni 20.09–4.11 z plików T (przepisane raz do bazy). RAPORT na kafelku dnia pobiera plik PDF (A4 poziomo): kierowcy, składowe wypłaty, pobrał od klienta (gotówka), zwrócił do firmy, dostał z kasy.</li>
+      <li>RUCH: komunikat o utrudnieniach w strefach dostaw, co godzinę 11–21 (dawniej mail „Utrudnienia w strefach dostaw”) — sytuacja na drogach, TERAZ · NA ŻYWO, ZAKOŃCZONE, DZIŚ, NAJBLIŻSZE DNI, źródła. Nowy komunikat: przycisk RUCH pulsuje na żółto, aż go otworzysz.</li>
+      <li>MAPA (rola Mapa; bez niej — pusta karta „Dostęp zablokowany”): dostawy dnia na godziny. DOWIEZIONE i W DOWOZIE — z plików FABRYKA (ulica i numer, bez kwot, telefonów i lokalu; punkt na mapie i kierowca — z eksportu trasy Routific); PLAN — dowozy przyjęte w DYSZY, dla których pliku FABRYKA jeszcze nie ma: liczba i adresy (ulica i numer) z łącznika DYSZY co minutę, punkt na mapie po 1–2 minutach (Transport Dysza, mapa Google); „bez adresu” — adres jeszcze nie przyszedł. Mapa poglądowa: strefy A i B z mapy dostaw, FABRYKA — start tras.</li>
     </ul>
   </details>
 </div>
@@ -1268,7 +1441,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
 
   // Notes z DYSZY w Routific: „K-207.99” → { kod: 'K', kwota (gr) }; „B-0,00” — BLIK obsługi, „B-89,50” — BLIK kierowcy
   function notes(v) {
-    const m = /^\s*([A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]{1,3})\s*-\s*(\d[\d\s]*(?:[.,]\d{1,2})?)\s*(?:zł)?\s*$/.exec(String(v || ''));
+    const m = /^\s*([A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]{1,3}|[Bb][Ll][Ii][Kk]_[SDTsdt])\s*-\s*(\d[\d\s]*(?:[.,]\d{1,2})?)\s*(?:zł)?\s*$/.exec(String(v || ''));   // (17.11) także „Blik_S-156”, „Blik_D-218.5” z DYSZY
     if (!m) return { kod: '', kwota: null };
     return { kod: m[1].toUpperCase(), kwota: kwotaGr(m[2]) };
   }
@@ -1284,8 +1457,11 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     if (brak.length) throw new Error(`nie ma kolumn ${brak.join(', ')} — to nie jest eksport „solution” z Routific (są: ${tab[0].slice(0, 12).join(', ')})`);
     const iV = kol('VISITNAME'), iId = kol('ID'), iN = kol('NOTES'), iA = kol('ARRIVEAT'), iSt = kol('STARTAT');
     const pole = (w, i) => (i >= 0 && i < w.length ? w[i] : '');
+    const iLat = kol('LATITUDE'), iLng = kol('LONGITUDE');      // (16.11) MAPA — położenie z eksportu trasy (okolice Warszawy)
+    const wsp = (w, i, od, do_) => { const v = tekst(pole(w, i)).replace(',', '.'); return /^\d{1,3}(\.\d+)?$/.test(v) && Number(v) >= od && Number(v) <= do_ ? Number(v) : null; };
+    const gdzie = w => { const la = wsp(w, iLat, 51, 53.5), ln = wsp(w, iLng, 19.5, 22.5); return la !== null && ln !== null ? { lat: la, lng: ln } : null; };
     const trasy = [], otwarte = {};
-    let bez = 0;
+    let bez = 0, start = null;
     for (let r = 1; r < tab.length; r++) {
       const w = tab[r];
       const kier = String(pole(w, iK)).replace(/\s+/g, ' ').trim();
@@ -1299,15 +1475,17 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       const k = klucz(kier);
       let t = otwarte[k];
       const nowa = wyj => { t = otwarte[k] = { kier: kier, wyjazd: wyj, stopy: [], km: 0 }; trasy.push(t); };
-      if (nr === '0') { nowa((/^(\d{1,2}):(\d{2})/.exec(tekst(pole(w, iSt))) || [])[0] || godz); continue; }
+      if (nr === '0') { nowa((/^(\d{1,2}):(\d{2})/.exec(tekst(pole(w, iSt))) || [])[0] || godz); start = start || gdzie(w); continue; }
       if (!t) nowa('');
       t.km += odc;
       if (nr === '999') { delete otwarte[k]; continue; }
       if (!/^\d+$/.test(nr)) continue;                     // przerwa — km liczą się do rzutu
       const n = notes(pole(w, iN));
-      t.stopy.push({ nr: Number(nr), id: tekst(pole(w, iId)) || tekst(pole(w, iV)), kod: n.kod, kwota: n.kwota, notes: tekst(pole(w, iN)), godz: godz });
+      const g = gdzie(w);
+      t.stopy.push({ nr: Number(nr), id: tekst(pole(w, iId)) || tekst(pole(w, iV)), kod: n.kod, kwota: n.kwota, notes: tekst(pole(w, iN)), godz: godz,
+        lat: g ? g.lat : null, lng: g ? g.lng : null });
     }
-    return { trasy: trasy.filter(t => t.stopy.length), bez: bez };
+    return { trasy: trasy.filter(t => t.stopy.length), bez: bez, start: start };
   }
 
   const FIRMA = /(^|[ (/])(ZEW[ ._-]|ALL[ ._-]*IN|DELIGO)/;          // ZEW-Imię (od V1.2) i dawne ALL-IN-…, DELIGO-…
@@ -1326,7 +1504,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       const kl = t[0].map(klucz);
       const i = n => kl.indexOf(n);
       const k = { id: i('ID'), adr: i('ADDRESS'), od: i('FROM'), do: i('TO'), tel: i('PHONE'), got: i('GOTÓWKA'), kar: i('KARTA'),
-        onl: i('ONLINE'), n1: i('NOTES'), n2: i('NOTES 2') };
+        onl: i('ONLINE'), bs: i('BLIK_S') >= 0 ? i('BLIK_S') : i('BLIK_T'), bd: i('BLIK_D'), n1: i('NOTES'), n2: i('NOTES 2') };   // (18.11) Blik_T = Blik_S   // (17.11) Blik_S, Blik_D — BLIK wybrany w DYSZY
       if (k.id < 0 || k.adr < 0) { p.blad = `nie ma kolumny ${k.id < 0 ? 'ID' : 'Address'} (są: ${t[0].slice(0, 12).join(', ')})`; return; }
       const pole = (w, j) => (j >= 0 && j < w.length ? tekst(w[j]) : '');
       t.slice(1).forEach(w => {
@@ -1335,11 +1513,12 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         const od = pole(w, k.od);
         const hOd = /^(\d{1,2}):/.exec(od);
         zam.set(klucz(id), { id: id, adres: pole(w, k.adr), od: od, do_: pole(w, k.do), tel: pole(w, k.tel), got: kwotaGr(pole(w, k.got)),
-          kar: kwotaGr(pole(w, k.kar)), onl: kwotaGr(pole(w, k.onl)), n1: pole(w, k.n1), n2: pole(w, k.n2),
+          kar: kwotaGr(pole(w, k.kar)), onl: kwotaGr(pole(w, k.onl)), bs: kwotaGr(pole(w, k.bs)), bd: kwotaGr(pole(w, k.bd)), n1: pole(w, k.n1), n2: pole(w, k.n2),
           h: hOd ? Number(hOd[1]) : p.h, plik: p.nazwa });
       });
     });
     const trasy = [];
+    let start = null;                                           // (16.11) MAPA — FABRYKA: start tras z eksportu Routific
     Object.keys(najR).forEach(pk => {
       const p = najR[pk];
       p.blad = '';
@@ -1347,6 +1526,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         const r = parsujRozwiazanie(p.tabela || []);
         r.trasy.forEach(t => { t.przedzial = pk; t.h = p.h; t.kmDz = Math.round(t.km * 10); trasy.push(t); });
         p.bez = r.bez;
+        start = start || r.start;
       } catch (e) { p.blad = e.message; }
     });
     pliki.filter(p => p.typ === 'R' && najR[p.przedzial] !== p).forEach(p => { p.zastapiony = true; });
@@ -1360,16 +1540,23 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     trasy.forEach(t => t.stopy.forEach(s => { const k = klucz(s.id); if (k && !przyp.has(k)) przyp.set(k, { t: t, s: s }); }));
     const godzinyR = {};
     Object.keys(najR).forEach(pk => { if (!najR[pk].blad) godzinyR[najR[pk].h] = true; });
-    return { zam: zam, trasy: trasy, poKier: poKier, przyp: przyp, godzinyR: godzinyR };
+    return { zam: zam, trasy: trasy, poKier: poKier, przyp: przyp, godzinyR: godzinyR, start: start };
   }
 
   // płatność zamówienia po BLIK z Routific (wiersz z „B-…”: kwota przechodzi do kolumny BLIK)
   function platnosc(z, s, bez) {                            // (6.11) bez — płatność z plików, bez ZMIANY
     const p = { got: z ? z.got : null, kar: z ? z.kar : null, onl: z ? z.onl : null, blikO: null, blikK: null };
-    if (s && s.kod === 'B') {
-      const suma = (p.got || 0) + (p.kar || 0) + (p.onl || 0);
+    const bs = z && z.bs > 0 ? z.bs : null, bd = z && z.bd > 0 ? z.bd : null;   // (17.11) BLIK wybrany w DYSZY (kolumny Blik_S, Blik_D)
+    const kod = s ? s.kod : '';
+    if (kod === 'B') {                                          // „B-0,00” / „B-kwota” w trasie (formularz, Rejestr Fabryki, od 2.0.15 DYSZA)
+      const suma = (p.got || 0) + (p.kar || 0) + (p.onl || 0) + (bs || 0) + (bd || 0);
       if (s.kwota > 0) p.blikK = s.kwota; else p.blikO = suma || 0;
       p.got = p.kar = p.onl = null;
+    } else if (bs || bd) {                                      // (17.11) bez „B” w trasie (Notes jak z DYSZY albo trasy jeszcze nie ma)
+      if (bs) p.blikO = bs;                                     // Blik_S — BLIK obsługa: kierowca nic nie pobiera (BO)
+      if (bd) p.blikK = bd;                                     // Blik_D — BLIK przy odbiorze: kierowca pobiera BLIK-iem (BK)
+    } else if ((kod === 'BLIK_S' || kod === 'BLIK_T' || kod === 'BLIK_D') && s.kwota !== null) {   // (17.11) bez pliku FABRYKA — kwota z Notes trasy
+      if (kod === 'BLIK_D') p.blikK = s.kwota; else p.blikO = s.kwota;   // (18.11) Blik_T — jak Blik_S (BLIK z góry)
     }
     const przyDrzwiach = DRZWI.filter(r => p[r]);
     p.drzwi = przyDrzwiach.length === 1 && p.blikO === null && !p.onl ? przyDrzwiach[0] : null;   // jedna płatność przy odbiorze → można ją zmienić
@@ -1395,6 +1582,11 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   const BLEDY = {
     BRAK_DOSTEPU: 'Brak dostępu do Transportu — poproś kierownika o rolę w manager.dysza.app.',
     'BRAK_DOSTEPU:archiwum': 'Dostęp zablokowany.',                // (9.11) ARCHIWUM bez roli Archiwum (baza 016–017)
+    'BRAK_DOSTEPU:mapa': 'Dostęp zablokowany.',                    // (17.11) MAPA bez roli Mapa (baza 019)
+    RUCH_WYLACZONY: 'Komunikaty o ruchu są wyłączone.',              // (17.11) RUCH — baza bez 021 albo wycofana
+    'ROLA:archiwum': 'Pole informacyjne zmienia rola Archiwum — Twoja rola na to nie pozwala.',   // (17.11) pole informacyjne (baza 019)
+    'ZLA_WARTOSC:info': 'Pole informacyjne: najwyżej 300 znaków.',
+    INFO_WYLACZONE: 'Pole informacyjne jest wyłączone.',
     'ROLA:dyspozytor': 'To robi Transport Dyspozytor — Twoja rola na to nie pozwala.',
     'ROLA:platnosci': 'Płatność zmienia się w Rejestrze Fabryki (tablica.dysza.app) — tu przychodzi sama.',   // (8.11)
     'ZLA_WARTOSC:podzial': 'Podział: dwie części, każda większa niż 0, razem cała kwota.',   // (6.11)
@@ -1517,7 +1709,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     pamiec: {},                                                 // md5 pliku → tabela (treść przychodzi raz)
     wczytano: false, blad: '', offline: false, zapis: '', zapisZly: false, czekaRysuj: false
   };
-  const ROLE = { dyspozytor: 'Dyspozytor', archiwum: 'Archiwum' };   // (9.11, 18:24) bez Odczytu; Płatności → Archiwum
+  const ROLE = { dyspozytor: 'Dyspozytor', archiwum: 'Archiwum', mapa: 'Mapa' };   // (17.11) Mapa — zakładka MAPA   // (9.11, 18:24) bez Odczytu; Płatności → Archiwum
   const maRole = r => S.role.indexOf(r) >= 0;
   const tylkoOdczyt = () => !maRole('dyspozytor');               // (9.11, 18:24) bez Dyspozytora — podgląd (rola Archiwum)
   const nazwaRol = () => S.role.map(r => ROLE[r] || r).join(' + ') || 'bez roli';
@@ -1579,6 +1771,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     (d.kierowcy || []).forEach(k => { S.bazaTel[k.nick] = !!k.ma_tel; if (k.tel) S.telNr[k.nick] = String(k.tel); });
     S.stawkiDni = d.stawki || {};
     S.automat = d.automat || {};
+    S.info = infoZBazy(d.info);                                 // (17.11) pole informacyjne (baza 019; wcześniej — brak)
     S.dlaRoutific = Array.isArray(d.dla_routific) ? d.dla_routific : [];   // (5.11) pliki dla Routific i eksporty tras — tylko Dyspozytor
     S.wgrane = Array.isArray(d.wgrane) ? d.wgrane : [];
     const dni = {};
@@ -1595,7 +1788,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     S.wczytano = true;
   }
   function odcisk() {                                           // czy coś się zmieniło (żeby nie przerysowywać bez potrzeby)
-    return JSON.stringify([S.wszystkie.map(p => p.md5 + p.czas), S.rozl, S.koniec, S.zmiany, S.rejestr, S.role, S.baza, S.bazaTel, S.stawkiDni,
+    return JSON.stringify([S.wszystkie.map(p => p.md5 + p.czas), S.rozl, S.koniec, S.zmiany, S.rejestr, S.role, S.baza, S.bazaTel, S.stawkiDni, S.info || null,
       S.dlaRoutific.map(f => f.id + '|' + f.wgrano), S.wgrane.map(w => [w.id, w.status, w.zapisano]),
       Object.keys(S.ls.dni).map(iso => [iso, S.ls.dni[iso].form, S.ls.dni[iso].wysylki.map(w => [w.id, w.status, w.wersja, w.wynik])])]);
   }
@@ -1641,6 +1834,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
 
   // ───────── chmurka z treścią (Phone, Notes, Notes 2) ─────────
   let chm = null;
+  const piszeWChmurce = () => { const a = document.activeElement; return !!(chm && a && chm.el.contains(a) && (a.tagName === 'TEXTAREA' || a.tagName === 'INPUT')); };   // (17.11)
   function zamknijChmurke() {
     if (!chm) return;
     chm.btn.setAttribute('aria-expanded', 'false');
@@ -1766,11 +1960,12 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     otworzChmurke(btn, 'Konto', '', [
       el('div', { class: 'chm-l' }, el('b', null, kto(ja) || '—'), ja.login ? el('small', null, ` · login ${ja.login}`) : null),
       el('div', { class: 'chm-l' }, 'Role Transportu: ', el('b', null, nazwaRol())),
-      el('div', { class: 'chm-m' }, 'Role nadaje kierownik w manager.dysza.app: Dyspozytor — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS, KONIEC; Archiwum — ARCHIWUM (raport dnia) i podgląd z telefonami kierowców.'),
+      el('div', { class: 'chm-m' }, 'Role nadaje kierownik w manager.dysza.app: Dyspozytor — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS, KONIEC; Archiwum — ARCHIWUM (raport dnia), podgląd z telefonami kierowców i pole informacyjne; Mapa — MAPA.'),
       el('div', { class: 'chm-l' }, 'Widok:'),
       el('div', { class: 'seg seg2 motyw-seg', role: 'group', 'aria-label': 'Widok jasny albo ciemny' }, ['light', 'dark'].map(m =>
         el('button', { type: 'button', class: 'x', 'data-motyw': m, 'aria-pressed': String(motywTeraz() === m), onclick: () => { ustawMotyw(m); zamknijChmurke(); } },
           m === 'light' ? 'JASNY' : 'CIEMNY'))),
+      maRole('archiwum') ? edytorInfo() : null,                 // (17.11) pole informacyjne LIST STARTOWYCH — między JASNY / CIEMNY a WYLOGUJ
       el('div', { class: 'chm-wyl' },
         el('button', { type: 'button', class: 'mb', id: 'wyloguj', onclick: wyloguj }, 'WYLOGUJ')),   // (7.11) bez ODŚWIEŻ — strona odświeża się sama
       el('div', { class: 'chm-m' }, `Strona ${WERSJA || '—'} · automat plików: ${a ? 'ostatnio ' + godzinaZ(a.kiedy) : 'jeszcze się nie odezwał'}.`)]);
@@ -1790,10 +1985,11 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   }
   document.addEventListener('click', e => { if (chm && !chm.el.contains(e.target) && !chm.btn.contains(e.target)) zamknijChmurke(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && chm) { const b = chm.btn; zamknijChmurke(); b.focus(); } });
-  window.addEventListener('resize', () => { zamknijChmurke(); wyrownajKafle(); });
+  window.addEventListener('resize', () => { if (piszeWChmurce()) ustawChmurke(); else zamknijChmurke(); wyrownajKafle(); });   // (17.11) klawiatura ekranowa zmienia okno — wpis zostaje
 
   // ───────── rysowanie ─────────
   function rysuj() {
+    if (piszeWChmurce()) { S.czekaRysuj = true; rysujStan(); return; }   // (17.11) kursor w polu okienka (pole informacyjne) — przerysuję po wyjściu
     zamknijChmurke();
     $('dzien').textContent = dzienNapis(S.dzien);
     const ost = S.pliki.reduce((m, p) => Math.max(m, p.czas), -1);
@@ -1805,12 +2001,12 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     $('rola').setAttribute('aria-label', `Zalogowany: ${kto(S.ja)}, role Transportu: ${nazwaRol()} — konto`);
     rysujStan();
     rysujMotyw();
-    [['w-kierowcy', 'kierowcy'], ['w-listy', 'listy'], ['w-startowe', 'startowe'], ['w-podsumowanie', 'podsumowanie'], ['w-archiwum', 'archiwum']].forEach(([id, v]) => $(id).setAttribute('aria-selected', String(S.widok === v)));
-    $('pliki-dnia').hidden = S.widok === 'startowe' || S.widok === 'podsumowanie' || S.widok === 'archiwum';   // listy startowe, podsumowanie i archiwum nie potrzebują plików dnia
+    [['w-kierowcy', 'kierowcy'], ['w-listy', 'listy'], ['w-mapa', 'mapa'], ['w-ruch', 'ruch'], ['w-startowe', 'startowe'], ['w-podsumowanie', 'podsumowanie'], ['w-archiwum', 'archiwum']].forEach(([id, v]) => $(id).setAttribute('aria-selected', String(S.widok === v)));
+    $('pliki-dnia').hidden = S.widok === 'startowe' || S.widok === 'podsumowanie' || S.widok === 'archiwum' || S.widok === 'mapa' || S.widok === 'ruch';   // (17.11) RUCH też bez plików dnia; listy startowe, podsumowanie, archiwum i mapa (własne godziny) nie potrzebują plików dnia
     rysujPliki();
     const w = $('widok');
     w.replaceChildren(S.widok === 'kierowcy' ? widokKierowcy() : S.widok === 'listy' ? widokListy() : S.widok === 'podsumowanie' ? widokPodsumowania()
-      : S.widok === 'archiwum' ? widokArchiwum() : widokStartowe());
+      : S.widok === 'archiwum' ? widokArchiwum() : S.widok === 'mapa' ? widokMapy() : S.widok === 'ruch' ? widokRuchu() : widokStartowe());
     wyrownajKafle();
   }
   function wyrownajKafle() {                                   // przyciski kierowców jak godziny: szerokość wg imienia; rzędy wyśrodkowane i możliwie równe
@@ -2186,7 +2382,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       koniec,
       el('div', { class: 'notka', id: 'o-blad', role: 'status' }));
     const panel = el('section', { class: 'panel', 'aria-label': `Rozliczenie ${k}` }, naglowek, gora, tab, wynik,
-      el('div', { class: 'notka' }, (tylkoOdczyt() ? 'Rola Transport Archiwum — podgląd; START, STOP, EXTRA i BONUS wpisuje dyspozytor. ' : '') + (typ === 'kierowca' ? (S.stawki ? '' : 'Stawki przyjdą z list startowych — do tego czasu kwoty to „—”. ') + 'EXTRA — km ponad trasę z Routific; BONUS — zł.'
+      el('div', { class: 'notka' }, (tylkoOdczyt() ? `Rola ${nazwaRol()} — podgląd; START, STOP, EXTRA i BONUS wpisuje dyspozytor. ` : '') + (typ === 'kierowca' ? (S.stawki ? '' : 'Stawki przyjdą z list startowych — do tego czasu kwoty to „—”. ') + 'EXTRA — km ponad trasę z Routific; BONUS — zł.'
         : typ === 'res' ? 'Dniówkę RES ustala dyspozytor w LISTACH STARTOWYCH (stawki dnia).' : '')
         + (trasy.some(t => wybrane.indexOf(t.h) < 0) ? ' Rozliczenie liczy cały dzień — przygaszone rzuty są poza wybranymi godzinami.' : '')));
     setTimeout(odswiez, 0);
@@ -2523,11 +2719,60 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     } else { S.stawki = null; S.dniowka = null; S.resDnia = null; }
   }
 
+  // ───────── (17.11) pole informacyjne LIST STARTOWYCH — tekst roli Archiwum (okienko Konto), widzą wszyscy (baza 019) ─────────
+  function infoZBazy(i) {
+    return i && typeof i === 'object' && typeof i.tekst === 'string' && i.tekst.trim() ? { tekst: i.tekst, kto: String(i.kto || ''), kiedy: String(i.kiedy || '') } : null;
+  }
+  function kiedyInfo(iso) {                                     // dziś „10:05”, wcześniej „16-11 10:05”
+    const ms = msZ(iso);
+    if (!ms) return '';
+    const f = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Warsaw', year: 'numeric', month: '2-digit', day: '2-digit' });
+    const d = f.format(new Date(ms)), g = godzinaZ(iso);
+    return d === f.format(new Date()) ? g : `${Number(d.slice(8, 10))}-${d.slice(5, 7)} ${g}`;
+  }
+  function kartaInfo() {                                        // żółta kartka obok STAWEK DNIA; puste pole — bez kartki
+    const i = S.info;
+    if (!i) return null;
+    const n = i.tekst.length, k = [i.kto, kiedyInfo(i.kiedy)].filter(Boolean).join(' · ');
+    return el('section', { class: 'pinf', id: 'pinf', 'aria-label': 'Pole informacyjne' },
+      el('p', { class: 'pi-t' + (n > 180 ? ' dl' : n > 90 ? ' sr' : ''), id: 'pinf-t' }, i.tekst),
+      k ? el('div', { class: 'pi-k' }, k) : null);
+  }
+  function edytorInfo() {                                       // okienko Konto, rola Archiwum: ZAPISZ — wszyscy widzą; WYCZYŚĆ — kartka znika
+    const jest = S.info ? S.info.tekst : '';
+    const pole = el('textarea', { id: 'pi-pole', rows: '4', maxlength: '300', spellcheck: 'true', autocapitalize: 'sentences', 'aria-label': 'Pole informacyjne' });
+    pole.value = jest;
+    const wyczysc = el('button', { type: 'button', class: 'mb', id: 'pi-wyczysc', onclick: () => zapiszInfo('') }, 'WYCZYŚĆ');
+    const zapisz = el('button', { type: 'button', class: 'mb', id: 'pi-zapisz', onclick: () => zapiszInfo(pole.value) }, 'ZAPISZ');
+    const bl = el('div', { class: 'chm-m pi-blad', id: 'pi-blad', role: 'status', hidden: true });
+    const stan = () => { zapisz.disabled = pole.value.trim() === jest.trim(); wyczysc.disabled = !jest && !pole.value.trim(); };
+    pole.addEventListener('input', () => { stan(); bl.hidden = true; });
+    stan();
+    return el('div', { class: 'chm-pi' }, el('div', { class: 'chm-l' }, 'Pole informacyjne:'), pole, el('div', { class: 'pi-przyc' }, wyczysc, zapisz), bl);
+  }
+  async function zapiszInfo(tekst) {                            // baza: transport_info_zapisz (019) — tekst przycina i porządkuje baza
+    if (!maRole('archiwum') || !baza.sesja()) return;
+    const przyc = ['pi-wyczysc', 'pi-zapisz'].map(id => $(id)).filter(Boolean);
+    przyc.forEach(b => { b.disabled = true; });
+    try {
+      const r = await baza.rpc('transport_info_zapisz', { p_tekst: String(tekst || '') });
+      S.info = infoZBazy(r && r.info);
+      stanZapisu('zapisane ' + godzinaZ((r && r.teraz) || new Date().toISOString()));
+      zamknijChmurke();
+      if (S.czekaRysuj) przeliczBezpiecznie(); else rysuj();    // dane, które przyszły w trakcie wpisu — teraz
+    } catch (e) {
+      if (e && e.sesja) { blad(e); return; }
+      const bl = $('pi-blad');
+      if (bl) { bl.textContent = 'NIE ZAPISANO: ' + tekstBledu(e); bl.hidden = false; }
+      przyc.forEach(b => { b.disabled = false; });
+    }
+  }
   function widokStartowe() {
     if (!dzienLS()) return el('div', { class: 'tabela-w' }, el('div', { class: 'puste' }, 'Listy startowe — wczytuję z bazy…'));
-    const f = dzienLS().form, mozna = maRole('dyspozytor');
-    return el('div', { class: 'ls' }, pasekDni(),
-      el('div', { class: 'uklad' }, el('div', { class: 'lewa' }, kartaStawek(f, mozna), kartaKierowcow(f, mozna), kartaZew(f, mozna)), panelLS()));
+    const f = dzienLS().form, mozna = maRole('dyspozytor'), pi = kartaInfo();   // (17.11) pole informacyjne — obok STAWEK DNIA
+    return el('div', { class: 'ls' }, pasekDni(), pi
+      ? el('div', { class: 'uklad z-pi' }, kartaStawek(f, mozna), pi, el('div', { class: 'lewa' }, kartaKierowcow(f, mozna), kartaZew(f, mozna)), panelLS())
+      : el('div', { class: 'uklad' }, el('div', { class: 'lewa' }, kartaStawek(f, mozna), kartaKierowcow(f, mozna), kartaZew(f, mozna)), panelLS()));
   }
   function pasekDni() {
     const dzien = (iso, napis) => el('button', { type: 'button', class: 'zakl', role: 'tab', 'aria-selected': String(S.ls.dzien === iso),
@@ -2557,7 +2802,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         oninput: e => { dzienLS().form.stawki[k] = e.target.value; e.target.classList.toggle('zle', !!stawkaLS(e.target.value).zla); S.ls.potw = false; zapiszLS(); odswiezLS(); } }),
         el('span', { class: 'jedn' }, jedn)),
       el('small', null, opis));
-    return el('section', { class: 'karta', 'aria-labelledby': 'ls-st-t' },
+    return el('section', { class: 'karta karta-st', 'aria-labelledby': 'ls-st-t' },
       el('div', { class: 'karta-n' }, el('b', { id: 'ls-st-t' }, el('span', { class: 'nr' }, '1'), 'Stawki dnia'), el('small', null, dzienNapis(S.ls.dzien))),
       el('div', { class: 'stawki' },
         pole('h', 'CZASÓWKA', 'zł / h', 'czas od START do STOP'),
@@ -3018,6 +3263,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     await odswiezTeraz(true);
     if (S.czekaRysuj && !wPolu() && !chm) przeliczBezpiecznie();
     if (S.widok === 'archiwum') arWczytaj();                    // (9.11) bieżący miesiąc co minutę, wcześniejsze co 10 minut
+    ruWczytaj();                                                // (17.11) RUCH — co minutę, w każdym widoku (pulsowanie)
+    if (S.widok === 'mapa') mpPlanWczytaj();                     // (16.11) plan z DYSZY co minutę; pełna godzina — W DOWOZIE → DOWIEZIONE
     const czeka = Object.keys(S.ls.dni).some(iso => { const p = oczekujaceLS(S.ls.dni[iso]); return p && p.status !== 'blad'; });
     if (baza.sesja() && !$('aplikacja').hidden) zaplanuj(czeka || Date.now() < SZYBKO_DO ? 5000 : 20000);
   }
@@ -3123,7 +3370,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     clearTimeout(CYKL);
     try { await zapiszWpisyTeraz(); await zapiszLSTeraz(); } catch (e) { /* bez sieci — trudno */ }
     await baza.wyloguj();
-    S.ja = null; S.role = []; S.pamiec = {}; S.wszystkie = []; S.wczytano = false; S.ls.dni = {}; S.ls.szkic = {}; S.dlaRoutific = []; S.wgrane = []; rtfWyczysc(); arWyczysc();
+    S.ja = null; S.role = []; S.info = null; S.pamiec = {}; S.wszystkie = []; S.wczytano = false; S.ls.dni = {}; S.ls.szkic = {}; S.dlaRoutific = []; S.wgrane = []; rtfWyczysc(); arWyczysc(); mpWyczysc(); ruWyczysc();
     pokazLogowanie('Wylogowano.');
   }
   async function start() {
@@ -3134,7 +3381,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       S.role = Array.isArray(ja.role) ? ja.role : [];
       if (!ja.id || !S.role.length) {
         await baza.wyloguj();
-        pokazLogowanie(`${kto(ja) ? kto(ja) + ': b' : 'B'}rak roli Transport — poproś kierownika o rolę w manager.dysza.app (Dyspozytor albo Archiwum).`);
+        pokazLogowanie(`${kto(ja) ? kto(ja) + ': b' : 'B'}rak roli Transport — poproś kierownika o rolę w manager.dysza.app (Dyspozytor, Archiwum albo Mapa).`);
         return;
       }
       if (S.dzien !== ja.dzis) { S.dzien = ja.dzis; S.ls.dzien = ja.dzis; S.pamiec = {}; S.godz = null; }
@@ -3146,6 +3393,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       await odswiezTeraz(false);
       if (!S.wczytano) przelicz();
       zaplanuj(20000);
+      ruStart();                                                  // (17.11) RUCH — ostatnio otwarty komunikat tej osoby i komunikat z bazy
     } catch (e) {
       if (e && e.sesja) { pokazLogowanie('Sesja wygasła — zaloguj się ponownie.'); return; }
       wejscieUkryj();
@@ -3758,8 +4006,388 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         el('div', { class: 'ar-siatka' }, kafle)));                // bez opisu pod siatką — jak działa, mówi instrukcja (Sławek 7.11, 16:22)
   }
 
+  // ───────── (16.11, 14:32) MAPA — dostawy dnia na godziny i na mapie Warszawy ─────────
+  // Godziny 12–23 jak „Pliki dnia”. W DOWOZIE — jest plik FABRYKA, godzina trwa; DOWIEZIONE — po godzinie; PLAN — pliku FABRYKA jeszcze nie ma:
+  // liczba dowozów czekających na przedział (łącznik DYSZY → Rejestr Tablicy → transport_mapa_plan, same liczby). Adresy z plików FABRYKA
+  // (ulica i numer — bez kwot, telefonów i lokalu), punkty z eksportu trasy Routific (Latitude, Longitude), kierowca z trasy. Mapa rysowana
+  // na stronie: strefy A i B („Pracownia Sushi dostawa.kmz”), Wisła, dzielnice, FABRYKA (start tras) — bez map z internetu.
+  const MP_GEO = {"W":1000,"H":966.1,"lon0":20.7238339,"lat1":52.3707253,"kx":0.612304997,"sk":3801.1163,"strefaA":"M321.3,585.4 L275.8,639.4 L277.8,642.6 L291.4,653.8 L304.2,668.6 L320.9,688.2 L369.7,722.2 L384.5,731.0 L416.0,741.0 L448.0,755.8 L486.7,774.6 L523.9,795.4 L541.9,817.0 L556.3,845.4 L565.4,862.0 L576.2,872.7 L597.4,881.3 L617.8,880.3 L714.1,877.0 L771.2,934.4 L814.0,938.8 L847.5,934.9 L834.3,909.1 L833.5,901.4 L791.8,835.2 L810.4,827.4 L824.3,829.0 L885.9,835.4 L900.3,832.2 L931.8,809.6 L968.1,798.7 L948.6,755.9 L897.7,708.5 L887.5,688.6 L883.9,676.2 L876.5,636.0 L847.7,604.5 L923.7,525.8 L938.8,520.8 L949.6,501.5 L923.6,480.6 L921.8,450.7 L908.9,431.7 L909.7,415.8 L900.4,370.2 L877.9,382.8 L854.7,334.5 L874.7,320.2 L865.9,311.0 L824.3,305.8 L848.3,255.5 L792.0,251.5 L796.4,235.6 L808.8,212.0 L806.4,172.9 L793.2,168.1 L758.8,167.7 L712.1,159.0 L693.3,191.3 L646.6,213.6 L605.4,235.2 L586.6,204.4 L532.9,234.2 L521.3,245.9 L474.0,197.9 L425.6,233.4 L416.0,264.9 L406.9,279.9 L380.1,265.5 L367.3,259.1 L354.1,289.8 L347.3,376.0 L318.9,375.2 L283.8,454.7 L288.6,471.9 L378.5,499.9 L321.3,585.4 Z","strefaB":"M504.9,85.5 L474.6,103.8 L478.6,128.3 L476.2,161.8 L501.9,197.3 L532.9,234.2 L521.3,245.9 L474.0,197.9 L425.6,233.4 L416.0,264.9 L406.9,279.9 L373.9,261.5 L279.0,231.4 L239.3,216.4 L170.5,199.5 L160.5,235.4 L87.4,212.2 L74.0,243.3 L104.2,252.9 L131.8,287.2 L163.7,307.4 L148.8,370.9 L146.2,430.0 L140.0,497.7 L28.3,501.3 L28.5,558.0 L35.5,576.6 L35.1,627.6 L77.6,616.4 L97.6,616.8 L97.8,654.0 L126.8,710.2 L116.6,714.6 L105.9,741.1 L88.3,822.0 L134.3,828.3 L153.4,831.3 L153.0,838.4 L202.0,846.8 L227.1,855.5 L232.5,830.1 L295.7,831.5 L293.0,819.2 L296.0,803.7 L340.8,807.2 L348.1,786.8 L368.9,795.0 L380.6,804.3 L381.9,812.5 L408.7,819.3 L426.2,825.6 L441.1,835.1 L450.3,835.5 L464.7,844.7 L491.0,857.5 L508.6,861.6 L522.3,870.9 L554.2,870.5 L565.4,862.0 L579.6,875.1 L597.4,881.3 L614.3,880.9 L655.5,879.7 L672.9,879.4 L714.1,877.0 L740.1,904.8 L771.2,934.4 L802.3,937.9 L819.7,937.8 L847.5,934.9 L835.8,912.8 L833.5,901.4 L812.6,869.6 L791.8,835.2 L798.3,831.3 L813.7,827.2 L866.3,833.5 L890.1,834.9 L905.2,829.1 L931.8,809.6 L968.1,798.7 L948.6,755.9 L923.9,733.2 L897.7,708.5 L883.8,680.2 L876.5,636.0 L847.7,604.5 L872.7,577.8 L923.7,525.8 L938.8,520.8 L949.6,501.5 L923.6,480.6 L921.8,450.7 L908.9,431.7 L909.7,415.8 L900.4,370.2 L917.5,366.8 L921.0,366.0 L929.3,364.6 L971.7,354.3 L964.9,300.8 L953.0,288.8 L926.7,279.4 L903.7,268.3 L898.7,258.3 L894.2,234.8 L928.6,222.7 L964.6,193.9 L956.6,152.5 L953.7,136.7 L933.3,125.8 L877.3,95.6 L859.6,95.6 L858.6,126.3 L840.3,134.5 L833.3,102.1 L816.7,104.0 L800.2,27.3 L753.7,32.2 L723.9,49.3 L719.7,50.2 L625.4,51.0 L590.6,72.3 L587.6,78.3 L578.0,101.5 L563.0,120.0 L524.1,71.3 L519.1,75.6 L504.9,85.5 Z","wisla":"M996.5,998.6 L982.6,972.0 L940.7,907.4 L910.4,846.6 L884.8,789.6 L859.2,732.6 L840.6,679.4 L822.0,633.7 L796.4,595.7 L773.1,565.3 L749.8,521.6 L726.5,496.9 L705.6,470.3 L687.0,447.5 L661.4,420.9 L642.8,390.5 L626.5,344.9 L598.5,303.0 L563.6,265.0 L538.0,223.2 L519.4,170.0 L512.4,109.2 L519.4,40.8 L528.7,-4.8","dzielnice":[["ŚRÓDMIEŚCIE",673.0,521.6,1],["WOLA",577.6,547.1,1],["OCHOTA",593.9,609.0,1],["MOKOTÓW",691.6,692.7,1],["URSYNÓW",735.9,858.0,1],["WILANÓW",866.2,791.5,2],["PRAGA-PŁD.",868.5,487.4,1],["PRAGA-PŁN.",747.5,407.6,2],["TARGÓWEK",787.1,325.9,2],["BIAŁOŁĘKA",633.5,179.5,1],["BIELANY",503.1,304.9,1],["ŻOLIBORZ",603.2,369.6,1],["BEMOWO",421.7,434.2,1],["WŁOCHY",496.1,685.1,2],["URSUS",365.8,673.7,2]],"fabryka":[543.8,479.8]};
+  const MP = { wyb: null, wybRys: null, recznie: false, przyp: null, plan: {}, planDzien: '', kiedy: 0, godzRys: -1, biezace: [], stany: {}, przewin: null,
+    planAdr: [], planAdrDzien: '', planAdrOk: false, planAdrSwieze: false };   // (18.11) adresy PLANU z łącznika DYSZY (020)
+  const MP_NAZWA = { dow: 'dowiezione', wd: 'w dowozie', pl: 'plan' };
+  const MP_GODZ = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+  const MP_DATA = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Warsaw', year: 'numeric', month: '2-digit', day: '2-digit' });
+  const mpXY = (lat, lng) => ({ x: (lng - MP_GEO.lon0) * MP_GEO.kx * MP_GEO.sk, y: (MP_GEO.lat1 - lat) * MP_GEO.sk });
+  const mpPrzedzial = h => `${h}:00–${h + 1}:00`;
+  function mpTeraz() {                                          // minuty dnia pracy; po północy (dzień pracy trwa do 6:00) — wszystko dowiezione
+    const c = {};
+    MP_DATA.formatToParts(new Date()).forEach(x => { c[x.type] = x.value; });
+    const dzis = `${c.year}-${c.month}-${c.day}`;
+    if (S.dzien && S.dzien < dzis) return 24 * 60;
+    if (S.dzien && S.dzien > dzis) return -1;
+    const m = minuty(zegarTeraz());
+    return m < 99999 ? m : new Date().getHours() * 60 + new Date().getMinutes();
+  }
+  function mpAdres(a) {                                         // „Wolska 12, Warszawa / m. 4” → „Wolska 12” (lokal i wskazówki zostają w pliku)
+    const s = String(a || '').replace(/\s+/g, ' ').trim().split(/\s\/\s/)[0];
+    const b = s.replace(/,?\s*(\d{2}-\d{3}\s*)?(Warszawa|Warsaw)\b.*$/i, '').replace(/[\s,]+$/, '').trim();
+    return b || s;
+  }
+  function mpSvg(tag, at, tekst) {
+    const e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    Object.keys(at || {}).forEach(k => e.setAttribute(k, at[k]));
+    if (tekst) e.textContent = tekst;
+    return e;
+  }
+  function mpFabryka() {                                        // start tras z eksportu Routific (Stop 0), inaczej punkt z mapy
+    const s = S.model && S.model.start;
+    if (s) { const q = mpXY(s.lat, s.lng); if (q.x > 0 && q.x < MP_GEO.W && q.y > 0 && q.y < MP_GEO.H) return [q.x, q.y]; }
+    return MP_GEO.fabryka;
+  }
+  function mpDane() {                                           // godziny dnia: stan, liczba, adresy (z położeniem z trasy)
+    const teraz = mpTeraz(), plikF = {}, poGodz = {}, [fx, fy] = mpFabryka();
+    S.wszystkie.forEach(p => { if (p.typ === 'F' && !p.blad) plikF[p.h] = true; });
+    if (S.model) S.model.zam.forEach(z => {
+      const adres = mpAdres(z.adres);
+      if (MP_GODZ.indexOf(z.h) < 0 || !adres) return;
+      const pr = S.model.przyp.get(klucz(z.id)), s = pr && pr.s;
+      let q = s && typeof s.lat === 'number' && typeof s.lng === 'number' ? mpXY(s.lat, s.lng) : null;
+      if (q && !(q.x >= 0 && q.x <= MP_GEO.W && q.y >= 0 && q.y <= MP_GEO.H)) q = null;   // poza mapą stref — tylko na liście
+      (poGodz[z.h] = poGodz[z.h] || []).push({ id: String(z.id), h: z.h, adres: adres, kier: pr ? pr.t.kier : '', x: q ? q.x : null, y: q ? q.y : null });
+    });
+    const numeruj = a => {                                      // numery obiegają mapę od północy, zgodnie z zegarem; bez punktu — na końcu
+      a.forEach(x => {
+        x.kat = x.x === null ? 999 : (Math.atan2(x.x - fx, fy - x.y) * 180 / Math.PI + 360) % 360;
+        x.odl = x.x === null ? 0 : Math.hypot(x.x - fx, x.y - fy);
+      });
+      a.sort((p, q) => Math.round(p.kat / 10) - Math.round(q.kat / 10) || p.odl - q.odl || p.adres.localeCompare(q.adres, 'pl'));
+      a.forEach((x, i) => { x.n = i + 1; });
+      return a;
+    };
+    const poPlanie = {};                                        // (18.11) adresy PLANU z łącznika DYSZY: ulica i numer, punkt z mapy Google
+    if (MP.planAdrDzien === S.dzien) MP.planAdr.forEach(p => {
+      if (MP_GODZ.indexOf(p.h) < 0) return;
+      let q = typeof p.lat === 'number' && typeof p.lng === 'number' ? mpXY(p.lat, p.lng) : null;
+      if (q && !(q.x >= 0 && q.x <= MP_GEO.W && q.y >= 0 && q.y <= MP_GEO.H)) q = null;   // poza mapą stref — tylko na liście
+      (poPlanie[p.h] = poPlanie[p.h] || []).push({ id: 'pl:' + p.id, h: p.h, adres: mpAdres(p.adres) || p.adres, kier: '', x: q ? q.x : null, y: q ? q.y : null });
+    });
+    return MP_GODZ.map(h => {
+      const a = numeruj(poGodz[h] || []);
+      const plan = (MP.planDzien === S.dzien && MP.plan[h]) || 0;
+      const stan = plikF[h] && a.length ? (teraz >= (h + 1) * 60 ? 'dow' : 'wd') : plan ? 'pl' : '';
+      const pa = stan === 'pl' ? numeruj(poPlanie[h] || []) : [];
+      return { h: h, stan: stan, n: stan === 'pl' ? plan : stan ? a.length : 0, adresy: stan === 'pl' ? pa : stan ? a : [],
+        bezAdresu: stan === 'pl' ? Math.max(0, plan - pa.length) : 0 };   // (18.11) dowozy PLANU, których adresu jeszcze nie ma
+    });
+  }
+  function mpWybierz(h) { MP.wyb = h; MP.recznie = true; MP.przyp = null; rysuj(); }
+  function mpWiersz(a) {
+    return el('li', null, el('button', { type: 'button', class: 'mp-adr' + (MP.przyp === a.id ? ' akt' : ''), 'data-id': a.id,
+      'aria-label': `${a.n}. ${a.adres}${a.kier ? ' — ' + a.kier : ''}`,
+      onpointerenter: () => mpPokaz(a.id), onpointerleave: () => mpPokaz(MP.przyp), onfocus: () => mpPokaz(a.id), onblur: () => mpPokaz(MP.przyp),
+      onclick: () => mpPrzypnij(a.id, false) },
+      el('span', { class: `mp-nr ${MP.stany[a.h] || ''}${a.x === null ? ' bez' : ''}`, 'aria-hidden': 'true' }, String(a.n)),
+      el('span', { class: 'mp-ul', title: a.adres }, a.adres), el('span', { class: 'mp-dz' }, a.kier)));
+  }
+  // ───────── (17.11) RUCH — komunikat o utrudnieniach w strefach dostaw ─────────
+  const RU = { id: null, ruch: null, dzis: null, wczytano: 0, pobiera: false, blad: '', wylaczone: false, widziany: null };
+  const RU_POZIOM = { blokada: 'bl', utrudnienia: 'ut', spokojnie: 'sp', brak: 'br' };
+  const RU_DNI = ['nd', 'pn', 'wt', 'śr', 'czw', 'pt', 'sob'];
+  const ruKlucz = () => 'transport-ruch:' + ((S.ja && S.ja.id) || '');
+  function ruPuls() {                                           // przycisk RUCH: nowy (inny niż ostatnio otwarty) — pulsuje na żółto
+    const b = $('w-ruch');
+    if (!b) return;
+    const nowy = !!(RU.id && RU.id !== RU.widziany && !RU.wylaczone);
+    b.classList.toggle('ru-nowy', nowy);
+    const t = RU.ruch && RU.ruch.tresc && RU.ruch.tresc.temat;
+    if (nowy) b.setAttribute('aria-label', 'RUCH — nowy komunikat' + (t ? ': ' + t : '')); else b.removeAttribute('aria-label');
+  }
+  function ruWidziany() {                                       // wejście w RUCH: ten komunikat widziany (ta osoba, to urządzenie)
+    if (RU.id && RU.widziany !== RU.id) { RU.widziany = RU.id; pisz(ruKlucz(), RU.id); }
+    ruPuls();
+  }
+  function ruWyczysc() { Object.assign(RU, { id: null, ruch: null, dzis: null, wczytano: 0, blad: '', wylaczone: false, widziany: null }); ruPuls(); }
+  function ruStart() { RU.widziany = czytaj(ruKlucz(), null); ruWczytaj(true); }
+  async function ruWczytaj(sila) {                              // co minutę (wyłączone — co 10 min); znany numer — baza oddaje sam numer
+    if (!baza.sesja() || RU.pobiera) return;
+    if (!sila && Date.now() - RU.wczytano < (RU.wylaczone ? 600000 : 60000)) return;
+    RU.pobiera = true;
+    const przed = [RU.id, RU.blad, RU.wylaczone].join('|');
+    try {
+      const d = await baza.rpc('transport_ruch', { p_znany: RU.id });
+      RU.wczytano = Date.now(); RU.blad = ''; RU.wylaczone = false; RU.dzis = (d && d.dzis) || null;
+      const r = d && d.ruch;
+      if (!r) { RU.id = null; RU.ruch = null; }
+      else if (r.tresc) { RU.id = r.id; RU.ruch = r; }
+      else if (r.id !== RU.id) { RU.id = null; RU.ruch = null; RU.wczytano = 0; }   // sam numer, którego strona nie zna — następnym razem całość
+    } catch (e) {
+      RU.wczytano = Date.now();
+      if (e && e.sesja) { RU.pobiera = false; return; }          // sesję obsługuje odświeżanie dnia
+      if (String(e && e.message) === 'RUCH_WYLACZONY' || (e && e.status === 404)) { RU.wylaczone = true; RU.id = null; RU.ruch = null; RU.blad = ''; }
+      else RU.blad = tekstBledu(e);
+    }
+    RU.pobiera = false;
+    if (S.widok === 'ruch' && !document.hidden) ruWidziany(); else ruPuls();
+    if (S.widok === 'ruch' && S.model && przed !== [RU.id, RU.blad, RU.wylaczone].join('|')) {
+      if (wPolu() || chm) { S.czekaRysuj = true; rysujStan(); } else rysuj();
+    }
+  }
+  function ruDzien(iso) {                                       // „2026-11-21” → ['sob', '21.11']
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ''));
+    if (!m) return ['', String(iso || '')];
+    return [RU_DNI[new Date(Date.UTC(+m[1], +m[2] - 1, +m[3], 12)).getUTCDay()], m[3] + '.' + m[2]];
+  }
+  const ruDzienZ = iso => { const ms = msZ(iso); return ms ? ruDzien(new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Warsaw' }).format(new Date(ms))).join(' ') : ''; };
+  const ruZnak = s => el('span', { class: 'ru-zn ru-zn-' + (s === 'dojazd' ? 'd' : s) }, s);
+  function ruPozycja(p, sek) {
+    const meta = [];
+    if (sek === 'teraz' && p.zgloszono) meta.push(el('span', null, 'Zgłoszono ', el('b', null, p.zgloszono)));
+    if ((sek === 'teraz' || sek === 'dzis') && p.do_kiedy) meta.push(el('span', null, 'Do kiedy: ', el('b', null, p.do_kiedy)));
+    if (sek === 'zakonczone' && p.kiedy) meta.push(el('span', null, 'Zakończone ', el('b', null, p.kiedy)));
+    const tresc = [el('div', { class: 'ru-poz-g' }, ruZnak(p.strefa), p.nowe ? el('span', { class: 'ru-nowe' }, 'NOWE') : null, el('b', { class: 'ru-m' }, p.miejsce)),
+      el('p', { class: 'ru-o' }, p.opis),
+      meta.length ? el('div', { class: 'ru-meta' }, meta.reduce((a, x, i) => (i ? a.concat([' · ', x]) : [x]), [])) : null,
+      p.co_zrobic ? el('div', { class: 'ru-co' }, el('b', null, 'Co zrobić: '), p.co_zrobic) : null];
+    if (sek !== 'najblizsze') return el('li', { class: 'ru-poz' }, tresc);
+    const [dt, dm] = ruDzien(p.dzien);
+    return el('li', { class: 'ru-poz ru-poz-d' }, el('div', { class: 'ru-data' }, el('small', null, dt), el('b', null, dm)), el('div', { class: 'ru-poz-t' }, tresc));
+  }
+  function ruSekcja(sek, tytul, lista) {
+    if (!Array.isArray(lista) || !lista.length) return null;
+    return el('section', { class: 'karta ru-sek ru-sek-' + sek, 'aria-labelledby': 'ru-s-' + sek },
+      el('div', { class: 'karta-n' }, el('b', { id: 'ru-s-' + sek }, tytul), sek === 'zakonczone' || sek === 'najblizsze' ? null : el('small', null, String(lista.length))),
+      el('ol', { class: 'ru-lista' }, lista.map(p => ruPozycja(p, sek))));
+  }
+  const ruRamka = (rodzaj, etykieta, tekst) => (tekst ? el('div', { class: 'ru-ramka ru-r-' + rodzaj }, el('b', null, etykieta), el('p', null, tekst)) : null);
+  const ruLink = z => (/^https:\/\/[^\s"<>\\]+$/.test(String(z.url || '')) ? el('a', { href: z.url, target: '_blank', rel: 'noopener noreferrer' }, z.nazwa || z.url)
+    : el('span', null, z.nazwa || ''));
+  function widokRuchu() {
+    if (RU.wylaczone) return el('section', { class: 'panel ar-blok', 'aria-labelledby': 'ru-blok-t' }, el('h2', { id: 'ru-blok-t' }, 'Komunikaty o ruchu są wyłączone'));
+    const teraz = minutyZ(new Date().toISOString()), r = RU.ruch, t = r && r.tresc;
+    if (!t) {
+      const spozn = RU.wczytano && !RU.blad && teraz >= 11 * 60 + 15 && teraz < 22 * 60;
+      const tekst = RU.blad ? RU.blad : !RU.wczytano ? 'Wczytuję komunikat…' : teraz < 11 * 60 + 15 ? 'Pierwszy komunikat dnia ok. 11:05.'
+        : spozn ? 'Dziś jeszcze nie ma komunikatu — automat się spóźnia. Przed wyjazdem sprawdź trasę w nawigacji z ruchem na żywo; daj znać Sławkowi.'
+        : 'Dziś bez komunikatów.';
+      return el('section', { class: 'karta ru-pusto' + (spozn || RU.blad ? ' uw' : ''), 'aria-live': 'polite' }, el('p', null, tekst));
+    }
+    const poz = RU_POZIOM[t.poziom] || 'br', wyd = msZ(r.wydano);
+    const spozn = teraz >= 11 * 60 + 15 && teraz < 22 * 60 && wyd && Date.now() - wyd > 75 * 60000;
+    const stan = el('section', { class: 'karta ru-stan ru-' + poz, 'aria-labelledby': 'ru-st-t' },
+      el('div', { class: 'ru-stan-g' },
+        el('div', { class: 'ru-stan-l' }, el('b', { id: 'ru-st-t', class: 'ru-et' }, 'Sytuacja na drogach'), el('div', { class: 'ru-slowo' }, t.slowo || '')),
+        el('div', { class: 'ru-czas' }, el('b', null, godzinaZ(r.wydano)), el('small', null, ruDzienZ(r.wydano)))),
+      el('p', { class: 'ru-zdanie' }, t.zdanie || ''),
+      Array.isArray(t.pigulki) && t.pigulki.length ? el('div', { class: 'ru-pig' }, t.pigulki.map(x => el('span', null, x))) : null,
+      t.notka ? el('p', { class: 'ru-notka' }, t.notka) : null,
+      spozn ? el('p', { class: 'ru-spozn' }, `Kolejny komunikat spóźnia się (ostatni o ${godzinaZ(r.wydano)}) — przed wyjazdem sprawdź trasę w nawigacji z ruchem na żywo; daj znać Sławkowi.`) : null,
+      RU.blad ? el('p', { class: 'ru-blad' }, RU.blad) : null);
+    const lewa = [ruSekcja('teraz', 'Teraz · na żywo', t.teraz), ruSekcja('zakonczone', 'Zakończone', t.zakonczone)].filter(Boolean);
+    const prawa = [ruSekcja('dzis', 'Dziś · zamknięcia i remonty', t.dzis), ruSekcja('najblizsze', 'Najbliższe dni', t.najblizsze),
+      t.wskazowka ? ruRamka('ni', t.wskazowka.etykieta || 'Wskazówka', t.wskazowka.tekst) : null].filter(Boolean);
+    const kol = lewa.length || prawa.length ? el('div', { class: 'ru-kol' + (lewa.length && prawa.length ? '' : ' jedna') },
+      lewa.length ? el('div', { class: 'ru-k' }, lewa) : null, prawa.length ? el('div', { class: 'ru-k' }, prawa) : null) : null;
+    const zr = Array.isArray(t.zrodla) ? t.zrodla : [];
+    return el('div', { class: 'ru ru-p-' + poz },
+      (Array.isArray(t.uwagi) ? t.uwagi : []).map(u => ruRamka('sz', 'Uwaga', u)),
+      stan, kol,
+      t.imgw || t.mapa ? el('div', { class: 'ru-dol' }, ruRamka('bu', 'Ostrzeżenie IMGW', t.imgw), ruRamka('sz', 'Mapa stref', t.mapa)) : null,
+      el('footer', { class: 'ru-stopka' },
+        zr.length ? el('p', null, el('b', null, 'Źródła: '), zr.map((z, i) => [i ? ' · ' : null, ruLink(z)]).flat()) : null,
+        el('p', null, `Sprawdzono ${t.sprawdzono || godzinaZ(r.wydano)}. Źródła publiczne mogą mieć opóźnienie — przed wyjazdem sprawdź trasę w nawigacji z ruchem na żywo.`)));
+  }
+  function widokMapy() {
+    if (!maRole('mapa')) return el('section', { class: 'panel ar-blok', 'aria-labelledby': 'mp-blok-t' }, el('h2', { id: 'mp-blok-t' }, 'Dostęp zablokowany'));   // (17.11) bez roli Mapa
+    const godz = mpDane(), poH = {};
+    godz.forEach(g => { poH[g.h] = g; MP.stany[g.h] = g.stan; });
+    if (MP.wyb !== 'dzien' && !(poH[MP.wyb] && poH[MP.wyb].stan)) MP.recznie = false;   // wybrana godzina opustoszała — znów sama
+    if (!MP.recznie) {                                          // bez wyboru: godzina w dowozie, potem plan, potem ostatnia dowieziona
+      const w = godz.find(g => g.stan === 'wd') || godz.find(g => g.stan === 'pl') || godz.slice().reverse().find(g => g.stan === 'dow');
+      MP.wyb = w ? w.h : 'dzien';
+    }
+    const stareK = document.querySelector('.mp-kafle'), staraL = $('mp-adresy'), pz = MP.przewin, nowyWyb = MP.wyb !== MP.wybRys;
+    MP.przewin = {                                              // przerysowanie nie przewija kafli ani listy; nowa godzina wybrana sama — kafel na widok
+      kafle: nowyWyb && !MP.recznie ? null : pz ? pz.kafle : stareK ? stareK.scrollLeft : null,   // pz — poprzednie ułożenie jeszcze nie nastąpiło
+      lista: nowyWyb || !staraL ? 0 : pz ? pz.lista : staraL.scrollTop };
+    MP.wybRys = MP.wyb;
+    MP.godzRys = Math.floor(mpTeraz() / 60);
+    const dzien = MP.wyb === 'dzien', g = dzien ? null : poH[MP.wyb], st = g ? g.stan : '';
+    const razem = godz.reduce((s, x) => s + x.n, 0);
+    const kafle = [];
+    for (let i = 0; i < godz.length;) {                         // fazy dnia nad kaflami godzin
+      let j = i;
+      while (j + 1 < godz.length && godz[j + 1].stan === godz[i].stan) j++;
+      if (godz[i].stan) kafle.push(el('div', { class: `mp-faza st-${godz[i].stan}${godz[i].stan === 'pl' ? ' przer' : ''}`, style: `grid-column: ${i + 2} / ${j + 3}` }, el('span', null, MP_NAZWA[godz[i].stan])));
+      i = j + 1;
+    }
+    kafle.push(el('button', { type: 'button', class: 'gp kafel', 'aria-pressed': String(dzien), 'aria-label': `Cały dzień — ${razem} ${odm(razem, ['dostawa', 'dostawy', 'dostaw'])}`,
+      onclick: () => mpWybierz('dzien') }, el('span', { class: 'h' }, 'CAŁY DZIEŃ'), el('span', { class: 'z' }, String(razem))));
+    godz.forEach(x => kafle.push(el('button', { type: 'button', class: 'gp kafel' + (x.stan ? '' : ' pusta'), 'data-h': String(x.h), disabled: !x.stan,
+      'aria-pressed': String(MP.wyb === x.h), 'aria-label': x.stan ? `${mpPrzedzial(x.h)} — ${MP_NAZWA[x.stan]}, ${x.n}` : `${mpPrzedzial(x.h)} — bez dostaw`,
+      onclick: () => mpWybierz(x.h) }, el('span', { class: 'h' }, String(x.h)), el('span', { class: 'z' }, x.stan ? String(x.n) : '—'))));
+    MP.biezace = dzien ? godz.reduce((l, x) => l.concat(x.adresy), []) : g.adresy;
+    if (MP.przyp && !MP.biezace.some(a => a.id === MP.przyp)) MP.przyp = null;
+    const wiersze = [];
+    const planAdr = MP.planAdrOk && MP.planAdrDzien === S.dzien;   // (18.11) łącznik DYSZY podaje adresy PLANU
+    const bezAdr = x => x.bezAdresu && planAdr && (MP.planAdrSwieze || x.adresy.length)
+      ? el('li', { class: 'mp-bez' }, el('i', { 'aria-hidden': 'true' }), el('span', null, `${x.bezAdresu} bez adresu`)) : null;
+    if (dzien) godz.filter(x => x.stan).forEach(x => {
+      wiersze.push(el('li', { class: 'mp-sub' }, el('span', null, mpPrzedzial(x.h)), el('span', { class: 'st-' + x.stan }, `${MP_NAZWA[x.stan]} · ${x.n}`)));
+      x.adresy.forEach(a => wiersze.push(mpWiersz(a)));
+      const b = bezAdr(x);
+      if (b) wiersze.push(b);
+    });
+    else {
+      g.adresy.forEach(a => wiersze.push(mpWiersz(a)));
+      const b = bezAdr(g);
+      if (b) wiersze.push(b);
+    }
+    const lista = el('section', { class: 'karta mp-lista', 'aria-labelledby': 'mp-l-t' },
+      el('div', { class: 'karta-n' }, el('b', { id: 'mp-l-t' }, dzien ? 'Cały dzień' : mpPrzedzial(MP.wyb)),
+        el('small', null, st ? el('span', { class: 'st-' + st }, MP_NAZWA[st]) : null, st ? ' · ' : null,
+          dzien ? `${razem} ${odm(razem, ['dostawa', 'dostawy', 'dostaw'])}`
+            : st === 'pl' ? `${g.n} ${odm(g.n, ['dowóz', 'dowozy', 'dowozów'])}` : `${g.n} ${odm(g.n, ['adres', 'adresy', 'adresów'])}`)),
+      st === 'pl' && !wiersze.length ? el('div', { class: 'puste-m' }, 'Adresy przyjdą z plikiem FABRYKA.')   // (18.11) łącznik nie podaje adresów
+        : !wiersze.length ? el('div', { class: 'puste-m' }, 'Jeszcze bez dostaw.')
+        : el('ol', { class: 'mp-adresy', id: 'mp-adresy' }, wiersze));
+    const tlo = mpSvg('svg', { class: 'mp-tlo', viewBox: `0 0 ${MP_GEO.W} ${MP_GEO.H}`, preserveAspectRatio: 'xMidYMid meet', 'aria-hidden': 'true' });
+    tlo.append(mpSvg('path', { class: 'b', d: MP_GEO.strefaB }), mpSvg('path', { class: 'a', d: MP_GEO.strefaA }), mpSvg('path', { class: 'w', d: MP_GEO.wisla }));
+    const ile = MP.biezace.filter(a => a.x !== null).length;
+    const plotno = el('div', { class: 'mp-plotno', id: 'mp-plotno', role: 'img', 'aria-label': `Mapa: ${ile} ${odm(ile, ['punkt', 'punkty', 'punktów'])}, strefy dostaw A i B` },
+      tlo, mpSvg('svg', { class: 'mp-nakl', id: 'mp-nakl', 'aria-hidden': 'true' }), el('div', { class: 'mp-pkty', id: 'mp-pkty' }));
+    const mapa = el('section', { class: 'karta mp-mapa', 'aria-labelledby': 'mp-m-t' },
+      el('div', { class: 'karta-n' }, el('b', { id: 'mp-m-t' }, 'Warszawa'),
+        el('small', { class: 'mp-leg' }, ['dow', 'wd', 'pl'].map(x => el('span', null, el('i', { class: x }), MP_NAZWA[x])), el('span', null, el('i', { class: 'fab' }), 'fabryka'))),   // (18.11) i plan
+      plotno);
+    if (MP_RO) { MP_RO.disconnect(); MP_RO.observe(plotno); }
+    requestAnimationFrame(mpUloz);
+    return el('div', { class: 'mp' },
+      el('section', { class: 'pliki', 'aria-labelledby': 'mp-g-t' }, el('div', { class: 'pliki-n' }, el('b', { id: 'mp-g-t' }, 'Dostawy dnia')),
+        el('div', { class: 'godziny-pl mp-kafle', role: 'group', 'aria-label': 'Godzina' }, kafle)),
+      el('div', { class: 'mp-uklad' }, lista, mapa));
+  }
+  function mpRozsun(p, minD, szer, wys, staly) {                 // znaczniki nie zasłaniają się nawzajem ani FABRYKI; zostaje kreska do miejsca adresu
+    const q = p.map(o => ({ x: o.x, y: o.y }));
+    for (let it = 0; it < 120; it++) {
+      let ruch = false;
+      q.forEach(o => {
+        let dx = o.x - staly.x, dy = o.y - staly.y, d = Math.hypot(dx, dy);
+        if (d >= 19) return;
+        if (d < .01) { dx = 0; dy = 1; d = 1; }
+        o.x += dx / d * (19 - d); o.y += dy / d * (19 - d); ruch = true;
+      });
+      for (let i = 0; i < q.length; i++) for (let j = i + 1; j < q.length; j++) {
+        let dx = q[j].x - q[i].x, dy = q[j].y - q[i].y, d = Math.hypot(dx, dy);
+        if (d >= minD) continue;
+        if (d < .01) { dx = Math.cos(i * 2.4); dy = Math.sin(i * 2.4); d = 1; }
+        const k = (minD - d) / 2 / d;
+        q[i].x -= dx * k; q[i].y -= dy * k; q[j].x += dx * k; q[j].y += dy * k; ruch = true;
+      }
+      if (it < 80) q.forEach((o, i) => { o.x += (p[i].x - o.x) * .04; o.y += (p[i].y - o.y) * .04; });
+      q.forEach(o => { o.x = Math.min(szer - 12, Math.max(12, o.x)); o.y = Math.min(wys - 12, Math.max(12, o.y)); });
+      if (!ruch && it >= 80) break;
+    }
+    return q;
+  }
+  function mpUloz() {                                           // znaczniki i opisy w pikselach — ten sam rozmiar przy każdej szerokości
+    const pl = $('mp-plotno'), nakl = $('mp-nakl');
+    if (!pl || !nakl || S.widok !== 'mapa') return;
+    const szer = pl.clientWidth, wys = pl.clientHeight, k = szer / MP_GEO.W, dzien = MP.wyb === 'dzien';
+    if (!szer || !wys) return;
+    if (MP.przewin) {                                           // po przerysowaniu: kafle i lista tam, gdzie były; pierwszy raz — wybrana godzina na widoku
+      const p = MP.przewin, kf = document.querySelector('.mp-kafle'), l = $('mp-adresy');
+      MP.przewin = null;
+      if (kf && p.kafle !== null) kf.scrollLeft = p.kafle;
+      else if (kf) {
+        const a = kf.querySelector('.kafel[aria-pressed="true"]'), rk = kf.getBoundingClientRect(), ra = a ? a.getBoundingClientRect() : null;
+        if (ra && (ra.right > rk.right || ra.left < rk.left)) kf.scrollLeft += ra.left - rk.left - (rk.width - ra.width) / 2;
+      }
+      if (l && p.lista) l.scrollTop = p.lista;
+    }
+    nakl.setAttribute('viewBox', `0 0 ${szer} ${wys}`);
+    const [gx, gy] = mpFabryka(), fx = gx * k, fy = gy * k;
+    const pkt = MP.biezace.filter(a => a.x !== null);
+    const p = pkt.map(a => ({ x: a.x * k, y: a.y * k }));
+    const q = dzien ? p : mpRozsun(p, 24, szer, wys, { x: fx, y: fy });
+    const g = [];
+    q.forEach((o, i) => { if (Math.hypot(o.x - p[i].x, o.y - p[i].y) > 4) g.push(mpSvg('line', { class: 'prow', x1: p[i].x, y1: p[i].y, x2: o.x, y2: o.y }), mpSvg('circle', { class: 'kotw', cx: p[i].x, cy: p[i].y, r: 2.2 })); });
+    const fab = mpSvg('g', { class: 'fab' });
+    fab.append(mpSvg('rect', { x: fx - 6, y: fy - 6, width: 12, height: 12, rx: 2 }));
+    g.push(fab);
+    nakl.replaceChildren(...g);
+    const r = dzien ? 6 : 12, zajete = q.map(o => [o.x - r, o.y - r, o.x + r, o.y + r]).concat([[fx - 7, fy - 7, fx + 7, fy + 7]]);
+    const wolne = b => !zajete.some(z => b[0] < z[2] + 2 && b[2] > z[0] - 2 && b[1] < z[3] + 2 && b[3] > z[1] - 2);
+    const poloz = (t, miejsca) => {                             // pierwsze miejsce, w którym opis niczego nie zasłania; inaczej bez opisu
+      for (const [x, y, kotw] of miejsca) {
+        t.setAttribute('x', x); t.setAttribute('y', y); t.setAttribute('text-anchor', kotw);
+        const b = t.getBBox(), pr = [b.x, b.y, b.x + b.width, b.y + b.height];
+        if (pr[0] >= 2 && pr[2] <= szer - 2 && wolne(pr)) { zajete.push(pr); return true; }
+      }
+      t.remove();
+      return false;
+    };
+    const ft = mpSvg('text', {}, 'FABRYKA');
+    fab.append(ft);
+    poloz(ft, [[fx + 11, fy + 4, 'start'], [fx - 11, fy + 4, 'end'], [fx, fy - 11, 'middle'], [fx, fy + 19, 'middle']]);   // brak miejsca — sam znak (jest w legendzie)
+    MP_GEO.dzielnice.forEach(([nazwa, x, y, waga]) => {
+      if (waga > 1 && szer < 480) return;
+      const t = mpSvg('text', {}, nazwa);
+      nakl.insertBefore(t, nakl.firstChild);
+      poloz(t, [0, -14, 14, -28, 28].map(d => [x * k, y * k + d, 'middle']));
+    });
+    $('mp-pkty').replaceChildren(...pkt.map((a, i) => el('button', { type: 'button', tabindex: '-1', 'aria-hidden': 'true',
+      class: `mp-pkt ${MP.stany[a.h] || ''}${dzien ? ' kr' : ''}`, 'data-id': a.id, style: `left:${q[i].x.toFixed(1)}px;top:${q[i].y.toFixed(1)}px;z-index:${dzien ? 1 : 2}`,
+      title: `${a.n}. ${a.adres}${a.kier ? ' · ' + a.kier : ''}`, onpointerenter: () => mpPokaz(a.id), onpointerleave: () => mpPokaz(MP.przyp),
+      onclick: () => mpPrzypnij(a.id, true) }, String(a.n))));
+    mpPokaz(MP.przyp, false);
+  }
+  function mpPokaz(id, przewin) {
+    document.querySelectorAll('.mp-adr.akt, .mp-pkt.akt').forEach(e => e.classList.remove('akt'));
+    if (id === null || id === undefined) return;
+    const w = Array.from(document.querySelectorAll('.mp-adr')).find(e => e.getAttribute('data-id') === id);
+    const p = Array.from(document.querySelectorAll('.mp-pkt')).find(e => e.getAttribute('data-id') === id);
+    if (w) { w.classList.add('akt'); if (przewin) w.scrollIntoView({ block: 'nearest' }); }
+    if (p) p.classList.add('akt');
+  }
+  function mpPrzypnij(id, zMapy) { MP.przyp = MP.przyp === id ? null : id; mpPokaz(MP.przyp, zMapy && MP.przyp !== null); }
+  let MP_RAF = 0, MP_TRWA = false;
+  const MP_RO = typeof ResizeObserver === 'function' ? new ResizeObserver(() => { cancelAnimationFrame(MP_RAF); MP_RAF = requestAnimationFrame(mpUloz); }) : null;
+  async function mpPlanWczytaj(sila) {                          // gdy widać MAPĘ: plan z łącznika DYSZY (same liczby, co minutę) i pełna godzina (W DOWOZIE → DOWIEZIONE)
+    if (S.widok !== 'mapa' || !baza.sesja() || !maRole('mapa')) return;   // (17.11) bez roli Mapa — bez pytania bazy
+    let zmiana = Math.floor(mpTeraz() / 60) !== MP.godzRys;
+    if (!MP_TRWA && (sila || MP.planDzien !== S.dzien || Date.now() - MP.kiedy > 55000)) {
+      MP_TRWA = true;
+      const dzien = S.dzien;
+      try {
+        const r = await baza.rpc('transport_mapa_plan', { p_dzien: dzien });
+        const plan = {}, gd = (r && r.godziny) || {};
+        Object.keys(gd).forEach(h => { const n = Number(gd[h]), hh = Number(h); if (n > 0 && Number.isInteger(hh) && hh >= 0 && hh <= 23) plan[hh] = Math.round(n); });
+        if (dzien === S.dzien && (JSON.stringify(plan) !== JSON.stringify(MP.plan) || MP.planDzien !== dzien)) { MP.plan = plan; MP.planDzien = dzien; zmiana = true; }
+        try {                                                    // (18.11) adresy PLANU (020): ulica i numer, godzina, punkt — bez kodów i kwot
+          const ra = await baza.rpc('transport_mapa_plan_adresy', { p_dzien: dzien });
+          const lista = (Array.isArray(ra && ra.adresy) ? ra.adresy : []).filter(x => x && x.id !== null && x.id !== undefined && typeof x.adres === 'string' && x.adres.trim()
+            && Number.isInteger(x.h) && x.h >= 0 && x.h <= 23).map(x => ({ id: String(x.id), h: x.h, adres: x.adres.trim(),
+              lat: typeof x.lat === 'number' ? x.lat : null, lng: typeof x.lng === 'number' ? x.lng : null }));
+          const sw = !!(ra && ra.swieze === true);
+          if (dzien === S.dzien && (!MP.planAdrOk || MP.planAdrDzien !== dzien || MP.planAdrSwieze !== sw || JSON.stringify(lista) !== JSON.stringify(MP.planAdr))) {
+            MP.planAdr = lista; MP.planAdrDzien = dzien; MP.planAdrOk = true; MP.planAdrSwieze = sw; zmiana = true;
+          }
+        } catch (e) {                                            // baza bez 020 albo łącznik wycofany — PLAN z samymi liczbami, jak dotąd
+          if (MP.planAdrOk || MP.planAdr.length) { MP.planAdr = []; MP.planAdrOk = false; MP.planAdrSwieze = false; zmiana = true; }
+        }
+      } catch (e) {                                              // bez planu — MAPA pokazuje godziny z plików FABRYKA
+        if (String(e && e.message) === 'BRAK_DOSTEPU:mapa') { S.role = S.role.filter(r => r !== 'mapa'); zmiana = true; }   // (17.11) rola zdjęta — pusta karta
+      } finally { MP_TRWA = false; MP.kiedy = Date.now(); }
+    }
+    if (zmiana && S.widok === 'mapa' && S.model) { if (wPolu() || chm) { S.czekaRysuj = true; rysujStan(); } else rysuj(); }   // (17.11) okienko otwarte — przerysuję po wyjściu
+  }
+  function mpWyczysc() { MP.wyb = null; MP.wybRys = null; MP.recznie = false; MP.przyp = null; MP.plan = {}; MP.planDzien = ''; MP.kiedy = 0; MP.biezace = []; MP.stany = {}; MP.przewin = null;
+    MP.planAdr = []; MP.planAdrDzien = ''; MP.planAdrOk = false; MP.planAdrSwieze = false; }   // (18.11) także adresy PLANU
+
   $('w-kierowcy').addEventListener('click', () => { S.widok = 'kierowcy'; rysuj(); });
   $('w-listy').addEventListener('click', () => { S.widok = 'listy'; rysuj(); });
+  $('w-mapa').addEventListener('click', () => { S.widok = 'mapa'; rysuj(); mpPlanWczytaj(true); });   // (16.11)
+  $('w-ruch').addEventListener('click', () => { S.widok = 'ruch'; ruWidziany(); rysuj(); ruWczytaj(true); });   // (17.11) wejście gasi pulsowanie
   $('w-startowe').addEventListener('click', () => { S.widok = 'startowe'; rysuj(); });
   $('w-podsumowanie').addEventListener('click', () => { S.widok = 'podsumowanie'; rysuj(); });
   $('w-archiwum').addEventListener('click', () => { S.widok = 'archiwum'; AR.info = ''; rysuj(); arWczytaj(); });   // (9.11)
@@ -3767,7 +4395,10 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     przelaczGodzine: przelaczGodzine, przelaczDzien: przelaczDzien, godzinyWybrane: godzinyWybrane, zmienPlatnosc: zmienPlatnosc, sprawdzLS: sprawdzLS,
     zmianyLS: zmianyLS, telefonZew: telefonZew, stawkaLS: stawkaLS, wierszeListy: wierszeListy, wyslijLS: wyslijLS, danePodsumowania: danePodsumowania,
     zastosujDzien: zastosujDzien, odswiezTeraz: odswiezTeraz, start: start, formDoBazy: formDoBazy,
-    raportPdf: raportPdf, archDzien: archDzien, AR: AR, arWczytaj: arWczytaj };   // (9.11) ARCHIWUM — do testów
+    raportPdf: raportPdf, archDzien: archDzien, AR: AR, arWczytaj: arWczytaj,   // (9.11) ARCHIWUM — do testów
+    MP: MP, MP_GEO: MP_GEO, mpDane: mpDane, mpAdres: mpAdres, mpPlanWczytaj: mpPlanWczytaj,   // (16.11) MAPA — do testów
+    platnosc: platnosc, notes: notes,                           // (17.11) Blik_S / Blik_D — do testów
+    RU: RU, ruWczytaj: ruWczytaj, ruPuls: ruPuls, widokRuchu: widokRuchu };   // (17.11) RUCH — do testów
   start();
 })();
 </script>
