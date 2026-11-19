@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-18 09:11 · 84076f3"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-19 12:10 · 07106a3"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -894,7 +894,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       <li>Pliki dnia: eksport z DYSZY <b>FABRYKA-RRRR-MM-DD-GG.csv</b> przychodzi sam; eksport tras z Routific <b>Routific solution - GG-GG - RRRR-MM-DD.csv</b> dyspozytor wgrywa tutaj (pod godzinami „Pliki dnia” → WGRAJ TRASĘ) — automat kładzie go na Dysku. Tu też są pliki dla Routific (ROUTIFIC-DD.MM.RRRR-GG.xlsx) do pobrania. Załoga nie zagląda na Dysk. Automat sprawdza wszystko co minutę, strona odświeża się sama co 20 sekund.</li>
       <li>START, STOP, EXTRA, BONUS i KONIEC zapisują się w bazie od razu (napis nad plikami dnia: „zapisane gg:mm”). Wszyscy zalogowani widzą to samo — iPad dyspozytora, telefon obsługi, komputer w biurze.</li>
       <li>Zestaw z Fabryki sprzedany w Restauracji — „R” w Rejestrze Fabryki (tablica.dysza.app): płatność zamówienia zmienia się tu sama na RK albo RG (jak płatność w Restauracji; w „Zmianach płatności” — „Rejestr Fabryki”). Cofnięte „R” — wraca pierwotna. Po KONIEC kierowcy, przy innej kwocie albo kodzie pasującym do kilku zamówień — uwaga na karcie kierowcy.</li>
-      <li>Płatność zmienia się tylko w Rejestrze Fabryki (tablica.dysza.app: płatność wpisu — jeden albo dwa sposoby) i przechodzi tu sama: Gotówka → G, Karta → K, BLIK → BO (BK, gdy kierowca wyjechał z BLIK-iem Kierowcy), Online i Voucher → zapłacone (kierowca nic nie pobiera), dwie płatności → podział; w „Zmianach płatności” — „Rejestr Fabryki”. Trzy płatności, inna kwota i zmiana po KONIEC — uwaga na karcie kierowcy. BLIK wybrany w DYSZY (plik FABRYKA z kolumnami Blik_S albo Blik_T i Blik_D): Blik_S / Blik_T — BLIK z góry (obsługa, telefon) → BO, Blik_D — BLIK przy odbiorze → BK.</li>
+      <li>Płatność zmienia się tylko w Rejestrze Fabryki (tablica.dysza.app: płatność wpisu — jeden albo dwa sposoby) i przechodzi tu sama: Gotówka → G, Karta → K, BLIK → BO (BK, gdy kierowca wyjechał z BLIK-iem Kierowcy), Online i Voucher → zapłacone (kierowca nic nie pobiera), dwie płatności → podział; w „Zmianach płatności” — „Rejestr Fabryki”. Trzy płatności, inna kwota i zmiana po KONIEC — uwaga na karcie kierowcy. BLIK wybrany w DYSZY (plik FABRYKA z kolumnami BlikT i BlikD; wcześniej Blik_S albo Blik_T i Blik_D): BlikT — BLIK z góry (telefon, obsługa) → BO, BlikD — BLIK przy dostawie → BK.</li>
       <li>Pole informacyjne (LISTY STARTOWE, obok STAWEK DNIA): tekst wpisuje rola Archiwum w okienku konta (przycisk z imieniem, między JASNY / CIEMNY a WYLOGUJ) — ZAPISZ pokazuje go wszystkim, WYCZYŚĆ zdejmuje; najwyżej 300 znaków.</li>
       <li>LISTY STARTOWE: szkic zapisuje się na bieżąco. „UTWÓRZ I WYŚLIJ LISTY” — w ciągu minuty automat Transport Listy robi 11 plików GHH-LS-RRRR-MM-DD.xlsx (katalog dnia › LISTY STARTOWE), kartę STAWKI w pliku T i mail do załogi. Formularz list startowych jest zablokowany — listy układa się tylko tutaj.</li>
       <li>Role nadaje manager.dysza.app: <b>Dyspozytor</b> — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS i KONIEC; <b>Archiwum</b> — ARCHIWUM (raport dnia), podgląd z telefonami kierowców i pole informacyjne; <b>Mapa</b> — MAPA. Można mieć kilka ról.</li>
@@ -1441,7 +1441,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
 
   // Notes z DYSZY w Routific: „K-207.99” → { kod: 'K', kwota (gr) }; „B-0,00” — BLIK obsługi, „B-89,50” — BLIK kierowcy
   function notes(v) {
-    const m = /^\s*([A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]{1,3}|[Bb][Ll][Ii][Kk]_[SDTsdt])\s*-\s*(\d[\d\s]*(?:[.,]\d{1,2})?)\s*(?:zł)?\s*$/.exec(String(v || ''));   // (17.11) także „Blik_S-156”, „Blik_D-218.5” z DYSZY
+    const m = /^\s*([A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]{1,3}|[Bb][Ll][Ii][Kk](?:_[SDTsdt]|[TDtd]))\s*-\s*(\d[\d\s]*(?:[.,]\d{1,2})?)\s*(?:zł)?\s*$/.exec(String(v || ''));   // (17.11) także „Blik_S-156”, „Blik_D-218.5” z DYSZY; (19.11) „BlikT-156”, „BlikD-218.5”
     if (!m) return { kod: '', kwota: null };
     return { kod: m[1].toUpperCase(), kwota: kwotaGr(m[2]) };
   }
@@ -1504,7 +1504,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       const kl = t[0].map(klucz);
       const i = n => kl.indexOf(n);
       const k = { id: i('ID'), adr: i('ADDRESS'), od: i('FROM'), do: i('TO'), tel: i('PHONE'), got: i('GOTÓWKA'), kar: i('KARTA'),
-        onl: i('ONLINE'), bs: i('BLIK_S') >= 0 ? i('BLIK_S') : i('BLIK_T'), bd: i('BLIK_D'), n1: i('NOTES'), n2: i('NOTES 2') };   // (18.11) Blik_T = Blik_S   // (17.11) Blik_S, Blik_D — BLIK wybrany w DYSZY
+        onl: i('ONLINE'), bs: i('BLIK_S') >= 0 ? i('BLIK_S') : i('BLIK_T') >= 0 ? i('BLIK_T') : i('BLIKT'), bd: i('BLIK_D') >= 0 ? i('BLIK_D') : i('BLIKD'),
+        n1: i('NOTES'), n2: i('NOTES 2') };   // (19.11) BlikT = Blik_S, BlikD = Blik_D (próbka v2)   // (18.11) Blik_T = Blik_S   // (17.11) Blik_S, Blik_D — BLIK wybrany w DYSZY
       if (k.id < 0 || k.adr < 0) { p.blad = `nie ma kolumny ${k.id < 0 ? 'ID' : 'Address'} (są: ${t[0].slice(0, 12).join(', ')})`; return; }
       const pole = (w, j) => (j >= 0 && j < w.length ? tekst(w[j]) : '');
       t.slice(1).forEach(w => {
@@ -1555,8 +1556,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     } else if (bs || bd) {                                      // (17.11) bez „B” w trasie (Notes jak z DYSZY albo trasy jeszcze nie ma)
       if (bs) p.blikO = bs;                                     // Blik_S — BLIK obsługa: kierowca nic nie pobiera (BO)
       if (bd) p.blikK = bd;                                     // Blik_D — BLIK przy odbiorze: kierowca pobiera BLIK-iem (BK)
-    } else if ((kod === 'BLIK_S' || kod === 'BLIK_T' || kod === 'BLIK_D') && s.kwota !== null) {   // (17.11) bez pliku FABRYKA — kwota z Notes trasy
-      if (kod === 'BLIK_D') p.blikK = s.kwota; else p.blikO = s.kwota;   // (18.11) Blik_T — jak Blik_S (BLIK z góry)
+    } else if ((kod === 'BLIK_S' || kod === 'BLIK_T' || kod === 'BLIK_D' || kod === 'BLIKT' || kod === 'BLIKD') && s.kwota !== null) {   // (17.11) bez pliku FABRYKA — kwota z Notes trasy
+      if (kod === 'BLIK_D' || kod === 'BLIKD') p.blikK = s.kwota; else p.blikO = s.kwota;   // (18.11) Blik_T — jak Blik_S (BLIK z góry); (19.11) BlikT, BlikD
     }
     const przyDrzwiach = DRZWI.filter(r => p[r]);
     p.drzwi = przyDrzwiach.length === 1 && p.blikO === null && !p.onl ? przyDrzwiach[0] : null;   // jedna płatność przy odbiorze → można ją zmienić
