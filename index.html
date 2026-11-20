@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-19 12:10 · 07106a3"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-20 16:39 · 29403e7"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -761,6 +761,13 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
 .pi-k { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--pi-szary); font-variant-numeric: tabular-nums; }
 @media (max-width: 480px) { .pi-t { font-size: 22px; } .pi-t.sr { font-size: 19px; } .pi-t.dl { font-size: 17px; } }
 .chm-pi { display: grid; gap: 6px; margin-block: 4px; }                  /* odstęp od JASNY / CIEMNY i od WYLOGUJ — osobna grupa */
+.chm-ob { display: grid; gap: 6px; }                                      /* (20.11) Zalogowani — rola Archiwum */
+.ob-lista { display: grid; gap: 5px; }
+.ob-w { display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; align-items: center; column-gap: 8px; font-size: 14px; }
+.ob-k { width: 8px; height: 8px; border-radius: 50%; background: var(--linia2); }
+.ob-w.teraz .ob-k { background: var(--ok); }
+.ob-n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ob-u { color: var(--szary); font-size: 13px; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .chm-pi textarea { width: 100%; box-sizing: border-box; min-height: 104px; resize: vertical; font-family: inherit; font-size: 16px; line-height: 1.35;
   color: var(--tusz); background: var(--karta); border: 1px solid var(--linia2); border-radius: 9px; padding: 8px 10px; }
 .chm-pi textarea:focus-visible { outline: 3px solid var(--akcent); outline-offset: 1px; }
@@ -1955,6 +1962,65 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     } catch (e) { blad(e); }
     rysuj();
   }
+  // ───────── (20.11) obecność — kto ma otwartą stronę (baza 022): zgłoszenie po wejściu, co minutę na ekranie i po powrocie na ekran,
+  // WYLOGUJ — wylogowanie; lista „Zalogowani” w okienku Konto (rola Archiwum). Bez 022 w bazie — zgłoszenia ustają, listy nie ma. ─────────
+  KL.urz = 'transport-urzadzenie';
+  const OBEC = { id: '', ostatnio: 0, wyl: false };
+  const NAZWY_URZ = { ipad: 'iPad', iphone: 'iPhone', tablet: 'tablet', telefon: 'telefon', komputer: 'komputer' };
+  const obWylaczona = e => !!e && (e.status === 404 || e.kod === 'PGRST202' || e.kod === '42501' || String(e.message) === 'OBECNOSC_WYLACZONA');
+  function idUrz() {                                            // losowy znak tej przeglądarki (12 liter i cyfr) — w pamięci przeglądarki
+    if (OBEC.id) return OBEC.id;
+    let u = czytaj(KL.urz, '');
+    if (!/^[a-z0-9]{12}$/.test(String(u || ''))) {
+      const a = new Uint8Array(12);
+      if (window.crypto && crypto.getRandomValues) crypto.getRandomValues(a); else for (let i = 0; i < a.length; i++) a[i] = Math.floor(Math.random() * 256);
+      u = Array.from(a, b => 'abcdefghijklmnopqrstuvwxyz0123456789'.charAt(b % 36)).join('');
+      pisz(KL.urz, u);
+    }
+    return (OBEC.id = u);
+  }
+  function typUrz() {                                           // iPad z Safari przedstawia się jak Mac — rozpoznaje go dotyk
+    const ua = navigator.userAgent || '';
+    if (/iPad/.test(ua) || (/Macintosh/.test(ua) && (navigator.maxTouchPoints || 0) > 1)) return 'ipad';
+    if (/iPhone|iPod/.test(ua)) return 'iphone';
+    if (/Android/.test(ua)) return /Mobile/.test(ua) ? 'telefon' : 'tablet';
+    return 'komputer';
+  }
+  async function zglosObecnosc(wyjscie) {                       // baza: transport_jestem (022)
+    if (OBEC.wyl || !S.ja || !S.ja.id || !baza.sesja()) return;
+    try {
+      await baza.rpc('transport_jestem', { p_urzadzenie: idUrz(), p_typ: typUrz(), p_wersja: WERSJA, p_wyloguj: !!wyjscie });
+      OBEC.ostatnio = Date.now();
+    } catch (e) { if (obWylaczona(e)) OBEC.wyl = true; }
+  }
+  const obCzynna = () => !document.hidden && !!(S.ja && S.ja.id) && !!baza.sesja() && !$('aplikacja').hidden;
+  setInterval(() => { if (obCzynna()) zglosObecnosc(false); }, 60000);
+  document.addEventListener('visibilitychange', () => { if (obCzynna() && Date.now() - OBEC.ostatnio > 20000) zglosObecnosc(false); });
+  function wierszObecnego(o) {
+    const urz = (o.tu ? 'ten ' : '') + (NAZWY_URZ[o.typ] || 'urządzenie');
+    const wer = o.wersja && WERSJA && o.wersja !== WERSJA ? ` · strona ${String(o.wersja).split('·').pop().trim()}` : '';
+    return el('div', { class: 'ob-w' + (o.teraz ? ' teraz' : '') },
+      el('span', { class: 'ob-k', 'aria-hidden': 'true' }),
+      el('span', { class: 'ob-n' }, o.kto || '—'),
+      el('span', { class: 'ob-u' }, `${urz} · ${o.teraz ? 'teraz' : godzinaZ(o.ostatnio)}${wer}`));
+  }
+  async function rysujObecnych() {                              // baza: transport_obecni (022) — rola Archiwum
+    let lista = null, blad = null;
+    try {
+      if (Date.now() - OBEC.ostatnio > 20000) await zglosObecnosc(false);
+      lista = await baza.rpc('transport_obecni', { p_urzadzenie: idUrz() });
+    } catch (e) { blad = e; }
+    const l = $('ob-lista');
+    if (!l) return;                                             // okienko zamknięte w międzyczasie
+    if (blad && obWylaczona(blad)) { const sek = $('chm-ob'); if (sek) sek.remove(); }
+    else {
+      l.textContent = '';
+      if (blad) l.append(el('div', { class: 'chm-m' }, tekstBledu(blad)));
+      else if (Array.isArray(lista) && lista.length) lista.forEach(o => l.append(wierszObecnego(o)));
+      else l.append(el('div', { class: 'chm-m' }, '—'));
+    }
+    if (chm) ustawChmurke();
+  }
   function pokazKonto(btn) {                                    // konto: kto zalogowany, role z manager.dysza.app, widok, wyloguj
     const ja = S.ja || {};
     const a = S.automat.zasilanie;
@@ -1962,6 +2028,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       el('div', { class: 'chm-l' }, el('b', null, kto(ja) || '—'), ja.login ? el('small', null, ` · login ${ja.login}`) : null),
       el('div', { class: 'chm-l' }, 'Role Transportu: ', el('b', null, nazwaRol())),
       el('div', { class: 'chm-m' }, 'Role nadaje kierownik w manager.dysza.app: Dyspozytor — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS, KONIEC; Archiwum — ARCHIWUM (raport dnia), podgląd z telefonami kierowców i pole informacyjne; Mapa — MAPA.'),
+      maRole('archiwum') ? el('div', { class: 'chm-ob', id: 'chm-ob' }, el('div', { class: 'chm-l' }, 'Zalogowani:'),
+        el('div', { class: 'ob-lista', id: 'ob-lista' }, el('div', { class: 'chm-m' }, '…'))) : null,   // (20.11) kto ma otwartą stronę
       el('div', { class: 'chm-l' }, 'Widok:'),
       el('div', { class: 'seg seg2 motyw-seg', role: 'group', 'aria-label': 'Widok jasny albo ciemny' }, ['light', 'dark'].map(m =>
         el('button', { type: 'button', class: 'x', 'data-motyw': m, 'aria-pressed': String(motywTeraz() === m), onclick: () => { ustawMotyw(m); zamknijChmurke(); } },
@@ -1970,6 +2038,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       el('div', { class: 'chm-wyl' },
         el('button', { type: 'button', class: 'mb', id: 'wyloguj', onclick: wyloguj }, 'WYLOGUJ')),   // (7.11) bez ODŚWIEŻ — strona odświeża się sama
       el('div', { class: 'chm-m' }, `Strona ${WERSJA || '—'} · automat plików: ${a ? 'ostatnio ' + godzinaZ(a.kiedy) : 'jeszcze się nie odezwał'}.`)]);
+    if (maRole('archiwum') && chm && chm.btn === btn) rysujObecnych();   // (20.11) Zalogowani
   }
   function ustawChmurke() {                                    // przy przycisku; idzie za nim, gdy lista przesuwa się w bok
     if (!chm) return;
@@ -3370,6 +3439,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     zamknijChmurke();
     clearTimeout(CYKL);
     try { await zapiszWpisyTeraz(); await zapiszLSTeraz(); } catch (e) { /* bez sieci — trudno */ }
+    await Promise.race([zglosObecnosc(true), new Promise(r => setTimeout(r, 2500))]);   // (20.11) obecność — wylogowanie
     await baza.wyloguj();
     S.ja = null; S.role = []; S.info = null; S.pamiec = {}; S.wszystkie = []; S.wczytano = false; S.ls.dni = {}; S.ls.szkic = {}; S.dlaRoutific = []; S.wgrane = []; rtfWyczysc(); arWyczysc(); mpWyczysc(); ruWyczysc();
     pokazLogowanie('Wylogowano.');
@@ -3394,6 +3464,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       await odswiezTeraz(false);
       if (!S.wczytano) przelicz();
       zaplanuj(20000);
+      zglosObecnosc(false);                                       // (20.11) obecność — Zalogowani w okienku Konto
       ruStart();                                                  // (17.11) RUCH — ostatnio otwarty komunikat tej osoby i komunikat z bazy
     } catch (e) {
       if (e && e.sesja) { pokazLogowanie('Sesja wygasła — zaloguj się ponownie.'); return; }
