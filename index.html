@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-20 16:39 · 29403e7"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-20 18:44 · dbf7a47"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1635,7 +1635,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     function zrob(j, login) {
       const u = j.user ? { id: j.user.id } : (sesja && sesja.user);
       return { access_token: j.access_token, refresh_token: j.refresh_token,
-        expires_at: j.expires_at || Math.floor(Date.now() / 1000) + (j.expires_in || 3600), user: u, login: login || (sesja && sesja.login) || '' };
+        expires_at: j.expires_at || Math.floor(Date.now() / 1000) + (j.expires_in || 3600), user: u, login: login || (sesja && sesja.login) || '',
+        zalogowano: (sesja && sesja.zalogowano) || 0 };        // (20.11) chwila logowania przechodzi przez odświeżenie tokenu
     }
     async function publiczna(nazwa, body) {
       const r = await siec(url + '/functions/v1/' + nazwa, { method: 'POST', cache: 'no-store', headers: { apikey: klucz, 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}) });
@@ -1649,12 +1650,12 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     }
     async function zaloguj(login, pin) {                       // blokada po 5 złych PIN-ach liczy się na serwerze
       const j = await publiczna('dysza-logowanie', { akcja: 'zaloguj', login: login, pin: pin });
-      ustaw(zrob(j.sesja, j.login));
+      ustaw(Object.assign(zrob(j.sesja, j.login), { zalogowano: Date.now() }));   // (20.11) chwila logowania — wylogowanie o 5:00
       return j;
     }
-    async function wyloguj() {
+    async function wyloguj(zakres) {                           // (20.11) 'local' — tylko ta przeglądarka (wylogowanie o 5:00); bez — jak dotąd
       const t = sesja && sesja.access_token; ustaw(null);
-      if (t) { try { await siec(url + '/auth/v1/logout', { method: 'POST', headers: { apikey: klucz, Authorization: 'Bearer ' + t } }); } catch (e) { /* i tak wylogowany */ } }
+      if (t) { try { await siec(url + '/auth/v1/logout' + (zakres === 'local' ? '?scope=local' : ''), { method: 'POST', headers: { apikey: klucz, Authorization: 'Bearer ' + t } }); } catch (e) { /* i tak wylogowany */ } }
     }
     async function odswiez() {
       if (odsw) return odsw;
@@ -3421,7 +3422,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     if (!w) { $('logowanie').hidden = false; $('logowanie').textContent = 'Nie mogę pokazać logowania — odśwież stronę.'; return; }
     const ost = osobyUrz()[0];
     if (komunikat && /^Sesja wygasła/.test(komunikat) && ost) w.pokaz({ krok: 'pin', osoba: { login: ost.login, imie: ost.imie, dl: ost.dl }, komunikat: komunikat });
-    else w.pokaz(komunikat ? { komunikat: komunikat, rodzaj: /^Wylogowano/.test(komunikat) ? 'info' : 'blad' } : {});
+    else w.pokaz(komunikat ? { komunikat: komunikat, rodzaj: /^(Wylogowano|Nowy dzień)/.test(komunikat) ? 'info' : 'blad' } : {});
   }
   function wejscieUkryj() { $('logowanie').hidden = true; if (WEJSCIE) WEJSCIE.ukryj(); }
   async function zalogujWejscie(osoba, pin) {                  // błąd → okno pokazuje komunikat (blokada po 5 złych PIN-ach liczy się na serwerze)
@@ -3435,17 +3436,47 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     ostatniPin = pin.length;
     await start();
   }
-  async function wyloguj() {
+  // ───────── (20.11) wylogowanie o 5:00 — każdego dnia pracy logowanie od nowa (Sławek 20.11, 18:37) ─────────
+  // Doba pracy trwa od 5:00 do 5:00 (czas warszawski). Logowanie z wcześniejszej doby — strona wylogowuje tę przeglądarkę i pokazuje
+  // kafelki: przy otwarciu strony, co 30 s i po powrocie na ekran. Chwila logowania — z tokenu (amr), inaczej zapisana przy logowaniu.
+  const NOWA_DOBA = 'Nowy dzień pracy — zaloguj się swoim kontem.';
+  const DZIEN_PRACY = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Warsaw', year: 'numeric', month: '2-digit', day: '2-digit' });
+  const dzienPracy = ms => DZIEN_PRACY.format(new Date(ms - 5 * 3600000));
+  function czasLogowania(s) {
+    try {
+      const p = JSON.parse(atob(String(s.access_token || '').split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+      const t = Math.max(...(Array.isArray(p.amr) ? p.amr : []).map(a => Number(a && a.timestamp) || 0));
+      if (t > 1.6e9 && t * 1000 < Date.now() + 600000) return t * 1000;
+    } catch (e) { /* token bez amr — zostaje chwila zapisana przy logowaniu */ }
+    return Number(s.zalogowano) || 0;
+  }
+  function sesjaZInnejDoby() {
+    const s = baza.sesja();
+    if (!s) return false;
+    let t = czasLogowania(s);
+    if (!t) { s.zalogowano = t = Date.now(); pisz(KL.sesja, s); }   // logowanie bez znanej chwili — liczy się od teraz
+    return dzienPracy(t) !== dzienPracy(Date.now());
+  }
+  let WYL_DOBA = false;
+  function pilnujDoby() {
+    if (WYL_DOBA || !S.ja || !baza.sesja() || $('aplikacja').hidden || !sesjaZInnejDoby()) return;
+    WYL_DOBA = true;
+    wyloguj(NOWA_DOBA).finally(() => { WYL_DOBA = false; });
+  }
+  setInterval(pilnujDoby, 30000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) pilnujDoby(); });
+  async function wyloguj(e) {                                  // e — tekst: wylogowanie automatyczne (o 5:00) z tym komunikatem
     zamknijChmurke();
     clearTimeout(CYKL);
     try { await zapiszWpisyTeraz(); await zapiszLSTeraz(); } catch (e) { /* bez sieci — trudno */ }
     await Promise.race([zglosObecnosc(true), new Promise(r => setTimeout(r, 2500))]);   // (20.11) obecność — wylogowanie
-    await baza.wyloguj();
+    await baza.wyloguj(typeof e === 'string' ? 'local' : undefined);
     S.ja = null; S.role = []; S.info = null; S.pamiec = {}; S.wszystkie = []; S.wczytano = false; S.ls.dni = {}; S.ls.szkic = {}; S.dlaRoutific = []; S.wgrane = []; rtfWyczysc(); arWyczysc(); mpWyczysc(); ruWyczysc();
-    pokazLogowanie('Wylogowano.');
+    pokazLogowanie(typeof e === 'string' ? e : 'Wylogowano.');
   }
   async function start() {
     if (!baza.sesja()) { pokazLogowanie(''); return; }
+    if (sesjaZInnejDoby()) { await baza.wyloguj('local'); pokazLogowanie(NOWA_DOBA); return; }   // (20.11) logowanie sprzed ostatniej 5:00
     try {
       const ja = await baza.rpc('transport_ja', {});
       S.ja = ja;
