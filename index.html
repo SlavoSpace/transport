@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-21 16:49 · c70b6b2"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-21 18:57 · 62df649"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -933,6 +933,11 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
 .mp-leg i.tr-l, .mp-leg i.tr-p { width: 18px; height: 0; border-radius: 0; border-top: 3px solid var(--szary); }
 .mp-leg i.tr-p { border-top: 2px dotted var(--szary); }
 @media (max-width: 700px) { .tr-lista { contain: none; } .tr-lista > .tr-przewin { flex: 0 0 auto; overflow: visible; } }
+/* (21.11) silnik tras: porównanie z Routific (dwa kafle), suma dnia, adresy, które nie zdążą */
+.tr-por { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.tr-kier .kafel .z.lp, .tr-et .lp { color: var(--ok); font-weight: 700; }
+.tr-suma { font-variant-numeric: tabular-nums; }
+.tr-bez.uw { color: var(--czer); font-weight: 700; }
 </style>
 
 <div id="logowanie" hidden></div>
@@ -993,7 +998,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       <li>ARCHIWUM (rola Archiwum; bez niej — pusta karta „Dostęp zablokowany”): miesiąc w siatce — dni od 5.11 z rozliczeń KONIEC, dni 20.09–4.11 z plików T (przepisane raz do bazy). RAPORT na kafelku dnia pobiera plik PDF (A4 poziomo): kierowcy, składowe wypłaty, pobrał od klienta (gotówka), zwrócił do firmy, dostał z kasy.</li>
       <li>RUCH: komunikat o utrudnieniach w strefach dostaw, co godzinę 11–21 (dawniej mail „Utrudnienia w strefach dostaw”) — sytuacja na drogach, TERAZ · NA ŻYWO, ZAKOŃCZONE, DZIŚ, NAJBLIŻSZE DNI, źródła. Nowy komunikat: przycisk RUCH pulsuje na żółto, aż go otworzysz.</li>
       <li>MAPA (rola Mapa; bez niej — pusta karta „Dostęp zablokowany”): dostawy dnia na godziny. DOWIEZIONE i W DOWOZIE — z plików FABRYKA (ulica i numer, bez kwot, telefonów i lokalu; punkt na mapie i kierowca — z eksportu trasy Routific); PLAN — dowozy przyjęte w DYSZY, dla których pliku FABRYKA jeszcze nie ma: liczba i adresy (ulica i numer) z łącznika DYSZY co minutę, punkt na mapie po 1–2 minutach (Transport Dysza, mapa Google); „bez adresu” — adres jeszcze nie przyszedł. Mapa poglądowa: strefy A i B z mapy dostaw, FABRYKA — start tras.</li>
-      <li>TRASY (rola Mapa, jak MAPA): rysunek poglądowy tras godziny. Godziny PLANU — sugestia, ilu kierowców wystarczy i jak rozłożyć adresy: wyjazd najpóźniej 20 min przed godziną, ostatnia paczka do końca godziny, powrót do bazy w 90 min; godziny parzyste — lista PARZYSTE, nieparzyste — NIEPARZYSTE. Godziny z trasą z Routific — trasy z Routific (km i godziny z eksportu). Sugestię liczy strona: linia prosta × 1,4, 25 km/h, 4 min przy adresie, 5 min zapasu. Punkty PLANU strona pamięta do końca dnia — godzina z plikiem FABRYKA, zanim przyjdzie trasa, zostaje z sugestią.</li>
+      <li>TRASY (rola Mapa, jak MAPA): rysunek poglądowy tras godziny. Godziny PLANU — sugestia, ilu kierowców wystarczy i jak rozłożyć adresy: wyjazd najpóźniej 20 min przed godziną, ostatnia paczka do końca godziny, powrót do bazy w 90 min; godziny parzyste — lista PARZYSTE, nieparzyste — NIEPARZYSTE. Plan liczy serwer tras (VROOM): drogi z OpenStreetMap (OSRM), punkty adresów z PRG, a gdy ich brak — z mapy Google; czasy jazdy dostrojone do tras z Routific. Zanim serwer policzy godzinę — sugestia strony (linia prosta × 1,4, 25 km/h, 4 min przy adresie, 5 min zapasu). Godziny z trasą z Routific — trasy z Routific (km i godziny z eksportu); ROUTIFIC / VROOM — te same adresy ułożone przez VROOM, km obu w tej samej mierze dróg (OSRM). Punkty PLANU strona pamięta do końca dnia — godzina z plikiem FABRYKA, zanim przyjdzie trasa, zostaje z planem.</li>
     </ul>
   </details>
 </div>
@@ -3420,7 +3425,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     if (S.czekaRysuj && !wPolu() && !chm) przeliczBezpiecznie();
     if (S.widok === 'archiwum') arWczytaj();                    // (9.11) bieżący miesiąc co minutę, wcześniejsze co 10 minut
     ruWczytaj();                                                // (17.11) RUCH — co minutę, w każdym widoku (pulsowanie)
-    if (maRole('mapa')) mpPlanWczytaj();                          // (21.11) w każdym widoku — TRASY pamiętają punkty PLANU; (16.11) plan z DYSZY co minutę
+    if (maRole('mapa')) { mpPlanWczytaj(); trSilnikWczytaj(); }   // (21.11) w każdym widoku — TRASY pamiętają punkty PLANU i wyniki silnika; (16.11) plan z DYSZY co minutę
     const czeka = Object.keys(S.ls.dni).some(iso => { const p = oczekujaceLS(S.ls.dni[iso]); return p && p.status !== 'blad'; });
     if (baza.sesja() && !$('aplikacja').hidden) zaplanuj(czeka || Date.now() < SZYBKO_DO ? 5000 : 20000);
   }
@@ -4583,6 +4588,9 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   // na H+2 — dowozy parzyste (12, 14 …) wozi lista PARZYSTE, nieparzyste (13, 15 …) — NIEPARZYSTE. Adresy i punkty jak w MAPIE (rola Mapa);
   // punkty PLANU strona pamięta po ID zamówienia (do końca dnia, tylko w pamięci) — godzina z plikiem FABRYKA, zanim przyjdzie trasa
   // z Routific, dalej ma sugestię. Planer liczy w przeglądarce: linia prosta × 1,4, 25 km/h, 4 min przy adresie, 5 min zapasu.
+  // (21.11, wieczór) Silnik tras na serwerze (Sławek 21.11, 17:18 — „OSRM + PRG + VROOM”): plan godziny PLANU z VROOM po ulicach (OSRM,
+  // punkty PRG albo Google) i — na godziny z trasą z Routific — te same adresy ułożone przez VROOM w tej samej mierze dróg (porównanie
+  // km). Strona czyta wyniki co minutę (transport_trasy_silnik, rola Mapa, baza 023); bez wyniku dla tych samych punktów — planer strony.
   const TRP = (function () {
     'use strict';
     const ZALOZENIA = { wyjazd: 20, okno: 60, powrot: 90, adres: 4, kmh: 25, droga: 1.4, zapas: 5 };
@@ -4827,7 +4835,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     return { ZALOZENIA: ZALOZENIA, planuj: planuj, ocen: ocen, macierz: macierz, odl: odl };
   })();
   const TRS = { dzien: '', wyb: null, recznie: false, wybRys: null, k: {}, trasa: null, przyp: null, przewin: null, pkt: new Map(), plany: new Map(),
-    biezace: [], kolor: {}, rys: [] };
+    biezace: [], kolor: {}, rys: [], vroom: {}, vplany: new Map(), geo: new Map(),
+    silnik: { dzien: '', godz: new Map(), stan: null, kiedy: 0, trwa: false, wyl: 0, gen: 0 } };
   const trLL = (x, y) => ({ lat: MP_GEO.lat1 - y / MP_GEO.sk, lng: x / (MP_GEO.kx * MP_GEO.sk) + MP_GEO.lon0 });   // odwrotność mpXY
   const trGrupa = h => (h % 2 ? 'nieparzyści' : 'parzyści');
   const TR_KTORY = ['Pierwszy', 'Drugi', 'Trzeci', 'Czwarty', 'Piąty', 'Szósty', 'Siódmy', 'Ósmy', 'Dziewiąty', 'Dziesiąty', 'Jedenasty', 'Dwunasty',
@@ -4835,8 +4844,9 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   const trKm1 = v => (Math.round(v * 10) / 10).toFixed(1).replace('.', ',');
   const trGodz = m => (m >= 0 && m < 99999 ? `${Math.floor(m / 60)}:${dd(Math.round(m) % 60)}` : '—');
   function trReset() {
-    Object.assign(TRS, { dzien: S.dzien, wyb: null, recznie: false, wybRys: null, k: {}, trasa: null, przyp: null, przewin: null, biezace: [], kolor: {}, rys: [] });
-    TRS.pkt.clear(); TRS.plany.clear();
+    Object.assign(TRS, { dzien: S.dzien, wyb: null, recznie: false, wybRys: null, k: {}, trasa: null, przyp: null, przewin: null, biezace: [], kolor: {}, rys: [], vroom: {} });
+    TRS.pkt.clear(); TRS.plany.clear(); TRS.vplany.clear();
+    if (TRS.silnik.dzien !== S.dzien || !S.ja) Object.assign(TRS.silnik, { dzien: S.dzien, godz: new Map(), stan: null, kiedy: 0, gen: TRS.silnik.gen + 1 });   // nowy dzień albo wylogowanie
   }
   function trPamietaj() {                                       // punkty PLANU po ID — zostają, gdy zamówienie przejdzie do pliku FABRYKA
     if (TRS.dzien !== S.dzien) trReset();
@@ -4869,9 +4879,10 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       const tr = g.stan !== 'pl' && S.model ? S.model.trasy.filter(t => t.h === g.h && t.stopy.length) : [];
       if (tr.length) return Object.assign({}, g, { rodzaj: 'rtf', trasy: tr });
       let dodane = false;
+      const sp = trSilnikPunkty(g.h);                            // (21.11) punkty z silnika — godzina z plikiem FABRYKA także po odświeżeniu strony
       const adresy = g.adresy.map(a => {
         if (a.x !== null) return Object.assign({}, a);
-        const p = TRS.pkt.get(klucz(String(a.id).replace(/^pl:/, '')));
+        const p = TRS.pkt.get(klucz(String(a.id).replace(/^pl:/, ''))) || sp.get(klucz(String(a.id).replace(/^pl:/, '')));
         const q = p ? mpXY(p.lat, p.lng) : null;
         if (!q || !(q.x >= 0 && q.x <= MP_GEO.W && q.y >= 0 && q.y <= MP_GEO.H)) return Object.assign({}, a);
         dodane = true;
@@ -4893,22 +4904,138 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     const k = TRS.k[h] !== undefined ? TRS.k[h] : plan.domyslny;
     return plan.warianty.find(w => w.k === k) || plan.warianty.find(w => w.k === plan.domyslny) || plan.warianty[0] || null;
   };
+  // ── (21.11) silnik tras (VROOM · OSRM · PRG na serwerze, funkcja transport-trasy, baza 023): plany godzin PLANU i porównanie z Routific ──
+  async function trSilnikWczytaj(sila) {                        // z rolą Mapa co minutę, jak PLAN; bez danych, które strona już ma (p_znane)
+    const E = TRS.silnik;
+    if (!baza.sesja() || !maRole('mapa') || E.trwa || Date.now() < E.wyl) return;
+    if (E.dzien !== S.dzien) Object.assign(E, { dzien: S.dzien, godz: new Map(), stan: null, kiedy: 0 });
+    if (!sila && Date.now() - E.kiedy < 55000) return;
+    E.trwa = true; E.kiedy = Date.now();
+    const dzien = S.dzien, gen = E.gen, znane = {};
+    E.godz.forEach((v, kl) => { znane[kl] = v.wersja; });
+    try {
+      const r = await baza.rpc('transport_trasy_silnik', { p_dzien: dzien, p_znane: znane });
+      if (dzien !== S.dzien || gen !== E.gen || !r || typeof r !== 'object') return;
+      const nowe = new Map();
+      let zmiana = false;
+      (Array.isArray(r.godziny) ? r.godziny : []).forEach(x => {
+        if (!x || !Number.isInteger(x.h) || (x.rodzaj !== 'plan' && x.rodzaj !== 'porownanie')) return;
+        const kl = `${x.h}:${x.rodzaj}`, byl = E.godz.get(kl);
+        if (x.dane && typeof x.dane === 'object') { nowe.set(kl, { wersja: x.wersja, policzono: x.policzono, dane: x.dane }); zmiana = zmiana || !byl || byl.wersja !== x.wersja; }
+        else if (byl && byl.wersja === x.wersja) nowe.set(kl, byl);
+      });
+      zmiana = zmiana || nowe.size !== E.godz.size;
+      E.godz = nowe; E.stan = r.stan && typeof r.stan === 'object' ? r.stan : null;
+      if (zmiana) { TRS.vplany.clear(); if (S.widok === 'trasy' && S.model) rysuj(); }
+    } catch (e) {
+      if (e && (e.status === 404 || e.kod === 'PGRST202' || e.kod === '42501')) E.wyl = Date.now() + 600000;   // baza bez 023 — następna próba za 10 min
+    } finally { E.trwa = false; }
+  }
+  const trSurowe = id => String(id).replace(/^pl:/, '');
+  function trSilnikPunkty(h) {                                  // punkty z silnika (PRG albo Google) po ID zamówienia
+    const x = TRS.silnik.godz.get(`${h}:plan`), m = new Map();
+    if (x && x.dane && x.dane.punkty && typeof x.dane.punkty === 'object') Object.keys(x.dane.punkty).forEach(id => {
+      const p = x.dane.punkty[id];
+      if (Array.isArray(p) && typeof p[0] === 'number' && typeof p[1] === 'number') m.set(klucz(id), { lat: p[0], lng: p[1] });
+    });
+    return m;
+  }
+  function trSilnikPlan(h, adresy) {                            // plan VROOM — tylko policzony dla tych samych punktów, co na stronie
+    const x = TRS.silnik.godz.get(`${h}:plan`);
+    if (!x || !x.dane || !Array.isArray(x.dane.warianty) || !x.dane.warianty.length || !x.dane.punkty || typeof x.dane.punkty !== 'object') return null;
+    const ids = adresy.filter(a => a.x !== null).map(a => klucz(trSurowe(a.id))).sort().join('|');
+    if (!ids || ids !== Object.keys(x.dane.punkty).map(klucz).sort().join('|')) return null;
+    const b = TRS.vplany.get(h);
+    if (b && b.wersja === x.wersja && b.ids === ids) return b.plan;
+    const plan = trZSilnika(x.dane, h, adresy, x.policzono);
+    TRS.vplany.set(h, { wersja: x.wersja, ids: ids, plan: plan });
+    return plan.warianty.length ? plan : null;
+  }
+  function trZSilnika(d, h, adresy, policzono) {                // wynik silnika → plan jak z planera strony (warianty, trasy, minuty dnia)
+    const z = TRP.ZALOZENIA, koniec = h * 60 + z.okno, wBazie = h * 60 + z.powrot, poKl = {};
+    adresy.forEach(a => { poKl[klucz(trSurowe(a.id))] = a.id; });
+    const ids = l => (Array.isArray(l) ? l : []).map(i => poKl[klucz(i)]).filter(Boolean);
+    const warianty = d.warianty.filter(w => w && Number.isInteger(w.k) && w.k > 0).map(w => {
+      const trasy = (Array.isArray(w.trasy) ? w.trasy : []).map(t => {
+        const eta = (Array.isArray(t.eta) ? t.eta : []).map(e => Math.round(Number(e))), powrot = typeof t.powrot === 'number' ? Math.round(t.powrot) : 99999;
+        return { adresy: ids(t.id), eta: eta, km: Number(t.km) || 0, powrot: powrot, spoznione: eta.map(e => e > koniec), pozno: powrot < 99999 && powrot > wBazie,
+          zapas: t.zapas !== false, geom: typeof t.geom === 'string' ? t.geom : '' };
+      }).filter(t => t.adresy.length && t.adresy.length === t.eta.length);
+      const nieob = ids(w.nieobsluzone);
+      return { k: w.k, km: Number(w.km) || trasy.reduce((s, t) => s + t.km, 0), trasy: trasy, nieobsluzone: nieob,
+        spoznionych: nieob.length + trasy.reduce((s, t) => s + t.spoznione.filter(Boolean).length, 0), powrotyPozno: trasy.filter(t => t.pozno).length,
+        bezZapasu: ids(w.bez_zapasu).length + trasy.filter(t => !t.zapas).length };
+    }).filter(w => w.trasy.length);
+    const pk = Object.keys(d.punkty).map(id => d.punkty[id]);
+    return { n: Number(d.n) || pk.length, lista: Number(d.lista) || 0, kMin: Number(d.kMin) || 0, domyslny: d.domyslny, warianty: warianty, silnik: true,
+      policzono: policzono || '', prg: pk.filter(p => Array.isArray(p) && p[2] === 'p').length };
+  }
+  function trPorownanie(g) {                                    // godzina z trasą z Routific: te same adresy w VROOM, ta sama miara dróg (OSRM)
+    const x = TRS.silnik.godz.get(`${g.h}:porownanie`);
+    if (!x || !x.dane || !x.dane.routific || !x.dane.vroom || !x.dane.punkty || typeof x.dane.punkty !== 'object') return null;
+    const naStronie = new Set(g.adresy.map(a => klucz(a.id))), wSilniku = Object.keys(x.dane.punkty).map(klucz);
+    if (!wSilniku.length || wSilniku.some(id => !naStronie.has(id))) return null;
+    const r = x.dane.routific, v = x.dane.vroom, kmR = Number(r.km_osrm) || 0, kmV = Number(v.km) || 0;
+    if (!(kmR > 0) || !(kmV > 0)) return null;
+    return { kmR: kmR, kmV: kmV, kR: Number(r.k) || 0, kV: Number(v.k) || 0, roznica: (kmV - kmR) / kmR, trasyR: Array.isArray(r.trasy) ? r.trasy : [],
+      trasyV: Array.isArray(v.trasy) ? v.trasy : [], nieob: Array.isArray(v.nieobsluzone) ? v.nieobsluzone.length : 0, policzono: x.policzono || '',
+      min: x.dane.vroom_min && Number.isInteger(x.dane.vroom_min.k) ? x.dane.vroom_min : null };
+  }
+  const trProc = r => `${r < 0 ? '−' : '+'}${Math.abs(Math.round(r * 100))}%`;
+  function trPolilinia(s) {                                     // OSRM (polyline, 5 miejsc po przecinku) → [[lat, lng], …]
+    const w = [];
+    let i = 0, lat = 0, lng = 0;
+    while (i < s.length) {
+      const d = [0, 0];
+      for (let j = 0; j < 2; j++) {
+        let b = 0, sh = 0, r = 0;
+        do { b = s.charCodeAt(i++) - 63; r |= (b & 31) << sh; sh += 5; } while (b >= 32 && i < s.length);
+        d[j] = r & 1 ? ~(r >> 1) : r >> 1;
+      }
+      lat += d[0]; lng += d[1];
+      w.push([lat / 1e5, lng / 1e5]);
+    }
+    return w;
+  }
+  function trGeo(geom, ostatni) {                               // przebieg po ulicach w układzie mapy; ost — punkt przy ostatnim adresie (dalej powrót)
+    if (!geom) return null;
+    let g = TRS.geo.get(geom);
+    if (!g) {
+      try { g = trPolilinia(geom).map(([la, ln]) => { const q = mpXY(la, ln); return [q.x, q.y]; }); } catch (e) { g = []; }
+      if (TRS.geo.size > 400) TRS.geo.clear();
+      TRS.geo.set(geom, g);
+    }
+    if (g.length < 2) return null;
+    let ost = g.length - 1, min = Infinity;
+    if (ostatni) for (let i = g.length - 1; i >= 0; i--) { const o = Math.hypot(g[i][0] - ostatni.x, g[i][1] - ostatni.y); if (o < min) { min = o; ost = i; } }
+    return { pkt: g, ost: ost };
+  }
   function trTrasy(g) {                                         // trasy do pokazania: { etykieta, adresy, eta, km, dokladnie, powrot, spoznione, pozno }
     const koniec = g.h * 60 + TRP.ZALOZENIA.okno, wBazie = g.h * 60 + TRP.ZALOZENIA.powrot, poId = {};
     if (g.rodzaj === 'rtf') {
       g.adresy.forEach(a => { poId[klucz(a.id)] = a; });
+      const por = g.por || null;
+      if (por && TRS.vroom[g.h]) {                              // (21.11) te same adresy ułożone przez VROOM
+        return por.trasyV.map((t, i) => {
+          const eta = (Array.isArray(t.eta) ? t.eta : []).map(e => Math.round(Number(e))), powrot = typeof t.powrot === 'number' ? Math.round(t.powrot) : 99999;
+          return { etykieta: TR_KTORY[i] || `${i + 1}.`, adresy: (Array.isArray(t.id) ? t.id : []).map(id => poId[klucz(id)]).filter(Boolean), eta: eta, km: Number(t.km) || 0,
+            dokladnie: true, powrot: powrot, spoznione: eta.map(e => e > koniec), pozno: powrot < 99999 && powrot > wBazie, geom: typeof t.geom === 'string' ? t.geom : '' };
+        }).filter(t => t.adresy.length && t.adresy.length === t.eta.length);
+      }
       return g.trasy.map(t => {
         const st = t.stopy.slice().sort((a, b) => a.nr - b.nr).filter(s => poId[klucz(s.id)]);
         const eta = st.map(s => minuty(s.godz)), powrot = t.koniec ? minuty(t.koniec) : 99999;
+        const kl = st.map(s => klucz(s.id)).join('|'), r = por ? por.trasyR.find(x => Array.isArray(x.id) && x.id.map(klucz).join('|') === kl) : null;
         return { etykieta: t.kier, adresy: st.map(s => poId[klucz(s.id)]), eta: eta, km: t.km, dokladnie: true, powrot: powrot,
-          spoznione: eta.map(e => e < 99999 && e > koniec), pozno: powrot < 99999 && powrot > wBazie };
+          spoznione: eta.map(e => e < 99999 && e > koniec), pozno: powrot < 99999 && powrot > wBazie, geom: r && typeof r.geom === 'string' ? r.geom : '' };
       }).filter(t => t.adresy.length);
     }
     g.adresy.forEach(a => { poId[a.id] = a; });
     const w = g.plan ? trWariant(g.plan, g.h) : null;
-    return w ? w.trasy.map((t, i) => ({ etykieta: TR_KTORY[i] || `${i + 1}.`, adresy: t.adresy.map(id => poId[id]), eta: t.eta, km: t.km, dokladnie: false,
-      powrot: t.powrot, spoznione: t.spoznione, pozno: t.pozno })) : [];
+    return w ? w.trasy.map((t, i) => ({ etykieta: TR_KTORY[i] || `${i + 1}.`, adresy: t.adresy.map(id => poId[id]), eta: t.eta, km: t.km, dokladnie: !!g.plan.silnik,
+      powrot: t.powrot, spoznione: t.spoznione, pozno: t.pozno, geom: t.geom || '' })) : [];
   }
+  function trWybierzZrodlo(h, vroom) { TRS.vroom[h] = vroom; TRS.trasa = null; TRS.przyp = null; rysuj(); }
   function trWybierzGodzine(h) { TRS.wyb = h; TRS.recznie = true; TRS.trasa = null; TRS.przyp = null; rysuj(); }
   function trWybierzK(h, k) { TRS.k[h] = k; TRS.trasa = null; rysuj(); }
   function trWybierzTrase(i) { TRS.trasa = TRS.trasa === i ? null : i; rysuj(); }
@@ -4967,7 +5094,12 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     const stareK = document.querySelector('.trs .mp-kafle'), staraL = $('tr-przewin'), nowyWyb = TRS.wyb !== TRS.wybRys;
     TRS.przewin = { kafle: nowyWyb && !TRS.recznie ? null : stareK ? stareK.scrollLeft : null, lista: nowyWyb || !staraL ? 0 : staraL.scrollTop };
     TRS.wybRys = TRS.wyb;
-    godz.forEach(g => { if (g.rodzaj === 'sug' && g.adresy.some(a => a.x !== null) && (TRS.wyb === 'dzien' || TRS.wyb === g.h)) { g.lista = trLista(g.h); g.plan = trPlan(g.h, g.adresy, g.lista.n); } });
+    godz.forEach(g => {
+      if (g.rodzaj === 'sug' && g.adresy.some(a => a.x !== null) && (TRS.wyb === 'dzien' || TRS.wyb === g.h)) {
+        g.lista = trLista(g.h); g.plan = trSilnikPlan(g.h, g.adresy) || trPlan(g.h, g.adresy, g.lista.n);   // (21.11) najpierw VROOM, inaczej planer strony
+      }
+      if (g.rodzaj === 'rtf') g.por = trPorownanie(g);           // (21.11) te same adresy w VROOM
+    });
     const dzien = TRS.wyb === 'dzien', g = dzien ? null : poH[TRS.wyb], razem = godz.reduce((s, x) => s + x.n, 0);
     const kafle = [];
     for (let i = 0; i < godz.length;) {                         // fazy dnia nad kaflami godzin — jak w MAPIE
@@ -4987,10 +5119,10 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       TRS.biezace = godz.reduce((l, x) => l.concat(x.adresy), []);
       const wiersze = godz.filter(x => x.stan).map(x => {
         let k = 0, km = '', uw = false, sz = '—';
-        if (x.rodzaj === 'rtf') { k = x.trasy.length; km = `${trKm1(x.trasy.reduce((s, t) => s + t.km, 0))} km`; sz = 'Routific'; }
+        if (x.rodzaj === 'rtf') { k = x.trasy.length; km = `${trKm1(x.trasy.reduce((s, t) => s + t.km, 0))} km${x.por ? ` · VROOM ${trProc(x.por.roznica)}` : ''}`; sz = 'Routific'; }
         else if (x.plan && x.plan.n) {
           const w = trWariant(x.plan, x.h), wL = x.plan.warianty.find(v => v.k === x.plan.lista);
-          k = w ? w.k : 0; km = `≈ ${Math.round(w ? w.km : 0)} km`; sz = '';
+          k = w ? w.k : 0; km = x.plan.silnik ? `${trKm1(w ? w.km : 0)} km` : `≈ ${Math.round(w ? w.km : 0)} km`; sz = '';
           uw = x.plan.lista > 0 && x.plan.kMin > x.plan.lista && (!wL || wL.spoznionych + wL.powrotyPozno > 0);
         }
         return el('li', null, el('button', { type: 'button', class: 'tr-g', onclick: () => trWybierzGodzine(x.h) },
@@ -4999,34 +5131,51 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
           el('span', { class: 'lz' + (uw ? ' uw' : '') }, k ? el('b', null, `${k} ${odm(k, ['kierowca', 'kierowców', 'kierowców'])}`) : el('b', null, '—'),
             el('small', null, k ? (uw ? `${km} · potrzeba ${x.plan.kMin}` : km) : 'bez punktów'))));
       });
+      const pory = godz.filter(x => x.por), sR = pory.reduce((s, x) => s + x.por.kmR, 0), sV = pory.reduce((s, x) => s + x.por.kmV, 0);
       lista = el('section', { class: 'karta mp-lista', 'aria-labelledby': 'tr-l-t' },
         el('div', { class: 'karta-n' }, el('b', { id: 'tr-l-t' }, 'Cały dzień'), el('small', null, `${razem} ${odm(razem, ['dostawa', 'dostawy', 'dostaw'])}`)),
+        pory.length ? el('div', { class: 'tr-et tr-suma' }, el('span', null, `Routific ${trKm1(sR)} km`), el('span', null, `VROOM ${trKm1(sV)} km`),
+          el('span', { class: sV <= sR ? 'lp' : 'uw' }, trProc((sV - sR) / sR)), el('span', null, `${pory.length} ${odm(pory.length, ['godzina', 'godziny', 'godzin'])}`)) : null,
         wiersze.length ? el('ol', { class: 'tr-dzien mp-adresy' }, wiersze) : el('div', { class: 'puste-m' }, 'Jeszcze bez dostaw.'));
     } else {
       const h = g.h, st = g.stan, trasy = trTrasy(g), lst = g.lista || trLista(h);
       TRS.biezace = g.adresy;
       trasy.forEach((t, i) => {
-        const kol = `--tr-${(i % 8) + 1}`;
+        const kol = `--tr-${(i % 8) + 1}`, ost = t.adresy[t.adresy.length - 1];
         t.adresy.forEach(a => { TRS.kolor[a.id] = { kol: kol, i: i }; });
-        TRS.rys.push({ adresy: t.adresy.map(a => a.id), kol: kol, cien: TRS.trasa !== null && TRS.trasa !== i });
+        TRS.rys.push({ adresy: t.adresy.map(a => a.id), kol: kol, cien: TRS.trasa !== null && TRS.trasa !== i,
+          geo: trGeo(t.geom, ost && ost.x !== null ? { x: ost.x, y: ost.y } : null) });   // (21.11) po ulicach (OSRM), gdy silnik dał przebieg
       });
       const naListe = lst.n ? `${trGrupa(h)}: ${lst.n} na liście` : `${trGrupa(h)} · bez listy startowej`;
       let et, kafleK = null;
-      if (g.rodzaj === 'rtf') et = el('div', { class: 'tr-et' }, el('span', null, `Trasy z Routific · ${naListe}`));
-      else if (g.plan && g.plan.n) {
+      if (g.rodzaj === 'rtf') {
+        const por = g.por, v = !!(por && TRS.vroom[h]);
+        et = el('div', { class: 'tr-et' }, el('span', null, `Trasy ${v ? 'VROOM' : 'z Routific'} · ${naListe}`),
+          por && por.min && por.min.k < por.kR ? el('span', null, `VROOM: wystarczy ${por.min.k}`) : null);
+        if (por) kafleK = el('div', { class: 'tr-kier tr-por', role: 'group', 'aria-label': 'Trasy' },
+          el('button', { type: 'button', class: 'gp kafel', 'aria-pressed': String(!v), onclick: () => trWybierzZrodlo(h, false),
+            'aria-label': `Routific: ${por.kR} ${odm(por.kR, ['kierowca', 'kierowców', 'kierowców'])}, ${trKm1(por.kmR)} km po ulicach` },
+            el('span', { class: 'h' }, 'ROUTIFIC'), el('span', { class: 'z' }, `${trKm1(por.kmR)} km`)),
+          el('button', { type: 'button', class: 'gp kafel', 'aria-pressed': String(v), onclick: () => trWybierzZrodlo(h, true),
+            'aria-label': `VROOM: ${por.kV} ${odm(por.kV, ['kierowca', 'kierowców', 'kierowców'])}, ${trKm1(por.kmV)} km po ulicach, ${trProc(por.roznica)}` },
+            el('span', { class: 'h' }, 'VROOM'), el('span', { class: 'z' + (por.roznica <= 0 ? ' lp' : ' uw') }, `${trKm1(por.kmV)} km · ${trProc(por.roznica)}`)));
+      } else if (g.plan && g.plan.n) {
         const p = g.plan, w = trWariant(p, h), wL = p.warianty.find(x => x.k === p.lista), poCzasie = !wL || wL.spoznionych + wL.powrotyPozno > 0;
         et = el('div', { class: 'tr-et' }, el('span', null, `Kierowcy · ${naListe}`),
           p.lista > 0 && p.kMin > p.lista ? el('span', { class: poCzasie ? 'uw' : 'cz' }, `${poCzasie ? 'potrzeba' : 'z zapasem'} ${p.kMin}`)
-            : p.lista > 0 && p.kMin < p.lista ? el('span', null, `wystarczy ${p.kMin}`) : null);
+            : p.lista > 0 && p.kMin < p.lista ? el('span', null, `wystarczy ${p.kMin}`) : null,
+          p.silnik ? el('span', null, `VROOM · ${godzinaZ(p.policzono)}`) : null);
         kafleK = el('div', { class: 'tr-kier', role: 'group', 'aria-label': 'Liczba kierowców' }, p.warianty.map(x => {
           const zle = x.spoznionych + x.powrotyPozno, ciasno = !zle && x.bezZapasu > 0;
           return el('button', { type: 'button', class: 'gp kafel', 'aria-pressed': String(!!w && w.k === x.k), onclick: () => trWybierzK(h, x.k),
             'aria-label': `${x.k} ${odm(x.k, ['kierowca', 'kierowców', 'kierowców'])}, około ${Math.round(x.km)} km${zle ? `, ${zle} po czasie` : ciasno ? ', bez zapasu' : ''}` },
-            el('span', { class: 'h' }, String(x.k)), el('span', { class: 'z' + (zle ? ' uw' : ciasno ? ' cz' : '') }, zle ? `${zle} po czasie` : `≈ ${Math.round(x.km)} km`));
+            el('span', { class: 'h' }, String(x.k)), el('span', { class: 'z' + (zle ? ' uw' : ciasno ? ' cz' : '') }, zle ? `${zle} po czasie` : p.silnik ? `${trKm1(x.km)} km` : `≈ ${Math.round(x.km)} km`));
         }));
       } else et = el('div', { class: 'tr-et' }, el('span', null, `Kierowcy · ${naListe}`));
       const wTrasach = new Set(); trasy.forEach(t => t.adresy.forEach(a => wTrasach.add(a.id)));
-      const poza = g.adresy.filter(a => !wTrasach.has(a.id)), bezAdr = g.bezAdresu && MP.planAdrOk && MP.planAdrDzien === S.dzien ? g.bezAdresu : 0;
+      const wW = g.rodzaj === 'sug' && g.plan ? trWariant(g.plan, h) : null, nieob = new Set(wW && Array.isArray(wW.nieobsluzone) ? wW.nieobsluzone : []);
+      const niezd = g.adresy.filter(a => !wTrasach.has(a.id) && nieob.has(a.id));   // (21.11) VROOM: przy tylu kierowcach nie zdąży wcale
+      const poza = g.adresy.filter(a => !wTrasach.has(a.id) && !nieob.has(a.id)), bezAdr = g.bezAdresu && MP.planAdrOk && MP.planAdrDzien === S.dzien ? g.bezAdresu : 0;
       const pusto = !g.adresy.length ? (st === 'pl' ? 'Adresy przyjdą z plikiem FABRYKA.' : 'Jeszcze bez dostaw.') : !trasy.length ? 'Punkty adresów jeszcze nie przyszły.' : '';
       lista = el('section', { class: 'karta mp-lista tr-lista', 'aria-labelledby': 'tr-l-t' },
         el('div', { class: 'karta-n' }, el('b', { id: 'tr-l-t' }, mpPrzedzial(h)),
@@ -5035,6 +5184,8 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         el('ol', { class: 'tr-przewin', id: 'tr-przewin' },
           pusto ? el('li', { class: 'puste-m' }, pusto) : null,
           trasy.map((t, i) => trKarta(t, i, h)),
+          niezd.length ? el('li', { class: 'tr-bez uw' }, `${niezd.length} ${odm(niezd.length, ['adres', 'adresy', 'adresów'])} nie zdąży — za mało kierowców`) : null,
+          niezd.length ? el('li', null, el('ol', { class: 'tr-adr' }, niezd.map(a => trWiersz(a, null, '', true)))) : null,
           poza.length && trasy.length ? el('li', { class: 'tr-bez' }, `${poza.length} ${odm(poza.length, ['adres', 'adresy', 'adresów'])} bez punktu — poza trasami`) : null,
           poza.length && trasy.length ? el('li', null, el('ol', { class: 'tr-adr' }, poza.map(a => trWiersz(a, null, '', false)))) : null,
           pusto && poza.length ? el('li', null, el('ol', { class: 'tr-adr' }, poza.map(a => trWiersz(a, null, '', false)))) : null,
@@ -5079,12 +5230,22 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     const q = dzien ? p : mpRozsun(p, 24, szer, wys, { x: fx, y: fy }), poz = {};
     pkt.forEach((a, i) => { poz[a.id] = q[i]; });                // linie przez środki znaczników — rysunek poglądowy
     const g = [];
+    const xy = o => `${o.x.toFixed(1)},${o.y.toFixed(1)}`;
     TRS.rys.forEach(t => {                                      // FABRYKA → adresy po kolei; powrót kropkami
       const pts = t.adresy.map(id => poz[id]).filter(Boolean);
       if (!pts.length) return;
-      const d = `M${fx.toFixed(1)},${fy.toFixed(1)} ` + pts.map(o => `L${o.x.toFixed(1)},${o.y.toFixed(1)}`).join(' '), z = pts[pts.length - 1];
+      let d, dp;
+      if (t.geo) {                                              // (21.11) po ulicach (OSRM): do ostatniego adresu — ciągła, powrót — kropkami
+        const l = t.geo.pkt.map(([x, y]) => ({ x: x * k, y: y * k }));
+        d = 'M' + l.slice(0, t.geo.ost + 1).map(xy).join(' L');
+        dp = 'M' + l.slice(t.geo.ost).map(xy).join(' L');
+      } else {
+        const z = pts[pts.length - 1];
+        d = `M${xy({ x: fx, y: fy })} ` + pts.map(o => `L${xy(o)}`).join(' ');
+        dp = `M${xy(z)} L${xy({ x: fx, y: fy })}`;
+      }
       const gr = mpSvg('g', { class: t.cien ? 'cien' : 'trasa' });
-      gr.append(mpSvg('path', { class: 'tr-p', d: `M${z.x.toFixed(1)},${z.y.toFixed(1)} L${fx.toFixed(1)},${fy.toFixed(1)}`, style: `stroke: var(${t.kol})` }),
+      gr.append(mpSvg('path', { class: 'tr-p', d: dp, style: `stroke: var(${t.kol})` }),
         mpSvg('path', { class: 'tr-tlo', d: d }), mpSvg('path', { class: 'tr-l', d: d, style: `stroke: var(${t.kol})` }));
       g.push(gr);
     });
@@ -5129,7 +5290,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   $('w-kierowcy').addEventListener('click', () => { S.widok = 'kierowcy'; rysuj(); });
   $('w-listy').addEventListener('click', () => { S.widok = 'listy'; rysuj(); });
   $('w-mapa').addEventListener('click', () => { S.widok = 'mapa'; rysuj(); mpPlanWczytaj(true); });   // (16.11)
-  $('w-trasy').addEventListener('click', () => { S.widok = 'trasy'; rysuj(); mpPlanWczytaj(true); });   // (21.11)
+  $('w-trasy').addEventListener('click', () => { S.widok = 'trasy'; rysuj(); mpPlanWczytaj(true); trSilnikWczytaj(true); });   // (21.11)
   $('w-ruch').addEventListener('click', () => { S.widok = 'ruch'; ruWidziany(); rysuj(); ruWczytaj(true); });   // (17.11) wejście gasi pulsowanie
   $('w-startowe').addEventListener('click', () => { S.widok = 'startowe'; rysuj(); });
   $('w-podsumowanie').addEventListener('click', () => { S.widok = 'podsumowanie'; rysuj(); });
@@ -5140,7 +5301,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     zastosujDzien: zastosujDzien, odswiezTeraz: odswiezTeraz, start: start, formDoBazy: formDoBazy,
     raportPdf: raportPdf, archDzien: archDzien, AR: AR, arWczytaj: arWczytaj,   // (9.11) ARCHIWUM — do testów
     MP: MP, MP_GEO: MP_GEO, mpDane: mpDane, mpAdres: mpAdres, mpPlanWczytaj: mpPlanWczytaj,   // (16.11) MAPA — do testów
-    TRS: TRS, TRP: TRP, trGodziny: trGodziny,                    // (21.11) TRASY — do testów
+    TRS: TRS, TRP: TRP, trGodziny: trGodziny, trSilnikWczytaj: trSilnikWczytaj, trPolilinia: trPolilinia,   // (21.11) TRASY — do testów
     platnosc: platnosc, notes: notes,                           // (17.11) Blik_S / Blik_D — do testów
     RU: RU, ruWczytaj: ruWczytaj, ruPuls: ruPuls, widokRuchu: widokRuchu };   // (17.11) RUCH — do testów
   start();
