@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-21 18:57 · 62df649"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-22 09:18 · 5c018a3"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -938,6 +938,10 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
 .tr-kier .kafel .z.lp, .tr-et .lp { color: var(--ok); font-weight: 700; }
 .tr-suma { font-variant-numeric: tabular-nums; }
 .tr-bez.uw { color: var(--czer); font-weight: 700; }
+/* (22.11) oba plany w modelu silnika: kursy i adresy po czasie w kaflach; pod sumą dnia kursy i VROOM przy 3 min */
+.tr-kier .kafel .s { font-size: 11px; color: var(--szary); font-variant-numeric: tabular-nums; }
+.tr-kier .kafel .s.uw { color: var(--czer); font-weight: 700; }
+.tr-kursy { font-variant-numeric: tabular-nums; }
 </style>
 
 <div id="logowanie" hidden></div>
@@ -998,7 +1002,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       <li>ARCHIWUM (rola Archiwum; bez niej — pusta karta „Dostęp zablokowany”): miesiąc w siatce — dni od 5.11 z rozliczeń KONIEC, dni 20.09–4.11 z plików T (przepisane raz do bazy). RAPORT na kafelku dnia pobiera plik PDF (A4 poziomo): kierowcy, składowe wypłaty, pobrał od klienta (gotówka), zwrócił do firmy, dostał z kasy.</li>
       <li>RUCH: komunikat o utrudnieniach w strefach dostaw, co godzinę 11–21 (dawniej mail „Utrudnienia w strefach dostaw”) — sytuacja na drogach, TERAZ · NA ŻYWO, ZAKOŃCZONE, DZIŚ, NAJBLIŻSZE DNI, źródła. Nowy komunikat: przycisk RUCH pulsuje na żółto, aż go otworzysz.</li>
       <li>MAPA (rola Mapa; bez niej — pusta karta „Dostęp zablokowany”): dostawy dnia na godziny. DOWIEZIONE i W DOWOZIE — z plików FABRYKA (ulica i numer, bez kwot, telefonów i lokalu; punkt na mapie i kierowca — z eksportu trasy Routific); PLAN — dowozy przyjęte w DYSZY, dla których pliku FABRYKA jeszcze nie ma: liczba i adresy (ulica i numer) z łącznika DYSZY co minutę, punkt na mapie po 1–2 minutach (Transport Dysza, mapa Google); „bez adresu” — adres jeszcze nie przyszedł. Mapa poglądowa: strefy A i B z mapy dostaw, FABRYKA — start tras.</li>
-      <li>TRASY (rola Mapa, jak MAPA): rysunek poglądowy tras godziny. Godziny PLANU — sugestia, ilu kierowców wystarczy i jak rozłożyć adresy: wyjazd najpóźniej 20 min przed godziną, ostatnia paczka do końca godziny, powrót do bazy w 90 min; godziny parzyste — lista PARZYSTE, nieparzyste — NIEPARZYSTE. Plan liczy serwer tras (VROOM): drogi z OpenStreetMap (OSRM), punkty adresów z PRG, a gdy ich brak — z mapy Google; czasy jazdy dostrojone do tras z Routific. Zanim serwer policzy godzinę — sugestia strony (linia prosta × 1,4, 25 km/h, 4 min przy adresie, 5 min zapasu). Godziny z trasą z Routific — trasy z Routific (km i godziny z eksportu); ROUTIFIC / VROOM — te same adresy ułożone przez VROOM, km obu w tej samej mierze dróg (OSRM). Punkty PLANU strona pamięta do końca dnia — godzina z plikiem FABRYKA, zanim przyjdzie trasa, zostaje z planem.</li>
+      <li>TRASY (rola Mapa, jak MAPA): rysunek poglądowy tras godziny. Godziny PLANU — sugestia, ilu kierowców wystarczy i jak rozłożyć adresy: wyjazd najpóźniej 20 min przed godziną, ostatnia paczka do końca godziny, powrót do bazy w 90 min; godziny parzyste — lista PARZYSTE, nieparzyste — NIEPARZYSTE. Plan liczy serwer tras (VROOM): drogi z OpenStreetMap (OSRM), punkty adresów z PRG, a gdy ich brak — z mapy Google; czasy jazdy dostrojone do tras z Routific. Zanim serwer policzy godzinę — sugestia strony (linia prosta × 1,4, 25 km/h, 5 min przy adresie, 5 min zapasu). Godziny z trasą z Routific — trasy z Routific (km i godziny z eksportu); ROUTIFIC / VROOM — te same adresy ułożone przez VROOM, km obu w tej samej mierze dróg (OSRM). Punkty PLANU strona pamięta do końca dnia — godzina z plikiem FABRYKA, zanim przyjdzie trasa, zostaje z planem.</li>
     </ul>
   </details>
 </div>
@@ -4587,13 +4591,13 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   // Cykl: dowóz H:00–H+1:00 → wyjazd najpóźniej H−0:20, ostatnia paczka H+1:00, powrót do bazy do H+1:30, 10 min załadunku, wyjazd H+1:40
   // na H+2 — dowozy parzyste (12, 14 …) wozi lista PARZYSTE, nieparzyste (13, 15 …) — NIEPARZYSTE. Adresy i punkty jak w MAPIE (rola Mapa);
   // punkty PLANU strona pamięta po ID zamówienia (do końca dnia, tylko w pamięci) — godzina z plikiem FABRYKA, zanim przyjdzie trasa
-  // z Routific, dalej ma sugestię. Planer liczy w przeglądarce: linia prosta × 1,4, 25 km/h, 4 min przy adresie, 5 min zapasu.
+  // z Routific, dalej ma sugestię. Planer liczy w przeglądarce: linia prosta × 1,4, 25 km/h, 5 min przy adresie, 5 min zapasu.
   // (21.11, wieczór) Silnik tras na serwerze (Sławek 21.11, 17:18 — „OSRM + PRG + VROOM”): plan godziny PLANU z VROOM po ulicach (OSRM,
   // punkty PRG albo Google) i — na godziny z trasą z Routific — te same adresy ułożone przez VROOM w tej samej mierze dróg (porównanie
   // km). Strona czyta wyniki co minutę (transport_trasy_silnik, rola Mapa, baza 023); bez wyniku dla tych samych punktów — planer strony.
   const TRP = (function () {
     'use strict';
-    const ZALOZENIA = { wyjazd: 20, okno: 60, powrot: 90, adres: 4, kmh: 25, droga: 1.4, zapas: 5 };
+    const ZALOZENIA = { wyjazd: 20, okno: 60, powrot: 90, adres: 5, kmh: 25, droga: 1.4, zapas: 5 };
     const KARA = 1000;                                            // km „kosztu” za minutę spóźnienia — spóźnienie zawsze gorsze niż objazd
     const CZAS = 0.02;                                            // km „kosztu” za minutę trasy — przy tych samych km wcześniejszy powrót do bazy
     const ROWNO = 0.6;                                            // przy zadanej liczbie kierowców: km „kosztu” × (adresów w trasie)² — adresy rozłożone równiej
@@ -4979,9 +4983,19 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     if (!(kmR > 0) || !(kmV > 0)) return null;
     return { kmR: kmR, kmV: kmV, kR: Number(r.k) || 0, kV: Number(v.k) || 0, roznica: (kmV - kmR) / kmR, trasyR: Array.isArray(r.trasy) ? r.trasy : [],
       trasyV: Array.isArray(v.trasy) ? v.trasy : [], nieob: Array.isArray(v.nieobsluzone) ? v.nieobsluzone.length : 0, policzono: x.policzono || '',
-      min: x.dane.vroom_min && Number.isInteger(x.dane.vroom_min.k) ? x.dane.vroom_min : null };
+      min: x.dane.vroom_min && Number.isInteger(x.dane.vroom_min.k) ? x.dane.vroom_min : null,
+      // (22.11) oba plany w modelu silnika: adresy Routifica po czasie przy postoju z parametrów; VROOM przy 3 min (założenia Routifica)
+      spR: Number.isInteger(r.spoznione) ? r.spoznione : null, spMaksR: Math.max(0, Number(r.spoznienie_maks) || 0),
+      spV: Number.isInteger(v.spoznione) ? v.spoznione : null, zaMalo: v.kierowcow_routific_za_malo === true,
+      sp: Number.isInteger(r.spoznione) && Number.isInteger(v.spoznione),
+      r3: x.dane.vroom_3min && Number.isInteger(x.dane.vroom_3min.k) && Number(x.dane.vroom_3min.km) > 0 ? { k: x.dane.vroom_3min.k, km: Number(x.dane.vroom_3min.km) } : null };
   }
   const trProc = r => `${r < 0 ? '−' : '+'}${Math.abs(Math.round(r * 100))}%`;
+  const TR_KURSY = ['kurs', 'kursy', 'kursów'];
+  // „4 po czasie · do 12 min” (dla czytnika: „, 4 adresy po czasie, najwięcej 12 min”); wynik silnika sprzed 22.11 — nic
+  const trPoCzasie = (n, maks, aria) => n === null || n === undefined ? ''
+    : aria ? `, ${n} ${odm(n, ['adres', 'adresy', 'adresów'])} po czasie${n > 0 ? `, najwięcej ${Math.ceil(maks)} min` : ''}`
+      : `${n} po czasie${n > 0 ? ` · do ${Math.ceil(maks)} min` : ''}`;
   function trPolilinia(s) {                                     // OSRM (polyline, 5 miejsc po przecinku) → [[lat, lng], …]
     const w = [];
     let i = 0, lat = 0, lng = 0;
@@ -5132,10 +5146,16 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
             el('small', null, k ? (uw ? `${km} · potrzeba ${x.plan.kMin}` : km) : 'bez punktów'))));
       });
       const pory = godz.filter(x => x.por), sR = pory.reduce((s, x) => s + x.por.kmR, 0), sV = pory.reduce((s, x) => s + x.por.kmV, 0);
+      const suma = f => pory.reduce((s, x) => s + f(x.por), 0), kR = suma(p => p.kR), kV = suma(p => p.kV), spR = suma(p => p.spR || 0), k3 = suma(p => p.r3 ? p.r3.k : 0);
+      const zSp = pory.length > 0 && pory.every(x => x.por.sp), z3 = pory.length > 0 && pory.every(x => x.por.r3);
       lista = el('section', { class: 'karta mp-lista', 'aria-labelledby': 'tr-l-t' },
         el('div', { class: 'karta-n' }, el('b', { id: 'tr-l-t' }, 'Cały dzień'), el('small', null, `${razem} ${odm(razem, ['dostawa', 'dostawy', 'dostaw'])}`)),
         pory.length ? el('div', { class: 'tr-et tr-suma' }, el('span', null, `Routific ${trKm1(sR)} km`), el('span', null, `VROOM ${trKm1(sV)} km`),
           el('span', { class: sV <= sR ? 'lp' : 'uw' }, trProc((sV - sR) / sR)), el('span', null, `${pory.length} ${odm(pory.length, ['godzina', 'godziny', 'godzin'])}`)) : null,
+        zSp ? el('div', { class: 'tr-et tr-kursy' },
+          el('span', spR > 0 ? { class: 'uw' } : null, `Routific ${kR} ${odm(kR, TR_KURSY)} · ${trPoCzasie(spR, Math.max(...pory.map(x => x.por.spMaksR)))}`),
+          el('span', null, `VROOM ${kV} ${odm(kV, TR_KURSY)} · ${trPoCzasie(suma(p => p.spV), 0)}`)) : null,
+        z3 ? el('div', { class: 'tr-et tr-kursy' }, el('span', null, `Na założeniach Routific (3 min) VROOM: ${k3} ${odm(k3, TR_KURSY)}, ${trKm1(suma(p => p.r3.km))} km`)) : null,
         wiersze.length ? el('ol', { class: 'tr-dzien mp-adresy' }, wiersze) : el('div', { class: 'puste-m' }, 'Jeszcze bez dostaw.'));
     } else {
       const h = g.h, st = g.stan, trasy = trTrasy(g), lst = g.lista || trLista(h);
@@ -5151,14 +5171,17 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       if (g.rodzaj === 'rtf') {
         const por = g.por, v = !!(por && TRS.vroom[h]);
         et = el('div', { class: 'tr-et' }, el('span', null, `Trasy ${v ? 'VROOM' : 'z Routific'} · ${naListe}`),
-          por && por.min && por.min.k < por.kR ? el('span', null, `VROOM: wystarczy ${por.min.k}`) : null);
+          por && por.zaMalo ? el('span', { class: 'uw' }, `VROOM: potrzeba ${por.kV}`)
+            : por && por.min && por.min.k < por.kR ? el('span', null, `VROOM: wystarczy ${por.min.k}`) : null);
         if (por) kafleK = el('div', { class: 'tr-kier tr-por', role: 'group', 'aria-label': 'Trasy' },
           el('button', { type: 'button', class: 'gp kafel', 'aria-pressed': String(!v), onclick: () => trWybierzZrodlo(h, false),
-            'aria-label': `Routific: ${por.kR} ${odm(por.kR, ['kierowca', 'kierowców', 'kierowców'])}, ${trKm1(por.kmR)} km po ulicach` },
-            el('span', { class: 'h' }, 'ROUTIFIC'), el('span', { class: 'z' }, `${trKm1(por.kmR)} km`)),
+            'aria-label': `Routific: ${por.kR} ${odm(por.kR, TR_KURSY)}, ${trKm1(por.kmR)} km po ulicach${por.sp ? trPoCzasie(por.spR, por.spMaksR, true) : ''}` },
+            el('span', { class: 'h' }, 'ROUTIFIC'), el('span', { class: 'z' }, `${trKm1(por.kmR)} km`), el('span', { class: 's' }, `${por.kR} ${odm(por.kR, TR_KURSY)}`),
+            por.sp ? el('span', { class: 's' + (por.spR > 0 ? ' uw' : '') }, trPoCzasie(por.spR, por.spMaksR)) : null),
           el('button', { type: 'button', class: 'gp kafel', 'aria-pressed': String(v), onclick: () => trWybierzZrodlo(h, true),
-            'aria-label': `VROOM: ${por.kV} ${odm(por.kV, ['kierowca', 'kierowców', 'kierowców'])}, ${trKm1(por.kmV)} km po ulicach, ${trProc(por.roznica)}` },
-            el('span', { class: 'h' }, 'VROOM'), el('span', { class: 'z' + (por.roznica <= 0 ? ' lp' : ' uw') }, `${trKm1(por.kmV)} km · ${trProc(por.roznica)}`)));
+            'aria-label': `VROOM: ${por.kV} ${odm(por.kV, TR_KURSY)}, ${trKm1(por.kmV)} km po ulicach, ${trProc(por.roznica)}${por.sp ? trPoCzasie(por.spV, 0, true) : ''}` },
+            el('span', { class: 'h' }, 'VROOM'), el('span', { class: 'z' + (por.roznica <= 0 ? ' lp' : ' uw') }, `${trKm1(por.kmV)} km · ${trProc(por.roznica)}`),
+            el('span', { class: 's' }, `${por.kV} ${odm(por.kV, TR_KURSY)}`), por.sp ? el('span', { class: 's' + (por.spV > 0 ? ' uw' : '') }, trPoCzasie(por.spV, 0)) : null));
       } else if (g.plan && g.plan.n) {
         const p = g.plan, w = trWariant(p, h), wL = p.warianty.find(x => x.k === p.lista), poCzasie = !wL || wL.spoznionych + wL.powrotyPozno > 0;
         et = el('div', { class: 'tr-et' }, el('span', null, `Kierowcy · ${naListe}`),
