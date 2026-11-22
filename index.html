@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-22 14:40 · 114121b"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-22 18:53 · f5290b9"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -545,11 +545,6 @@ table.pods-t th { white-space: normal; letter-spacing: .05em; vertical-align: bo
   .zew-g .nick { margin-right: auto; }
 }
 
-/* ── stopka ── */
-details.zalozenia { background: var(--karta); border: 1px solid var(--linia); border-radius: 12px; padding: 10px 14px; }
-details.zalozenia summary { cursor: pointer; font-weight: 700; min-height: 36px; display: flex; align-items: center; }
-details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; gap: 5px; max-width: 80ch; font-size: 15px; }
-
 @media (max-width: 1080px) { .uklad { grid-template-columns: 1fr; } }
 @media (max-width: 640px) {
   .znak h1 { font-size: 19px; }
@@ -869,8 +864,11 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
 @media (min-width: 481px) and (max-width: 559px) { .widoki.z-trasy button { font-size: 12px; } }
 @media (max-width: 480px) { .widoki.z-trasy { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 /* (22.11) KURSATOR — przycisk w czarno-żółtej obwódce („w budowie”); wymiary jak inne przyciski paska */
-.widoki #w-trasy { border: 3px solid transparent; background: linear-gradient(var(--karta), var(--karta)) padding-box, repeating-linear-gradient(-45deg, #1d1d1b 0 5px, #f5c400 5px 10px) border-box; }
-.widoki #w-trasy[aria-selected="true"] { background: linear-gradient(var(--akcent), var(--akcent)) padding-box, repeating-linear-gradient(-45deg, #1d1d1b 0 5px, #f5c400 5px 10px) border-box; }
+:root { --kr-napis: #1d1d1b; --kr-napis-wyb: #f5c400; }   /* (22.11, 18:48) napis: jasny — czarny, wybrany żółty; ciemny — żółty, wybrany czarny */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --kr-napis: #f5c400; --kr-napis-wyb: #1d1d1b; } }
+:root[data-theme="dark"] { --kr-napis: #f5c400; --kr-napis-wyb: #1d1d1b; }
+.widoki #w-trasy { border: 3px solid transparent; background: linear-gradient(var(--karta), var(--karta)) padding-box, repeating-linear-gradient(-45deg, #1d1d1b 0 5px, #f5c400 5px 10px) border-box; color: var(--kr-napis); }
+.widoki #w-trasy[aria-selected="true"] { background: linear-gradient(var(--akcent), var(--akcent)) padding-box, repeating-linear-gradient(-45deg, #1d1d1b 0 5px, #f5c400 5px 10px) border-box; color: var(--kr-napis-wyb); }
 @media (min-width: 1024px) { .widoki.z-trasy { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); } }   /* jeden rząd: osiem równych kolumn — obwódka nie poszerza przycisku */
 .tr-lista { contain: size; display: flex; flex-direction: column; gap: 10px; }
 .tr-lista > * { flex: 0 0 auto; }
@@ -970,12 +968,12 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     </div>
     <div class="widoki z-archiwum z-mapa z-ruch z-trasy" role="tablist" aria-label="Widok">
       <button type="button" role="tab" id="w-kierowcy" aria-selected="true">KIEROWCY</button>
-      <button type="button" role="tab" id="w-listy" aria-selected="false">LISTY PRZEWOZOWE</button>
+      <button type="button" role="tab" id="w-listy" aria-selected="false">PRZEWOZY</button>
       <button type="button" role="tab" id="w-mapa" aria-selected="false">MAPA</button>
       <button type="button" role="tab" id="w-trasy" aria-selected="false">KURSATOR</button>
       <button type="button" role="tab" id="w-ruch" aria-selected="false">RUCH</button>
-      <button type="button" role="tab" id="w-startowe" aria-selected="false">LISTY STARTOWE</button>
-      <button type="button" role="tab" id="w-podsumowanie" aria-selected="false">PODSUMOWANIE</button>
+      <button type="button" role="tab" id="w-startowe" aria-selected="false">SKŁAD</button>
+      <button type="button" role="tab" id="w-podsumowanie" aria-selected="false">RAPORT</button>
       <button type="button" role="tab" id="w-archiwum" aria-selected="false">ARCHIWUM</button>
     </div>
   </header>
@@ -991,24 +989,6 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
   </section>
 
   <main id="widok"></main>
-
-  <details class="zalozenia">
-    <summary>Skąd dane i jak zapisują się wpisy</summary>
-    <ul>
-      <li>Pliki dnia: eksport z DYSZY <b>FABRYKA-RRRR-MM-DD-GG.csv</b> przychodzi sam; eksport tras z Routific <b>Routific solution - GG-GG - RRRR-MM-DD.csv</b> dyspozytor wgrywa tutaj (pod godzinami „Pliki dnia” → WGRAJ TRASĘ) — automat kładzie go na Dysku. Tu też są pliki dla Routific (ROUTIFIC-DD.MM.RRRR-GG.xlsx) do pobrania. Załoga nie zagląda na Dysk. Automat sprawdza wszystko co minutę, strona odświeża się sama co 20 sekund.</li>
-      <li>START, STOP, EXTRA, BONUS i KONIEC zapisują się w bazie od razu (napis nad plikami dnia: „zapisane gg:mm”). Wszyscy zalogowani widzą to samo — iPad dyspozytora, telefon obsługi, komputer w biurze.</li>
-      <li>Zestaw z Fabryki sprzedany w Restauracji — „R” w Rejestrze Fabryki (tablica.dysza.app): płatność zamówienia zmienia się tu sama na RK albo RG (jak płatność w Restauracji; w „Zmianach płatności” — „Rejestr Fabryki”). Cofnięte „R” — wraca pierwotna. Po KONIEC kierowcy, przy innej kwocie albo kodzie pasującym do kilku zamówień — uwaga na karcie kierowcy.</li>
-      <li>Płatność zmienia się tylko w Rejestrze Fabryki (tablica.dysza.app: płatność wpisu — jeden albo dwa sposoby) i przechodzi tu sama: Gotówka → G, Karta → K, BLIK → BO (BK, gdy kierowca wyjechał z BLIK-iem Kierowcy), Online i Voucher → zapłacone (kierowca nic nie pobiera), dwie płatności → podział; w „Zmianach płatności” — „Rejestr Fabryki”. Trzy płatności, inna kwota i zmiana po KONIEC — uwaga na karcie kierowcy. BLIK wybrany w DYSZY (plik FABRYKA z kolumnami BlikT i BlikD; wcześniej Blik_S albo Blik_T i Blik_D): BlikT — BLIK z góry (telefon, obsługa) → BO, BlikD — BLIK przy dostawie → BK.</li>
-      <li>Pole informacyjne (LISTY STARTOWE, obok STAWEK DNIA): tekst wpisuje rola Archiwum w okienku konta (przycisk z imieniem, między JASNY / CIEMNY a WYLOGUJ) — ZAPISZ pokazuje go wszystkim, WYCZYŚĆ zdejmuje; najwyżej 300 znaków.</li>
-      <li>LISTY STARTOWE: szkic zapisuje się na bieżąco. „UTWÓRZ I WYŚLIJ LISTY” — w ciągu minuty automat Transport Listy robi 11 plików GHH-LS-RRRR-MM-DD.xlsx (katalog dnia › LISTY STARTOWE), kartę STAWKI w pliku T i mail do załogi. Formularz list startowych jest zablokowany — listy układa się tylko tutaj.</li>
-      <li>Role nadaje manager.dysza.app: <b>Dyspozytor</b> — listy startowe, pliki dla Routific i eksport trasy, START, STOP, EXTRA, BONUS i KONIEC; <b>Archiwum</b> — ARCHIWUM (raport dnia), podgląd z telefonami kierowców i pole informacyjne; <b>Mapa</b> — MAPA. Można mieć kilka ról.</li>
-      <li>Rozliczenie jak w pliku T: CZASÓWKA = (STOP − START) × zł/h; KILOMETRY = (km z Routific + EXTRA) × zł/km; ADRESY = adresy × zł/adres + BONUS; WYPŁATA = suma; ODDAJE = gotówka − wypłata, DOSTAJE = wypłata − gotówka. ZEW — bez wypłaty, oddaje gotówkę; RES — dniówka z list startowych.</li>
-      <li>ARCHIWUM (rola Archiwum; bez niej — pusta karta „Dostęp zablokowany”): miesiąc w siatce — dni od 5.11 z rozliczeń KONIEC, dni 20.09–4.11 z plików T (przepisane raz do bazy). RAPORT na kafelku dnia pobiera plik PDF (A4 poziomo): kierowcy, składowe wypłaty, pobrał od klienta (gotówka), zwrócił do firmy, dostał z kasy.</li>
-      <li>RUCH: komunikat o utrudnieniach w strefach dostaw, co godzinę 11–21 (dawniej mail „Utrudnienia w strefach dostaw”) — sytuacja na drogach, TERAZ · NA ŻYWO, ZAKOŃCZONE, DZIŚ, NAJBLIŻSZE DNI, źródła. Nowy komunikat: przycisk RUCH pulsuje na żółto, aż go otworzysz.</li>
-      <li>MAPA (rola Mapa; bez niej — pusta karta „Dostęp zablokowany”): dostawy dnia na godziny. DOWIEZIONE i W DOWOZIE — z plików FABRYKA (ulica i numer, bez kwot, telefonów i lokalu; punkt na mapie i kierowca — z eksportu trasy Routific); PLAN — dowozy przyjęte w DYSZY, dla których pliku FABRYKA jeszcze nie ma: liczba i adresy (ulica i numer) z łącznika DYSZY co minutę, punkt na mapie po 1–2 minutach (Transport Dysza, mapa Google); „bez adresu” — adres jeszcze nie przyszedł. Mapa poglądowa: strefy A i B z mapy dostaw, FABRYKA — start tras.</li>
-      <li>KURSATOR (rola Mapa, jak MAPA): rysunek poglądowy tras godziny. Godziny PLANU — sugestia, ilu kierowców wystarczy i jak rozłożyć adresy: wyjazd najpóźniej 20 min przed godziną, ostatnia paczka do końca godziny, powrót do bazy w 90 min; godziny parzyste — lista PARZYSTE, nieparzyste — NIEPARZYSTE. Plan liczy KURSATOR: drogi z OpenStreetMap (OSRM), punkty adresów z PRG, a gdy ich brak — z mapy Google; czasy jazdy dostrojone do tras z Routific. Zanim KURSATOR policzy godzinę — sugestia strony (linia prosta × 1,4, 25 km/h, 5 min przy adresie, 5 min zapasu). Godziny z trasą z Routific — trasy z Routific (km i godziny z eksportu); ROUTIFIC / KURSATOR — te same adresy ułożone przez KURSATORA, km obu w tej samej mierze dróg (OSRM). Punkty PLANU strona pamięta do końca dnia — godzina z plikiem FABRYKA, zanim przyjdzie trasa, zostaje z planem.</li>
-    </ul>
-  </details>
 </div>
 
 <style>
@@ -2594,7 +2574,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
       rozl: kier.filter(w => w.zamk).length, doRozl: kier.filter(w => !w.zamk).map(w => w.k) };
   }
   function widokPodsumowania() {
-    if (!S.model || !Object.keys(S.model.poKier).length) return el('div', { class: 'tabela-w' }, el('div', { class: 'puste' }, 'Podsumowanie pojawi się po pierwszym eksporcie z Routific.'));
+    if (!S.model || !Object.keys(S.model.poKier).length) return el('div', { class: 'tabela-w' }, el('div', { class: 'puste' }, 'Raport pojawi się po pierwszym eksporcie z Routific.'));
     const D = danePodsumowania(), d = D.dzien;
     const ost = S.pliki.reduce((m, p) => Math.max(m, p.czas), -1);
     const czasTxt = m => `${Math.floor(m / 60)} h ${dd(m % 60)} min`;
@@ -2623,7 +2603,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     const tabela = el('section', { class: 'panel', 'aria-labelledby': 'pods-k-t' },
       el('div', { class: 'karta-n' }, el('b', { id: 'pods-k-t' }, 'Kierowcy dnia'),
         el('small', null, `${dzienNapis(S.dzien)} · cały dzień · stan na ${ost < 0 ? '—' : godzMin(ost)} · rozliczeni ${D.rozl} z ${D.kier.length}`)),
-      el('div', { class: 'tabela-w' }, el('table', { class: 'pods-t', 'aria-label': 'Kierowcy dnia — podsumowanie' },
+      el('div', { class: 'tabela-w' }, el('table', { class: 'pods-t', 'aria-label': 'Kierowcy dnia — raport' },
         el('thead', null, el('tr', null, el('th', { class: 'stk' }, 'Kierowca'), ['Czas', 'Rzuty', 'Adresy', 'Km', 'Gotówka', 'Wypłata', 'Oddaje / dostaje'].map(x => el('th', { class: 'kw' }, x)))),
         el('tbody', null, wiersze), el('tfoot', null, stopka))),
       el('div', { class: 'notka' }, D.doRozl.length
@@ -2664,7 +2644,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
         kafel('KOSZT DOSTAWY', D.adresyWl ? zl(Math.round(D.wyplWl / D.adresyWl)) + ' zł' : '—',
           `na adres · ${D.wartoscWl ? (D.wyplWl * 100 / D.wartoscWl).toFixed(1).replace('.', ',') + ' %' : '—'} wartości zamówień (wypłaty bez ZEW)`)]));
     return el('div', { class: 'pods' }, tabela, statystyka,
-      el('div', { class: 'notka' }, 'PODSUMOWANIE zastępuje plik T — liczy się samo z eksportów i wpisów dyspozytora, zawsze za cały dzień. Wszyscy zalogowani widzą to samo.'));
+      el('div', { class: 'notka' }, 'RAPORT zastępuje plik T — liczy się samo z eksportów i wpisów dyspozytora, zawsze za cały dzień. Wszyscy zalogowani widzą to samo.'));
   }
 
   // ── widok LISTY PRZEWOZOWE ──
@@ -2937,7 +2917,7 @@ details.zalozenia ul { margin: 6px 0 4px; padding-left: 1.2em; display: grid; ga
     }
   }
   function widokStartowe() {
-    if (!dzienLS()) return el('div', { class: 'tabela-w' }, el('div', { class: 'puste' }, 'Listy startowe — wczytuję z bazy…'));
+    if (!dzienLS()) return el('div', { class: 'tabela-w' }, el('div', { class: 'puste' }, 'Skład — wczytuję z bazy…'));
     const f = dzienLS().form, mozna = maRole('dyspozytor'), pi = kartaInfo();   // (17.11) pole informacyjne — obok STAWEK DNIA
     return el('div', { class: 'ls' }, pasekDni(), pi
       ? el('div', { class: 'uklad z-pi' }, kartaStawek(f, mozna), pi, el('div', { class: 'lewa' }, kartaKierowcow(f, mozna), kartaZew(f, mozna)), panelLS())
