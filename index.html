@@ -1,4 +1,4 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-22 18:53 · f5290b9"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="transport-wersja" content="2026-11-22 19:34 · 6b2db5b"><meta name="theme-color" content="#2d6b57"><meta name="robots" content="noindex"><link rel="apple-touch-icon" href="ikona-180.png"><link rel="icon" type="image/png" sizes="32x32" href="ikona-32.png"><link rel="icon" type="image/png" sizes="192x192" href="ikona-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Transport</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -944,6 +944,36 @@ table.pods-t th { white-space: normal; letter-spacing: .05em; vertical-align: bo
 .tr-kier .kafel .s { font-size: 11px; color: var(--szary); font-variant-numeric: tabular-nums; }
 .tr-kier .kafel .s.uw { color: var(--czer); font-weight: 700; }
 .tr-kursy { font-variant-numeric: tabular-nums; }
+/* (22.11, 19:09) CAŁY DZIEŃ — wskaźnik: wskazówka na stronę wydajniejszego planu (średnia: KM, KURSY, CZAS; skala ±25); pod nim godziny — przewijane razem */
+.tr-dz-przewin { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; align-content: start; min-height: 0; min-width: 0; overflow: auto; overscroll-behavior: contain;
+  margin: 0 -6px; padding: 0 6px 2px; }
+.tr-dz-przewin > .mp-adresy { overflow: visible; }
+@media (max-width: 700px) { .tr-dz-przewin { overflow: visible; } }
+@media (max-width: 374px) { .tr-g { grid-template-columns: minmax(0, 1fr) auto; } .tr-g .gr { grid-column: 1; grid-row: 2; } .tr-g .lz { grid-column: 2; grid-row: 1 / span 2; } }   /* 360 px: godzina i grupa jedna pod drugą */
+.tr-dz-gora { display: grid; gap: 10px; min-width: 0; }
+.tr-wsk { display: grid; gap: 8px; width: 100%; max-width: 420px; min-width: 0; justify-self: center; padding: 6px 0 4px; }
+.tr-wsk-t { display: grid; }
+.tr-wsk-t > * { grid-area: 1 / 1; }
+.tr-wsk-n { align-self: start; display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--tusz); }
+.tr-wsk svg { display: block; width: 100%; height: auto; overflow: visible; }
+.tr-wsk .tor { fill: none; stroke: var(--linia2); stroke-width: 2; }
+.tr-wsk .wyp { fill: none; stroke: var(--kr-napis); stroke-width: 5; stroke-linecap: round; }
+.tr-wsk .kr { stroke: var(--szary2); stroke-width: 1.5; stroke-linecap: round; }
+.tr-wsk .kr0 { stroke: var(--tusz); stroke-width: 2.5; }
+.tr-wsk text { font: 600 12px var(--mono); fill: var(--szary); text-anchor: middle; }
+.tr-wsk .ig { fill: var(--kr-napis); }
+.tr-wsk .os { fill: var(--karta); }
+.tr-wsk-w { display: flex; justify-content: center; align-items: baseline; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--szary); }
+.tr-wsk-w b { font-size: 22px; letter-spacing: 0; color: var(--tusz); font-variant-numeric: tabular-nums; }
+.tr-wsk-p { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.tr-wsk-p > div { display: grid; justify-items: center; gap: 5px; min-width: 0; }
+.tr-wsk-p .n { font-size: 11px; font-weight: 700; letter-spacing: .1em; color: var(--szary); }
+.tr-wsk-p .b { position: relative; justify-self: stretch; height: 6px; border-radius: 3px; background: var(--linia); }
+.tr-wsk-p .b::before { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 2px; margin-left: -1px; border-radius: 1px; background: var(--szary2); }
+.tr-wsk-p .b i { position: absolute; top: 0; bottom: 0; border-radius: 3px; background: var(--kr-napis); }
+.tr-wsk-p .v { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--tusz); white-space: nowrap; }
+.tr-wsk-p .v.lp { color: var(--ok); }
+.tr-wsk-p .v.uw { color: var(--czer); }
 </style>
 
 <div id="logowanie" hidden></div>
@@ -4971,6 +5001,8 @@ table.pods-t th { white-space: normal; letter-spacing: .05em; vertical-align: bo
       // (22.11) oba plany w modelu silnika: adresy Routifica po czasie przy postoju z parametrów; VROOM przy 3 min (założenia Routifica)
       spR: Number.isInteger(r.spoznione) ? r.spoznione : null, spMaksR: Math.max(0, Number(r.spoznienie_maks) || 0),
       spV: Number.isInteger(v.spoznione) ? v.spoznione : null, zaMalo: v.kierowcow_routific_za_malo === true,
+      spMaksV: Math.max(0, ...(Array.isArray(v.trasy) ? v.trasy : []).map(t => Math.max(0, ...(Array.isArray(t.eta) ? t.eta : [])
+        .map(e => Number(e) - g.h * 60 - TRP.ZALOZENIA.okno).filter(x => isFinite(x))))),   // (22.11, 19:09) „do N min” KURSATORA
       sp: Number.isInteger(r.spoznione) && Number.isInteger(v.spoznione),
       r3: x.dane.vroom_3min && Number.isInteger(x.dane.vroom_3min.k) && Number(x.dane.vroom_3min.km) > 0 ? { k: x.dane.vroom_3min.k, km: Number(x.dane.vroom_3min.km) } : null };
   }
@@ -4980,6 +5012,43 @@ table.pods-t th { white-space: normal; letter-spacing: .05em; vertical-align: bo
   const trPoCzasie = (n, maks, aria) => n === null || n === undefined ? ''
     : aria ? `, ${n} ${odm(n, ['adres', 'adresy', 'adresów'])} po czasie${n > 0 ? `, najwięcej ${Math.ceil(maks)} min` : ''}`
       : `${n} po czasie${n > 0 ? ` · do ${Math.ceil(maks)} min` : ''}`;
+  // (22.11, 19:09) CAŁY DZIEŃ — wskaźnik: wskazówka przechyla się na stronę wydajniejszego planu (Sławek: „jak namalowany na zrzucie”,
+  // z uwzględnieniem kilometrów, kursów i czasów). Wskazówka = średnia trzech porównań, każde na skali ±25 (KURSATOR wobec Routific):
+  // KM i KURSY — o ile procent mniej; CZAS — adresy po czasie: 1 na 100 dostaw = 5. Na prawo — KURSATOR wydajniejszy, na lewo — Routific.
+  const TR_SKALA = 25, TR_KAT = 62;                             // koniec skali (25) — 62° od pionu
+  function trWskaznik(d) {
+    const ogr = x => Math.max(-TR_SKALA, Math.min(TR_SKALA, x)), f = x => x.toFixed(1), proc = r => (Math.round(r * 100) === 0 ? '0%' : trProc(r));
+    const cz = [
+      { n: 'KM', p: (d.kmR - d.kmV) / d.kmR * 100, t: proc((d.kmV - d.kmR) / d.kmR) },
+      { n: 'KURSY', p: d.kR > 0 ? (d.kR - d.kV) / d.kR * 100 : null, t: d.kR > 0 ? proc((d.kV - d.kR) / d.kR) : '—' },
+      { n: 'CZAS', p: d.spR !== null && d.n > 0 ? (d.spR - d.spV) / d.n * 500 : null, t: d.spR !== null ? `${d.spR} → ${d.spV}` : '—' }];
+    const jest = cz.filter(c => c.p !== null && isFinite(c.p)), w = jest.reduce((s, c) => s + ogr(c.p), 0) / jest.length, wz = Math.round(Math.abs(w));
+    const kto = wz === 0 ? 'Remis' : w > 0 ? 'Przewaga KURSATORA' : 'Przewaga Routific';
+    const cx = 180, cy = 196, R = 150, kat = v => ogr(v) / TR_SKALA * TR_KAT, rad = v => kat(v) * Math.PI / 180;
+    const pt = (v, r) => [cx + r * Math.sin(rad(v)), cy - r * Math.cos(rad(v))];
+    const luk = (a, b) => { const [x0, y0] = pt(a, R), [x1, y1] = pt(b, R); return `M${f(x0)} ${f(y0)}A${R} ${R} 0 0 1 ${f(x1)} ${f(y1)}`; };
+    const svg = mpSvg('svg', { viewBox: '0 0 360 214', 'aria-hidden': 'true' });
+    svg.append(mpSvg('path', { class: 'tor', d: luk(-TR_SKALA, TR_SKALA) }));
+    if (wz > 0) svg.append(mpSvg('path', { class: 'wyp', d: w > 0 ? luk(0, w) : luk(w, 0) }));
+    for (let v = -TR_SKALA; v <= TR_SKALA; v += 5) {
+      const dl = v === 0 ? 10 : 6, [x0, y0] = pt(v, R - dl), [x1, y1] = pt(v, R + dl), [tx, ty] = pt(v, R + 21);
+      svg.append(mpSvg('line', { class: v === 0 ? 'kr kr0' : 'kr', x1: f(x0), y1: f(y0), x2: f(x1), y2: f(y1) }),
+        mpSvg('text', { x: f(tx), y: f(ty), dy: '.35em' }, String(Math.abs(v))));
+    }
+    const ig = mpSvg('g', { class: 'ig', transform: `rotate(${f(kat(w))} ${cx} ${cy})` });
+    ig.append(mpSvg('path', { d: `M${cx} ${cy - 140}L${cx + 5.5} ${cy}L${cx} ${cy + 18}L${cx - 5.5} ${cy}Z` }));
+    svg.append(ig, mpSvg('circle', { class: 'ig', cx: cx, cy: cy, r: 11 }), mpSvg('circle', { class: 'os', cx: cx, cy: cy, r: 4 }));
+    return el('div', { class: 'tr-wsk', role: 'img', 'aria-label': `${kto}${wz ? ` ${wz}%` : ''}: kilometry ${cz[0].t}, kursy ${cz[1].t}`
+      + (d.spR !== null ? `, adresy po czasie — Routific ${d.spR}, KURSATOR ${d.spV}` : '') },
+      el('div', { class: 'tr-wsk-t' }, el('div', { class: 'tr-wsk-n' }, el('span', null, 'Routific'), el('span', null, 'KURSATOR')), svg),
+      el('div', { class: 'tr-wsk-w' }, kto, wz ? el('b', null, `${wz}%`) : null),
+      el('div', { class: 'tr-wsk-p' }, cz.map(c => {
+        const p = c.p === null || !isFinite(c.p) ? 0 : ogr(c.p), sz = Math.abs(p) / TR_SKALA * 50;
+        return el('div', null, el('span', { class: 'n' }, c.n),
+          el('span', { class: 'b' }, sz > 0 ? el('i', { style: p > 0 ? `left:50%;width:${f(sz)}%` : `right:50%;width:${f(sz)}%` }) : null),
+          el('span', { class: 'v' + (p >= 0.5 ? ' lp' : p <= -0.5 ? ' uw' : '') }, c.t));
+      })));
+  }
   function trPolilinia(s) {                                     // OSRM (polyline, 5 miejsc po przecinku) → [[lat, lng], …]
     const w = [];
     let i = 0, lat = 0, lng = 0;
@@ -5132,15 +5201,18 @@ table.pods-t th { white-space: normal; letter-spacing: .05em; vertical-align: bo
       const pory = godz.filter(x => x.por), sR = pory.reduce((s, x) => s + x.por.kmR, 0), sV = pory.reduce((s, x) => s + x.por.kmV, 0);
       const suma = f => pory.reduce((s, x) => s + f(x.por), 0), kR = suma(p => p.kR), kV = suma(p => p.kV), spR = suma(p => p.spR || 0), k3 = suma(p => p.r3 ? p.r3.k : 0);
       const zSp = pory.length > 0 && pory.every(x => x.por.sp), z3 = pory.length > 0 && pory.every(x => x.por.r3);
-      lista = el('section', { class: 'karta mp-lista', 'aria-labelledby': 'tr-l-t' },
+      lista = el('section', { class: 'karta mp-lista tr-calosc', 'aria-labelledby': 'tr-l-t' },
         el('div', { class: 'karta-n' }, el('b', { id: 'tr-l-t' }, 'Cały dzień'), el('small', null, `${razem} ${odm(razem, ['dostawa', 'dostawy', 'dostaw'])}`)),
-        pory.length ? el('div', { class: 'tr-et tr-suma' }, el('span', null, `Routific ${trKm1(sR)} km`), el('span', null, `KURSATOR ${trKm1(sV)} km`),
-          el('span', { class: sV <= sR ? 'lp' : 'uw' }, trProc((sV - sR) / sR)), el('span', null, `${pory.length} ${odm(pory.length, ['godzina', 'godziny', 'godzin'])}`)) : null,
-        zSp ? el('div', { class: 'tr-et tr-kursy' },
-          el('span', spR > 0 ? { class: 'uw' } : null, `Routific ${kR} ${odm(kR, TR_KURSY)} · ${trPoCzasie(spR, Math.max(...pory.map(x => x.por.spMaksR)))}`),
-          el('span', null, `KURSATOR ${kV} ${odm(kV, TR_KURSY)} · ${trPoCzasie(suma(p => p.spV), 0)}`)) : null,
-        z3 ? el('div', { class: 'tr-et tr-kursy' }, el('span', null, `Na założeniach Routific (3 min) KURSATOR: ${k3} ${odm(k3, TR_KURSY)}, ${trKm1(suma(p => p.r3.km))} km`)) : null,
-        wiersze.length ? el('ol', { class: 'tr-dzien mp-adresy' }, wiersze) : el('div', { class: 'puste-m' }, 'Jeszcze bez dostaw.'));
+        el('div', { class: 'tr-dz-przewin', id: 'tr-przewin' },        // (22.11, 19:09) kilometry, wskaźnik, kursy i adresy po czasie, pod nimi godziny — przewijane razem
+          pory.length ? el('div', { class: 'tr-dz-gora' },
+            el('div', { class: 'tr-et tr-suma' }, el('span', null, `Routific ${trKm1(sR)} km`), el('span', null, `KURSATOR ${trKm1(sV)} km`),
+              el('span', { class: sV <= sR ? 'lp' : 'uw' }, trProc((sV - sR) / sR)), el('span', null, `${pory.length} ${odm(pory.length, ['godzina', 'godziny', 'godzin'])}`)),
+            trWskaznik({ kmR: sR, kmV: sV, kR: kR, kV: kV, spR: zSp ? spR : null, spV: zSp ? suma(p => p.spV) : null, n: pory.reduce((s, x) => s + x.n, 0) }),
+            zSp ? el('div', { class: 'tr-et tr-kursy' },
+              el('span', spR > 0 ? { class: 'uw' } : null, `Routific ${kR} ${odm(kR, TR_KURSY)} · ${trPoCzasie(spR, Math.max(...pory.map(x => x.por.spMaksR)))}`),
+              el('span', suma(p => p.spV) > 0 ? { class: 'uw' } : null, `KURSATOR ${kV} ${odm(kV, TR_KURSY)} · ${trPoCzasie(suma(p => p.spV), Math.max(...pory.map(x => x.por.spMaksV)))}`)) : null,
+            z3 ? el('div', { class: 'tr-et tr-kursy' }, el('span', null, `Na założeniach Routific (3 min) KURSATOR: ${k3} ${odm(k3, TR_KURSY)}, ${trKm1(suma(p => p.r3.km))} km`)) : null) : null,
+          wiersze.length ? el('ol', { class: 'tr-dzien mp-adresy' }, wiersze) : el('div', { class: 'puste-m' }, 'Jeszcze bez dostaw.')));
     } else {
       const h = g.h, st = g.stan, trasy = trTrasy(g), lst = g.lista || trLista(h);
       TRS.biezace = g.adresy;
@@ -5163,9 +5235,9 @@ table.pods-t th { white-space: normal; letter-spacing: .05em; vertical-align: bo
             el('span', { class: 'h' }, 'ROUTIFIC'), el('span', { class: 'z' }, `${trKm1(por.kmR)} km`), el('span', { class: 's' }, `${por.kR} ${odm(por.kR, TR_KURSY)}`),
             por.sp ? el('span', { class: 's' + (por.spR > 0 ? ' uw' : '') }, trPoCzasie(por.spR, por.spMaksR)) : null),
           el('button', { type: 'button', class: 'gp kafel', 'aria-pressed': String(v), onclick: () => trWybierzZrodlo(h, true),
-            'aria-label': `KURSATOR: ${por.kV} ${odm(por.kV, TR_KURSY)}, ${trKm1(por.kmV)} km po ulicach, ${trProc(por.roznica)}${por.sp ? trPoCzasie(por.spV, 0, true) : ''}` },
+            'aria-label': `KURSATOR: ${por.kV} ${odm(por.kV, TR_KURSY)}, ${trKm1(por.kmV)} km po ulicach, ${trProc(por.roznica)}${por.sp ? trPoCzasie(por.spV, por.spMaksV, true) : ''}` },
             el('span', { class: 'h' }, 'KURSATOR'), el('span', { class: 'z' + (por.roznica <= 0 ? ' lp' : ' uw') }, `${trKm1(por.kmV)} km · ${trProc(por.roznica)}`),
-            el('span', { class: 's' }, `${por.kV} ${odm(por.kV, TR_KURSY)}`), por.sp ? el('span', { class: 's' + (por.spV > 0 ? ' uw' : '') }, trPoCzasie(por.spV, 0)) : null));
+            el('span', { class: 's' }, `${por.kV} ${odm(por.kV, TR_KURSY)}`), por.sp ? el('span', { class: 's' + (por.spV > 0 ? ' uw' : '') }, trPoCzasie(por.spV, por.spMaksV)) : null));
       } else if (g.plan && g.plan.n) {
         const p = g.plan, w = trWariant(p, h), wL = p.warianty.find(x => x.k === p.lista), poCzasie = !wL || wL.spoznionych + wL.powrotyPozno > 0;
         et = el('div', { class: 'tr-et' }, el('span', null, `Kierowcy · ${naListe}`),
